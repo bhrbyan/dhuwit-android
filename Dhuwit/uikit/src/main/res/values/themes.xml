@@ -28,7 +28,7 @@
     </style>
 
     <style name="Uikit.Theme.Dhuwit.Button.Toggle" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorMajor</item>
+        <item name="colorPrimary">@color/colorMinor</item>
     </style>
 
     <!-- Text Appearance -->

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Major -->
-    <color name="colorMajor">@color/apple</color>
-    <color name="colorMajorLight">@color/mantis</color>
-    <color name="colorMajorDark">@color/camarone</color>
+    <color name="colorMajor">@color/alabaster</color>
+    <color name="colorMajorLight">@color/white</color>
+    <color name="colorMajorDark">@color/silver</color>
 
     <!-- Minor -->
-    <color name="colorMinor">@color/mineShaft</color>
-    <color name="colorMinorLight">@color/emperor</color>
-    <color name="colorMinorDark">@color/black</color>
+    <color name="colorMinor">@color/apple</color>
+    <color name="colorMinorLight">@color/mantis</color>
+    <color name="colorMinorDark">@color/camarone</color>
 
     <!-- Text On Major -->
-    <color name="colorOnMajor">@color/mineShaft</color>
+    <color name="colorOnMajor">@color/black</color>
 
     <!-- Text On Minor -->
     <color name="colorOnMinor">@color/white</color>
@@ -29,7 +29,7 @@
     <color name="apple">#388e3c</color>
     <color name="mantis">#6abf69</color>
     <color name="camarone">#00600f</color>
-    <color name="mineShaft">#2c2c2c</color>
+    <color name="alabaster">#fafafa</color>
     <color name="emperor">#555555</color>
     <color name="silver">#c7c7c7</color>
     <color name="monza">#B00020</color>
