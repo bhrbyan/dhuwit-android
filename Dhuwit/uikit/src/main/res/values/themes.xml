@@ -27,7 +27,7 @@
         <item name="colorPrimary">@color/colorMajor</item>
         <item name="colorPrimaryDark">@color/colorMajorDark</item>
         <item name="colorAccent">@color/colorMinor</item>
-        <item name="android:statusBarColor">@color/colorMinor</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="Uikit.Theme.Dhuwit.Button.Toggle" parent="Theme.MaterialComponents.Light.NoActionBar">

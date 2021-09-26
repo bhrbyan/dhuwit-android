@@ -11,6 +11,7 @@ import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
@@ -29,6 +30,9 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
 
     @Inject
     lateinit var transactionRouter: TransactionRouter
+
+    @Inject
+    lateinit var accountRouter: AccountRouter
 
     @Inject
     lateinit var storage: Storage
@@ -53,6 +57,10 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
     override fun listener() {
         binding.buttonTransaction.setOnClickListener {
             openTransactionPage(null)
+        }
+
+        binding.layoutAccount.setOnClickListener {
+            openAccountPage()
         }
     }
 
@@ -155,5 +163,9 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
 
     private fun openTransactionPage(transactionId: Long?) {
         transactionResult.launch(transactionRouter.openTransactionPage(this, transactionId))
+    }
+
+    private fun openAccountPage() {
+        startActivity(accountRouter.openAccountPage(this))
     }
 }

@@ -1,3 +1,4 @@
+include ':features:feature-account'
 include ':features:feature-note'
 include ':features:feature-category'
 include ':cores:core-transaction'
