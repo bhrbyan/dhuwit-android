@@ -45,6 +45,14 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         }
     }
 
+    private val accountResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            viewModel.getDetails()
+        }
+    }
+
     override fun init() {
         binding = DashboardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -166,6 +174,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
     }
 
     private fun openAccountPage() {
-        startActivity(accountRouter.openAccountPage(this))
+        accountResult.launch(accountRouter.openAccountPage(this))
     }
 }

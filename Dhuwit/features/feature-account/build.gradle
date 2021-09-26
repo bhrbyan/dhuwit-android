@@ -40,6 +40,7 @@ dependencies {
     implementation project(":core")
     implementation project(":cores:core-account")
     implementation project(":state")
+    implementation project(":storage")
     implementation project(":uikit")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -59,4 +60,7 @@ dependencies {
 
     /* View Model */
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
+
+    /* Decimal Input Text */
+    implementation 'me.abhinay.input:currency-edittext:1.1'
 }

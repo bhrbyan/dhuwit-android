@@ -1,9 +1,6 @@
 package id.dhuwit.core.account.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface AccountDao {
@@ -12,4 +9,7 @@ interface AccountDao {
 
     @Query("SELECT * FROM account_table")
     suspend fun getAccount(): AccountEntity
+
+    @Update
+    suspend fun updateAccount(account: AccountEntity)
 }

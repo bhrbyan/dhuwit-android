@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_hint_toolbar_title">Account</string>
+    <string name="account_hint_name">Name</string>
+    <string name="account_hint_balance">Balance</string>
+</resources>

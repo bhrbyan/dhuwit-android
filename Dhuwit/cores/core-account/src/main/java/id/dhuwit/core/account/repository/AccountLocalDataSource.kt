@@ -31,4 +31,16 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
             }
         }
     }
+
+    override suspend fun updateAccount(account: Account): State<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                dao.updateAccount(account.toEntity())
+
+                State.Success(true)
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage ?: "")
+            }
+        }
+    }
 }
