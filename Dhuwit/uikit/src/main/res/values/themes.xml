@@ -17,6 +17,9 @@
         <item name="colorOnSecondary">@color/colorOnMinor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Date Picker -->
+        <item name="materialCalendarTheme">@style/Uikit.Theme.DatePicker</item>
     </style>
 
     <style name="Uikit.Theme.Dhuwit.Launcher">
@@ -29,6 +32,15 @@
 
     <style name="Uikit.Theme.Dhuwit.Button.Toggle" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorMinor</item>
+    </style>
+
+    <style name="Uikit.Theme.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/colorMinor</item>
+        <item name="colorOnPrimary">@color/colorOnMinor</item>
+        <item name="shapeAppearanceSmallComponent">@style/Uikit.Style.DatePicker.SmallComponent
+        </item>
+        <item name="shapeAppearanceMediumComponent">@style/Uikit.Style.DatePicker.MediumComponent
+        </item>
     </style>
 
     <!-- Text Appearance -->
@@ -151,7 +163,7 @@
     <style name="Uikit.Style.Button.Fill">
         <item name="android:background">@drawable/selector_button_fill</item>
         <item name="android:textAppearance">@style/Uikit.Style.TextAppearance.Button</item>
-        <item name="android:textColor">@color/colorOnMajor</item>
+        <item name="android:textColor">@color/colorOnMinor</item>
         <item name="textAllCaps">false</item>
     </style>
 
@@ -179,6 +191,15 @@
         <item name="cornerSizeTopLeft">8dp</item>
         <item name="cornerSizeBottomRight">8dp</item>
         <item name="cornerSizeBottomLeft">8dp</item>
+    </style>
+
+    <!-- Date Picker -->
+    <style name="Uikit.Style.DatePicker.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Uikit.Style.DatePicker.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

@@ -4,6 +4,6 @@
 
     <corners android:radius="@dimen/uikit_corner_radius_medium" />
 
-    <solid android:color="@color/colorMajor" />
+    <solid android:color="@color/colorMinor" />
 
 </shape>
