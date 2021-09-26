@@ -1,7 +1,6 @@
 package id.dhuwit.feature.category
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,9 +26,7 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
     private lateinit var adapterCategoryList: CategoryListAdapter
     private val viewModel: CategoryListViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun init() {
         binding = CategoryListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -37,13 +34,13 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
 
         val categoryType = intent.getStringExtra(KEY_CATEGORY_TYPE)
         viewModel.getCategories(CategoryType.getCategoryType(categoryType))
+    }
 
+    override fun listener() {
         binding.imageClose.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
         }
-
-        observer()
     }
 
     override fun observer() {

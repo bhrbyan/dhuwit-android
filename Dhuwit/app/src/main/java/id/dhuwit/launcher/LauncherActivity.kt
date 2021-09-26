@@ -1,6 +1,5 @@
 package id.dhuwit.launcher
 
-import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,15 +21,15 @@ class LauncherActivity : BaseActivity() {
     @Inject
     lateinit var dashboardRouter: DashboardRouter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun init() {
         val currencies = CurrencyUtil.getCurrencies(this)
         val categories = CategoryUtil.getCategories(this)
 
         viewModel.validationUserStatus(currencies, categories)
+    }
 
-        observer()
+    override fun listener() {
+        // Do nothing
     }
 
     override fun observer() {

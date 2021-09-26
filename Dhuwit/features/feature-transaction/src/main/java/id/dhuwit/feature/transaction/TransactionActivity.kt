@@ -1,6 +1,5 @@
 package id.dhuwit.feature.transaction
 
-import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -64,8 +63,7 @@ class TransactionActivity : BaseActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -78,23 +76,9 @@ class TransactionActivity : BaseActivity() {
             setUpButtonDelete()
             viewModel.getTransaction(transactionId)
         }
-
-        setListener()
-
-        observer()
     }
 
-    private fun setUpButtonDelete() {
-        binding.buttonDelete.enabled()
-        binding.buttonDelete.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.ic_delete
-            )
-        )
-    }
-
-    private fun setListener() {
+    override fun listener() {
         with(binding) {
             buttonDate.setOnClickListener {
                 openDatePicker(viewModel.date.value?.convertToMillis(PATTERN_DATE_DATABASE))
@@ -186,21 +170,6 @@ class TransactionActivity : BaseActivity() {
         }
     }
 
-    private fun openDatePicker(selectionDate: Long?) {
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.transaction_date_picker_title))
-            .setSelection(selectionDate)
-            .build()
-
-        datePicker.apply {
-            addOnPositiveButtonClickListener { dateInMillis ->
-                viewModel.setTransactionDate(dateInMillis.convertToDate(PATTERN_DATE_DATABASE))
-            }
-
-            show(supportFragmentManager, MaterialDatePicker::class.java.simpleName)
-        }
-    }
-
     override fun observer() {
         with(viewModel) {
             amount.observe(this@TransactionActivity) { amount ->
@@ -243,6 +212,31 @@ class TransactionActivity : BaseActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setUpButtonDelete() {
+        binding.buttonDelete.enabled()
+        binding.buttonDelete.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_delete
+            )
+        )
+    }
+
+    private fun openDatePicker(selectionDate: Long?) {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.transaction_date_picker_title))
+            .setSelection(selectionDate)
+            .build()
+
+        datePicker.apply {
+            addOnPositiveButtonClickListener { dateInMillis ->
+                viewModel.setTransactionDate(dateInMillis.convertToDate(PATTERN_DATE_DATABASE))
+            }
+
+            show(supportFragmentManager, MaterialDatePicker::class.java.simpleName)
         }
     }
 

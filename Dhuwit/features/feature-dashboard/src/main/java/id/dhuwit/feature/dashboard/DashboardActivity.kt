@@ -1,6 +1,5 @@
 package id.dhuwit.feature.dashboard
 
-import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -42,21 +41,19 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun init() {
         binding = DashboardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpToolbar()
         setUpAdapter()
         viewModel.getDetails()
+    }
 
+    override fun listener() {
         binding.buttonTransaction.setOnClickListener {
             openTransactionPage(null)
         }
-
-        observer()
     }
 
     override fun observer() {
@@ -86,6 +83,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         adapterTransaction = DashboardTransactionAdapter(this, emptyList()).apply {
             listener = this@DashboardActivity
         }
+
         binding.recyclerViewTransaction.apply {
             adapter = adapterTransaction
             layoutManager = LinearLayoutManager(context)

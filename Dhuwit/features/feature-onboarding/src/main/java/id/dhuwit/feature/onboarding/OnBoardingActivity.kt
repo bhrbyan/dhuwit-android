@@ -1,6 +1,5 @@
 package id.dhuwit.feature.onboarding
 
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
@@ -8,8 +7,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.dashboard.router.DashboardRouter
 import id.dhuwit.feature.onboarding.databinding.OnBoardingActivityBinding
 import id.dhuwit.state.State
@@ -28,15 +25,16 @@ class OnBoardingActivity : BaseActivity() {
     @Inject
     lateinit var storage: Storage
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun init() {
         binding = OnBoardingActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpView()
         viewModel.checkInputField()
+    }
 
-        observer()
+    override fun listener() {
+        // Do nothing
     }
 
     override fun observer() {
@@ -116,7 +114,11 @@ class OnBoardingActivity : BaseActivity() {
     }
 
     private fun showError() {
-        Snackbar.make(binding.root, "", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(
+            binding.root,
+            getString(R.string.general_error_message),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun openDashboardPage() {
