@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="general_create">Create</string>
+    <string name="general_save">Save</string>
+    <string name="general_error_message">There is a problem, Please try again later!</string>
+</resources>

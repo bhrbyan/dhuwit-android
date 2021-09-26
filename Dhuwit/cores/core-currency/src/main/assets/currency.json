@@ -1,0 +1,11 @@
+[
+  {
+    "symbol": "Rp",
+    "name": "Indonesian Rupiah",
+    "symbol_native": "Rp",
+    "decimal_digits": 0,
+    "rounding": 0,
+    "code": "IDR",
+    "name_plural": "Indonesian rupiahs"
+  }
+]

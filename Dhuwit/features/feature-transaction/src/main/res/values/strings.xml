@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Toolbar -->
+    <string name="transaction_toolbar_title_add">Add Transaction</string>
+    <string name="transaction_toolbar_title_update">Update Transaction</string>
+
+    <!-- Transaction Calculator-->
+    <string name="transaction_calculator_one">1</string>
+    <string name="transaction_calculator_two">2</string>
+    <string name="transaction_calculator_three">3</string>
+    <string name="transaction_calculator_four">4</string>
+    <string name="transaction_calculator_five">5</string>
+    <string name="transaction_calculator_six">6</string>
+    <string name="transaction_calculator_seven">7</string>
+    <string name="transaction_calculator_eight">8</string>
+    <string name="transaction_calculator_nine">9</string>
+    <string name="transaction_calculator_zero">0</string>
+    <string name="transaction_calculator_dot">.</string>
+    <string name="transaction_calculator_clear">C</string>
+
+    <string name="transaction_caption_note">Note</string>
+    <string name="transaction_caption_date">Date</string>
+    <string name="transaction_caption_category">Category</string>
+
+    <string name="transaction_toggle_income">Income</string>
+    <string name="transaction_toggle_expense">Expense</string>
+    <string name="transaction_toggle_saving">Saving</string>
+
+    <string name="transaction_caption_note_with_separator">Note : </string>
+
+    <string name="transaction_date_picker_title">Select Transaction Date</string>
+
+</resources>

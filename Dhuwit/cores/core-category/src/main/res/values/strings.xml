@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Income -->
+    <string name="category_income_salary">Salary</string>
+    <string name="category_income_invoices">Invoices</string>
+    <string name="category_income_interest">Interest</string>
+    <string name="category_income_rental_income">Rental Income</string>
+    <string name="category_income_lottery">Lottery</string>
+
+    <!-- Expense -->
+    <string name="category_expense_food_drink">Food &amp; Drinks</string>
+    <string name="category_expense_groceries">Groceries</string>
+    <string name="category_expense_restaurant">Restaurant</string>
+    <string name="category_expense_bar_cafe">Bar &amp; cafe</string>
+    <string name="category_expense_shopping">Shopping</string>
+    <string name="category_expense_clothes_shoes">Clothes &amp; shoes</string>
+    <string name="category_expense_jewels_accessories">Jewels &amp; accessories</string>
+    <string name="category_expense_health_beauty">Health and beauty</string>
+    <string name="category_expense_kids">Kids</string>
+    <string name="category_expense_pets">Pets</string>
+    <string name="category_expense_electronics_accessories">Electronics &amp; accessories</string>
+    <string name="category_expense_gifts">Gifts</string>
+    <string name="category_expense_stationery_tools">Stationery &amp; tools</string>
+    <string name="category_expense_medicine">Medicine</string>
+    <string name="category_expense_housing">Housing</string>
+    <string name="category_expense_rent">Rent</string>
+    <string name="category_expense_service">Service</string>
+    <string name="category_expense_energy_utilities">Energy &amp; utilities</string>
+    <string name="category_expense_house_maintenance">House maintenance</string>
+    <string name="category_expense_transportation">Transportation</string>
+    <string name="category_expense_vehicle">Vehicle</string>
+    <string name="category_expense_vehicle_maintenance">Vehicle maintenance</string>
+    <string name="category_expense_fuel">Fuel</string>
+    <string name="category_expense_parking">Parking</string>
+    <string name="category_expense_lifestyle">Lifestyle</string>
+    <string name="category_expense_sports">Sport</string>
+    <string name="category_expense_hobbies">Hobbies</string>
+    <string name="category_expense_education">Education</string>
+    <string name="category_expense_books">Books, audio &amp; subscription</string>
+    <string name="category_expense_charity">Charity</string>
+
+</resources>

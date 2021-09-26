@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="on_boarding_title">Let\'s Get Started!</string>
+    <string name="on_boarding_description">Create your account to record all transactions</string>
+    <string name="on_boarding_account_title">Account</string>
+    <string name="on_boarding_account_hint_name">Name</string>
+    <string name="on_boarding_account_hint_balance">Balance</string>
+</resources>
