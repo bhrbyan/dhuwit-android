@@ -34,7 +34,6 @@ class TransactionActivity : BaseActivity() {
 
     private lateinit var binding: TransactionActivityBinding
     private val viewModel: TransactionViewModel by viewModels()
-    private var transactionId: Long = DEFAULT_TRANSACTION_ID
 
     @Inject
     lateinit var storage: Storage
@@ -67,61 +66,57 @@ class TransactionActivity : BaseActivity() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
+        val transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
+        viewModel.setUpTransaction(transactionId)
+
         if (transactionId == DEFAULT_TRANSACTION_ID) {
             setUpToolbar(getString(R.string.transaction_toolbar_title_add))
-            viewModel.setUpTransaction()
         } else {
             setUpToolbar(getString(R.string.transaction_toolbar_title_update))
             setUpButtonDelete()
-            viewModel.getTransaction(transactionId)
         }
     }
 
     override fun listener() {
         with(binding) {
-            buttonDate.setOnClickListener {
-                openDatePicker(viewModel.date.value?.convertToMillis(PATTERN_DATE_DATABASE))
-            }
-
             buttonZero.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_zero))
+                viewModel.setCounter(getString(R.string.transaction_calculator_zero))
             }
 
             buttonOne.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_one))
+                viewModel.setCounter(getString(R.string.transaction_calculator_one))
             }
 
             buttonTwo.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_two))
+                viewModel.setCounter(getString(R.string.transaction_calculator_two))
             }
 
             buttonThree.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_three))
+                viewModel.setCounter(getString(R.string.transaction_calculator_three))
             }
 
             buttonFour.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_four))
+                viewModel.setCounter(getString(R.string.transaction_calculator_four))
             }
 
             buttonFive.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_five))
+                viewModel.setCounter(getString(R.string.transaction_calculator_five))
             }
 
             buttonSix.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_six))
+                viewModel.setCounter(getString(R.string.transaction_calculator_six))
             }
 
             buttonSeven.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_seven))
+                viewModel.setCounter(getString(R.string.transaction_calculator_seven))
             }
 
             buttonEight.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_eight))
+                viewModel.setCounter(getString(R.string.transaction_calculator_eight))
             }
 
             buttonNine.setOnClickListener {
-                viewModel.setAmountCounter(getString(R.string.transaction_calculator_nine))
+                viewModel.setCounter(getString(R.string.transaction_calculator_nine))
             }
 
             buttonClear.setOnClickListener {
@@ -148,6 +143,10 @@ class TransactionActivity : BaseActivity() {
                 }
             }
 
+            buttonDate.setOnClickListener {
+                openDatePicker(viewModel.date.value?.convertToMillis(PATTERN_DATE_DATABASE))
+            }
+
             buttonCategory.setOnClickListener {
                 viewModel.onOpenCategory()
             }
@@ -157,11 +156,7 @@ class TransactionActivity : BaseActivity() {
             }
 
             buttonSave.setOnClickListener {
-                if (transactionId == DEFAULT_TRANSACTION_ID) {
-                    viewModel.saveTransaction()
-                } else {
-                    viewModel.updateTransaction()
-                }
+                viewModel.processTransaction()
             }
 
             buttonDelete.setOnClickListener {
@@ -172,18 +167,10 @@ class TransactionActivity : BaseActivity() {
 
     override fun observer() {
         with(viewModel) {
-            amount.observe(this@TransactionActivity) { amount ->
-                setTextAmount(amount)
-            }
-            date.observe(this@TransactionActivity) { date ->
-                setTextDate(date)
-            }
-            category.observe(this@TransactionActivity) { category ->
-                setTextCategory(category)
-            }
-            note.observe(this@TransactionActivity) { note ->
-                setTextNote(note)
-            }
+            amount.observe(this@TransactionActivity) { amount -> setTextAmount(amount) }
+            date.observe(this@TransactionActivity) { date -> setTextDate(date) }
+            category.observe(this@TransactionActivity) { category -> setTextCategory(category) }
+            note.observe(this@TransactionActivity) { note -> setTextNote(note) }
             transactionType.observe(this@TransactionActivity) { transactionType ->
                 when (transactionType) {
                     TransactionType.Expense -> binding.layoutButtonToggle.check(binding.buttonToggleExpense.id)
@@ -191,7 +178,10 @@ class TransactionActivity : BaseActivity() {
                 }
             }
             openCategory.observe(this@TransactionActivity) { categoryType ->
-                openCategoryPage(categoryType)
+                categoryType?.let { type ->
+                    openCategoryPage(type)
+                    viewModel.successOpenCategory()
+                }
             }
             openNote.observe(this@TransactionActivity) { note ->
                 openNotePage(note)

@@ -24,64 +24,83 @@ class TransactionViewModel @Inject constructor(
     private val categoryRepository: CategoryDataSource
 ) : ViewModel() {
 
+    private var _categories: List<Category>? = null
+    private var _counter: String = DEFAULT_AMOUNT.convertDoubleToString()
+    private var _transactionId: Long = DEFAULT_TRANSACTION_ID
+
     private val _amount = MutableLiveData<Double?>()
-    private val _amountCounter = MutableLiveData<String>()
     private val _date = MutableLiveData<String>()
-    private val _category = MutableLiveData<Category>()
-    private val _categories = MutableLiveData<List<Category>>()
+    private val _category = MutableLiveData<Category?>()
     private val _note = MutableLiveData<String?>()
     private val _transactionType = MutableLiveData<TransactionType>()
-    private val _openCategory = MutableLiveData<CategoryType>()
+    private val _openCategory = MutableLiveData<CategoryType?>()
     private val _openNote = MutableLiveData<String?>()
-    private val _processTransaction = MutableLiveData<State<Boolean>>()
-    private val _transaction = MutableLiveData<State<Transaction>>()
+    private val _processTransaction = MutableLiveData<State<Boolean?>>()
 
     val amount: LiveData<Double?> = _amount
     val date: LiveData<String> = _date
-    val category: LiveData<Category> = _category
+    val category: LiveData<Category?> = _category
     val note: LiveData<String?> = _note
     val transactionType: LiveData<TransactionType> = _transactionType
-    val openCategory: LiveData<CategoryType> = _openCategory
+    val openCategory: LiveData<CategoryType?> = _openCategory
     val openNote: LiveData<String?> = _openNote
-    val processTransaction: LiveData<State<Boolean>> = _processTransaction
-    val transaction: LiveData<State<Transaction>> = _transaction
+    val processTransaction: LiveData<State<Boolean?>> = _processTransaction
 
-    fun setUpTransaction() {
+    fun setUpTransaction(transactionId: Long) {
+        setTransactionId(transactionId)
         viewModelScope.launch {
-            _categories.value =
-                categoryRepository.getCategories(CategoryType.Expense).data ?: emptyList()
-            _categories.value?.first()?.let { setCategory(it) }
+            if (isCreateTransaction()) {
+                _categories = categoryRepository.getCategories(CategoryType.Expense).data
 
-            setAmountCounter(DEFAULT_AMOUNT.convertDoubleToString())
-            setTransactionDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
-            setTransactionType(TransactionType.Expense)
-            setTransactionNote(null)
+                setCounter(_counter)
+                setTransactionDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
+                setTransactionType(TransactionType.Expense)
+                setTransactionNote(null)
+                setCategory(_categories?.first())
+            } else {
+                transactionRepository.getTransaction(transactionId).data?.let { transaction ->
+                    val categoryType = getCategoryType(transaction.type)
+                    _categories = categoryRepository.getCategories(categoryType).data
+                    val category =
+                        _categories?.find { category -> category.id == transaction.category?.id }
+
+                    setCounter(transaction.amount.convertDoubleToString())
+                    setTransactionDate(transaction.date)
+                    setTransactionType(transaction.type)
+                    setTransactionNote(transaction.note)
+                    setCategory(category)
+                }
+            }
         }
     }
 
-    private fun setTransactionNote(note: String?) {
-        _note.value = note
+    private fun setTransactionId(transactionId: Long) {
+        _transactionId = transactionId
     }
 
-    private fun setCategory(category: Category) {
-        _category.value = category
+    private fun isCreateTransaction(): Boolean {
+        return _transactionId == DEFAULT_TRANSACTION_ID
     }
 
-    private fun setAmount(amount: Double?) {
-        _amount.value = amount
+    private fun getCategoryType(transactionType: TransactionType): CategoryType {
+        return when (transactionType) {
+            is TransactionType.Expense -> CategoryType.Expense
+            is TransactionType.Income -> CategoryType.Income
+            else -> throw Exception("Transaction Type not found!")
+        }
     }
 
-    fun setAmountCounter(counter: String) {
+    fun setCounter(counter: String) {
         if (isCounterLengthMoreThanOne() && isFirstCharZero()) {
             removeFirstChar()
         }
 
-        var fullCounter: String = _amountCounter.value ?: String()
+        var fullCounter: String = _counter
         fullCounter += counter
 
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
-            _amountCounter.value = fullCounter
-            setAmount(_amountCounter.value?.toDouble())
+            setAmount(_counter.toDouble())
+            _counter = fullCounter
         }
     }
 
@@ -89,55 +108,43 @@ class TransactionViewModel @Inject constructor(
         return fullCounter.length <= 9
     }
 
-    private fun isCounterLengthMoreThanOne(): Boolean {
-        return _amountCounter.value?.length ?: 0 > 1
+    private fun isFirstCharZero(): Boolean {
+        return _counter.first() == '0'
     }
 
-    private fun isFirstCharZero(): Boolean {
-        return _amountCounter.value?.first() == '0'
+    private fun isCounterLengthMoreThanOne(): Boolean {
+        return _counter.length > 1
     }
 
     private fun removeFirstChar() {
-        _amountCounter.value = _amountCounter.value?.removePrefix("0")
-    }
-
-    fun getTransaction(transactionId: Long) {
-        _transaction.value = State.Loading()
-        viewModelScope.launch {
-            _transaction.value = transactionRepository.getTransaction(transactionId)
-
-            _transaction.value?.data?.let { transaction ->
-                val categoryType = when (transaction.type) {
-                    is TransactionType.Expense -> CategoryType.Expense
-                    is TransactionType.Income -> CategoryType.Income
-                    else -> throw Exception("Transaction Type not found!")
-                }
-                _categories.value =
-                    categoryRepository.getCategories(categoryType).data ?: emptyList()
-                _categories.value
-                    ?.find { category -> category.id == _transaction.value?.data?.categoryId }
-                    ?.let { category -> setCategory(category) }
-
-                setAmountCounter(transaction.amount.convertDoubleToString())
-                setTransactionDate(transaction.date)
-                setTransactionType(transaction.type)
-                setTransactionNote(transaction.note)
-            }
-        }
+        _counter = _counter.removePrefix("0")
     }
 
     fun setTransactionDate(date: String) {
         _date.value = date
     }
 
-    fun onClearCounter() {
-        val counter = _amountCounter.value?.dropLast(1)
 
-        _amountCounter.value = counter ?: String()
-        val amount = if (_amountCounter.value.isNullOrEmpty()) {
+    private fun setTransactionNote(note: String?) {
+        _note.value = note
+    }
+
+    private fun setCategory(category: Category?) {
+        _category.value = category
+    }
+
+    private fun setAmount(amount: Double?) {
+        _amount.value = amount
+    }
+
+    fun onClearCounter() {
+        val counter = _counter.dropLast(1)
+
+        _counter = counter
+        val amount = if (counter.isEmpty()) {
             DEFAULT_AMOUNT
         } else {
-            _amountCounter.value?.toDouble()
+            counter.toDouble()
         }
         setAmount(amount)
     }
@@ -148,8 +155,10 @@ class TransactionViewModel @Inject constructor(
 
     fun updateCategories(categoryType: CategoryType) {
         viewModelScope.launch {
-            _categories.value = categoryRepository.getCategories(categoryType).data ?: emptyList()
-            _categories.value?.first()?.let { setCategory(it) }
+            _categories = categoryRepository.getCategories(categoryType).data
+            val category = _categories?.first()
+
+            setCategory(category)
         }
     }
 
@@ -161,9 +170,13 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
+    fun successOpenCategory() {
+        _openCategory.value = null
+    }
+
     fun onSelectCategory(categoryId: Long?) {
-        val category = _categories.value?.find { it.id == categoryId }
-        category?.let { setCategory(it) }
+        val category = _categories?.find { it.id == categoryId }
+        setCategory(category)
     }
 
     fun setNote(note: String?) {
@@ -174,55 +187,61 @@ class TransactionViewModel @Inject constructor(
         _openNote.value = _note.value
     }
 
-    fun saveTransaction() {
+    fun processTransaction() {
+        if (isCreateTransaction()) {
+            saveTransaction()
+        } else {
+            updateTransaction()
+        }
+    }
+
+    private fun saveTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
             _processTransaction.value = transactionRepository.saveTransaction(mapTransaction())
         }
     }
 
-    private fun mapTransaction(): Transaction {
-        return Transaction(
-            type = _transactionType.value ?: TransactionType.Expense,
-            amount = _amount.value ?: DEFAULT_AMOUNT,
-            categoryId = _category.value?.id ?: DEFAULT_CATEGORY_ID,
-            categoryName = _category.value?.name ?: DEFAULT_CATEGORY_NAME,
-            note = _note.value,
-            date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-            createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE)
-        )
-    }
-
-    fun updateTransaction() {
+    private fun updateTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
-            _processTransaction.value =
-                transactionRepository.updateTransaction(mapUpdateTransaction())
+            _processTransaction.value = transactionRepository.updateTransaction(mapTransaction())
         }
     }
 
-    private fun mapUpdateTransaction(): Transaction {
-        return Transaction(
-            id = _transaction.value?.data?.id ?: 0,
-            type = _transactionType.value ?: TransactionType.Expense,
-            amount = _amount.value ?: DEFAULT_AMOUNT,
-            categoryId = _category.value?.id ?: DEFAULT_CATEGORY_ID,
-            categoryName = _category.value?.name ?: DEFAULT_CATEGORY_NAME,
-            note = _note.value,
-            date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-            createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE)
-        )
+    private fun mapTransaction(): Transaction {
+        return if (isCreateTransaction()) {
+            Transaction(
+                type = _transactionType.value ?: TransactionType.Expense,
+                amount = _amount.value ?: DEFAULT_AMOUNT,
+                note = _note.value,
+                date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                category = _category.value
+            )
+        } else {
+            Transaction(
+                id = _transactionId,
+                type = _transactionType.value ?: TransactionType.Expense,
+                amount = _amount.value ?: DEFAULT_AMOUNT,
+                note = _note.value,
+                date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                category = _category.value
+            )
+        }
     }
 
     fun deleteTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
             _processTransaction.value =
-                transactionRepository.deleteTransaction(_transaction.value?.data?.id ?: 0)
+                transactionRepository.deleteTransaction(_transactionId)
         }
     }
 
     companion object {
+        private const val DEFAULT_TRANSACTION_ID: Long = -1
         private const val DEFAULT_AMOUNT: Double = 0.0
         private const val DEFAULT_CATEGORY_ID: Long = 0
         private const val DEFAULT_CATEGORY_NAME: String = "-"

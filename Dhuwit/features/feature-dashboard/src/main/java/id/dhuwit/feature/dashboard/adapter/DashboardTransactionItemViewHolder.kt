@@ -16,8 +16,9 @@ class DashboardTransactionItemViewHolder(private val binding: DashboardTransacti
     fun onBind(transaction: Transaction, currencySymbol: String?) {
         with(binding) {
             textAmount.text = transaction.amount.convertPriceWithCurrencyFormat(currencySymbol)
-            textCategoryName.text = transaction.categoryName
-            textTime.text = transaction.createdAt.convertPattern(PATTERN_DATE_DATABASE, PATTERN_TIME)
+            textCategoryName.text = transaction.category?.name
+            textTime.text =
+                transaction.createdAt.convertPattern(PATTERN_DATE_DATABASE, PATTERN_TIME)
             setUpNote(transaction.note)
         }
     }

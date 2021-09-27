@@ -42,6 +42,7 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":cores:core-account")
+    implementation project(":cores:core-category")
     implementation project(":cores:core-currency")
     implementation project(":cores:core-transaction")
     implementation project(":features:feature-account")

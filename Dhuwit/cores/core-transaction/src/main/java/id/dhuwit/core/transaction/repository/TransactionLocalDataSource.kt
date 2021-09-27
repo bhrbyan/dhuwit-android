@@ -35,7 +35,7 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun saveTransaction(transaction: Transaction): State<Boolean> {
+    override suspend fun saveTransaction(transaction: Transaction): State<Boolean?> {
         return withContext(Dispatchers.IO) {
             try {
                 dao.saveTransaction(transaction.toEntity())
@@ -47,7 +47,7 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun updateTransaction(transaction: Transaction): State<Boolean> {
+    override suspend fun updateTransaction(transaction: Transaction): State<Boolean?> {
         return withContext(Dispatchers.IO) {
             try {
                 dao.updateTransaction(transaction.toEntity())
@@ -59,7 +59,7 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun deleteTransaction(id: Long): State<Boolean> {
+    override suspend fun deleteTransaction(id: Long): State<Boolean?> {
         return withContext(Dispatchers.IO) {
             try {
                 dao.deleteTransaction(id)
