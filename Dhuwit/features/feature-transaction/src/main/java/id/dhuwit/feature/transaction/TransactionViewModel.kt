@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
@@ -21,12 +22,14 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionDataSource,
-    private val categoryRepository: CategoryDataSource
+    private val categoryRepository: CategoryDataSource,
+    private val accountRepository: AccountDataSource
 ) : ViewModel() {
 
     private var _categories: List<Category>? = null
     private var _counter: String = DEFAULT_AMOUNT.convertDoubleToString()
     private var _transactionId: Long = DEFAULT_TRANSACTION_ID
+    private var _transaction: Transaction? = null
 
     private val _amount = MutableLiveData<Double?>()
     private val _date = MutableLiveData<String>()
@@ -35,7 +38,7 @@ class TransactionViewModel @Inject constructor(
     private val _transactionType = MutableLiveData<TransactionType>()
     private val _openCategory = MutableLiveData<CategoryType?>()
     private val _openNote = MutableLiveData<String?>()
-    private val _processTransaction = MutableLiveData<State<Boolean?>>()
+    private val _processTransaction = MutableLiveData<State<Boolean>>()
 
     val amount: LiveData<Double?> = _amount
     val date: LiveData<String> = _date
@@ -44,7 +47,7 @@ class TransactionViewModel @Inject constructor(
     val transactionType: LiveData<TransactionType> = _transactionType
     val openCategory: LiveData<CategoryType?> = _openCategory
     val openNote: LiveData<String?> = _openNote
-    val processTransaction: LiveData<State<Boolean?>> = _processTransaction
+    val processTransaction: LiveData<State<Boolean>> = _processTransaction
 
     fun setUpTransaction(transactionId: Long) {
         setTransactionId(transactionId)
@@ -58,7 +61,9 @@ class TransactionViewModel @Inject constructor(
                 setTransactionNote(null)
                 setCategory(_categories?.first())
             } else {
-                transactionRepository.getTransaction(transactionId).data?.let { transaction ->
+                _transaction = transactionRepository.getTransaction(transactionId).data
+
+                _transaction?.let { transaction ->
                     val categoryType = getCategoryType(transaction.type)
                     _categories = categoryRepository.getCategories(categoryType).data
                     val category =
@@ -99,8 +104,8 @@ class TransactionViewModel @Inject constructor(
         fullCounter += counter
 
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
-            setAmount(_counter.toDouble())
             _counter = fullCounter
+            setAmount(_counter.toDouble())
         }
     }
 
@@ -198,14 +203,23 @@ class TransactionViewModel @Inject constructor(
     private fun saveTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
-            _processTransaction.value = transactionRepository.saveTransaction(mapTransaction())
+            transactionRepository.saveTransaction(mapTransaction())
+            _processTransaction.value = accountRepository.updateBalance(
+                _amount.value ?: DEFAULT_AMOUNT,
+                _transactionType.value == TransactionType.Expense
+            )
         }
     }
 
     private fun updateTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
-            _processTransaction.value = transactionRepository.updateTransaction(mapTransaction())
+            transactionRepository.updateTransaction(mapTransaction())
+            _processTransaction.value = accountRepository.updateBalance(
+                totalTransaction = _amount.value ?: DEFAULT_AMOUNT,
+                originalTotalTransaction = _transaction?.amount ?: 0.0,
+                isExpenseTransaction = _transactionType.value == TransactionType.Expense
+            )
         }
     }
 
@@ -235,8 +249,12 @@ class TransactionViewModel @Inject constructor(
     fun deleteTransaction() {
         _processTransaction.value = State.Loading()
         viewModelScope.launch {
-            _processTransaction.value =
-                transactionRepository.deleteTransaction(_transactionId)
+            transactionRepository.deleteTransaction(_transactionId)
+
+            _processTransaction.value = accountRepository.updateBalance(
+                _transactionType.value == TransactionType.Expense,
+                _transaction?.amount ?: 0.0,
+            )
         }
     }
 

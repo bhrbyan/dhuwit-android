@@ -16,15 +16,15 @@ class TransactionRepository @Inject constructor(
         return local.getTransaction(id)
     }
 
-    override suspend fun saveTransaction(transaction: Transaction): State<Boolean?> {
+    override suspend fun saveTransaction(transaction: Transaction): State<Boolean> {
         return local.saveTransaction(transaction)
     }
 
-    override suspend fun updateTransaction(transaction: Transaction): State<Boolean?> {
+    override suspend fun updateTransaction(transaction: Transaction): State<Boolean> {
         return local.updateTransaction(transaction)
     }
 
-    override suspend fun deleteTransaction(id: Long): State<Boolean?> {
+    override suspend fun deleteTransaction(id: Long): State<Boolean> {
         return local.deleteTransaction(id)
     }
 }

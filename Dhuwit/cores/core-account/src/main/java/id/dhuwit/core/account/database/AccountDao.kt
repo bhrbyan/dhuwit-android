@@ -12,4 +12,7 @@ interface AccountDao {
 
     @Update
     suspend fun updateAccount(account: AccountEntity)
+
+    @Query("UPDATE account_table SET balance = :balance")
+    suspend fun updateBalance(balance: Double)
 }

@@ -17,4 +17,26 @@ class AccountRepository @Inject constructor(private val local: AccountDataSource
     override suspend fun updateAccount(account: Account): State<Boolean> {
         return local.updateAccount(account)
     }
+
+    override suspend fun updateBalance(
+        totalTransaction: Double,
+        isExpenseTransaction: Boolean
+    ): State<Boolean> {
+        return local.updateBalance(totalTransaction, isExpenseTransaction)
+    }
+
+    override suspend fun updateBalance(
+        totalTransaction: Double,
+        originalTotalTransaction: Double,
+        isExpenseTransaction: Boolean
+    ): State<Boolean> {
+        return local.updateBalance(totalTransaction, originalTotalTransaction, isExpenseTransaction)
+    }
+
+    override suspend fun updateBalance(
+        isExpenseTransaction: Boolean,
+        totalTransaction: Double
+    ): State<Boolean> {
+        return local.updateBalance(isExpenseTransaction, totalTransaction)
+    }
 }
