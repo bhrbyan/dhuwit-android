@@ -12,14 +12,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_date"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_amount"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Sunday, 5 April 2020" />
+        tools:text="Sunday, 5 September 2020" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_amount"
@@ -30,6 +31,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="9.000.000" />
+        tools:text="Rp999.999.999" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

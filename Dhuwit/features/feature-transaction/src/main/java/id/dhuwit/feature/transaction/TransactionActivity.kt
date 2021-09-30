@@ -9,10 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
-import id.dhuwit.core.extension.enabled
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
+import id.dhuwit.core.extension.*
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
@@ -71,9 +68,10 @@ class TransactionActivity : BaseActivity() {
 
         if (transactionId == DEFAULT_TRANSACTION_ID) {
             setUpToolbar(getString(R.string.transaction_toolbar_title_add))
+            disableButtonDelete()
         } else {
             setUpToolbar(getString(R.string.transaction_toolbar_title_update))
-            setUpButtonDelete()
+            enableButtonDelete()
         }
     }
 
@@ -205,7 +203,7 @@ class TransactionActivity : BaseActivity() {
         }
     }
 
-    private fun setUpButtonDelete() {
+    private fun enableButtonDelete() {
         binding.buttonDelete.enabled()
         binding.buttonDelete.setImageDrawable(
             ContextCompat.getDrawable(
@@ -213,6 +211,11 @@ class TransactionActivity : BaseActivity() {
                 R.drawable.ic_delete
             )
         )
+    }
+
+    private fun disableButtonDelete() {
+        binding.buttonDelete.disabled()
+        binding.buttonDelete.setImageDrawable(null)
     }
 
     private fun openDatePicker(selectionDate: Long?) {
