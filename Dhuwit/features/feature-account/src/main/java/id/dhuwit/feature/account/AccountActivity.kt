@@ -103,11 +103,11 @@ class AccountActivity : BaseActivity() {
     private fun setUpView(data: Account?) {
         with(binding) {
             inputTextAccountName.apply {
-                setText(data?.name)
                 addTextChangedListener {
                     viewModel.setAccountName(it.toString())
                     viewModel.checkInputField()
                 }
+                setText(data?.name)
             }
 
             inputTextAccountBalance.apply {
