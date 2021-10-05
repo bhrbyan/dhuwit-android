@@ -212,13 +212,14 @@
             android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
             app:srcCompat="@drawable/ic_note" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/transaction_caption_note" />
+            android:text="@string/transaction_caption_note"
+            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption" />
 
     </LinearLayout>
 
@@ -244,13 +245,13 @@
             android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
             app:srcCompat="@drawable/ic_category" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_category" />
+            android:text="@string/transaction_caption_category"
+            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption" />
 
     </LinearLayout>
 
@@ -276,13 +277,14 @@
             android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
             app:srcCompat="@drawable/ic_calendar" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/transaction_caption_date" />
+            android:text="@string/transaction_caption_date"
+            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption" />
 
     </LinearLayout>
 
@@ -362,7 +364,7 @@
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         app:layout_constraintBottom_toTopOf="@+id/text_note"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -384,7 +386,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
         android:ellipsize="end"
         android:gravity="end"
         android:lines="1"
