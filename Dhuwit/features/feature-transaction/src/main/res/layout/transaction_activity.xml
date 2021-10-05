@@ -199,8 +199,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_medium"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_medium"
+        android:paddingStart="@dimen/uikit_margin_padding_size_small"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
         app:layout_constraintBottom_toBottomOf="@+id/button_nine"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_nine"
@@ -209,7 +209,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
             app:srcCompat="@drawable/ic_note" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -232,8 +232,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_medium"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_medium"
+        android:paddingStart="@dimen/uikit_margin_padding_size_small"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
         app:layout_constraintBottom_toBottomOf="@+id/button_six"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_six"
@@ -242,7 +242,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
             app:srcCompat="@drawable/ic_category" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -264,8 +264,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_medium"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_medium"
+        android:paddingStart="@dimen/uikit_margin_padding_size_small"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
         app:layout_constraintBottom_toBottomOf="@+id/button_three"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_three"
@@ -274,7 +274,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
             app:srcCompat="@drawable/ic_calendar" />
 
         <androidx.appcompat.widget.AppCompatTextView
