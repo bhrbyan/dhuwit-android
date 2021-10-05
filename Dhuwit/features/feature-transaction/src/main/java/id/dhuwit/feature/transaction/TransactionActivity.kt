@@ -10,6 +10,7 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.extension.*
+import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
@@ -259,7 +260,22 @@ class TransactionActivity : BaseActivity() {
     }
 
     private fun setTextDate(date: String) {
-        binding.textDate.text = date.convertPattern(PATTERN_DATE_DATABASE, PATTERN_DATE_TRANSACTION)
+        val convertedDate = date.convertPattern(PATTERN_DATE_DATABASE, PATTERN_DATE_TRANSACTION)
+        binding.textDate.text = when (convertedDate) {
+            DateHelper.getDate(
+                PATTERN_DATE_TRANSACTION,
+                COUNT_TODAY
+            ) -> getString(R.string.transaction_date_today)
+            DateHelper.getDate(
+                PATTERN_DATE_TRANSACTION,
+                COUNT_TOMORROW
+            ) -> getString(R.string.transaction_date_tomorrow)
+            DateHelper.getDate(
+                PATTERN_DATE_TRANSACTION,
+                COUNT_YESTERDAY
+            ) -> getString(R.string.transaction_date_yesterday)
+            else -> convertedDate
+        }
     }
 
     private fun setUpToolbar(title: String) {
@@ -311,5 +327,8 @@ class TransactionActivity : BaseActivity() {
 
     companion object {
         private const val DEFAULT_TRANSACTION_ID: Long = -1
+        private const val COUNT_TODAY: Int = 0
+        private const val COUNT_TOMORROW: Int = 1
+        private const val COUNT_YESTERDAY: Int = -1
     }
 }

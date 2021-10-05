@@ -16,6 +16,12 @@ object DateHelper {
             .patternFormat(pattern)
     }
 
+    fun getDate(pattern: String, count: Int): String {
+        return Calendar.getInstance()
+            .apply { add(Calendar.DAY_OF_YEAR, count) }
+            .patternFormat(pattern)
+    }
+
     fun getPeriodDate(count: Int, pattern: String): String {
         return Calendar.getInstance()
             .apply { add(Calendar.MONTH, count) }

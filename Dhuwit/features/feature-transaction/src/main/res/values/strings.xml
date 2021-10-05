@@ -30,4 +30,8 @@
 
     <string name="transaction_date_picker_title">Select Transaction Date</string>
 
+    <string name="transaction_date_today">Today</string>
+    <string name="transaction_date_tomorrow">Tomorrow</string>
+    <string name="transaction_date_yesterday">Yesterday</string>
+
 </resources>
