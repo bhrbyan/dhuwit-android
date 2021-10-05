@@ -59,33 +59,52 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
 
         setUpToolbar()
         setUpAdapter()
+        setUpMonth()
+
+        viewModel.setDefaultPeriodDate()
         viewModel.getDetails()
     }
 
     override fun listener() {
-        binding.buttonTransaction.setOnClickListener {
-            openTransactionPage(null)
-        }
+        with(binding) {
+            buttonTransaction.setOnClickListener {
+                openTransactionPage(null)
+            }
 
-        binding.layoutAccount.setOnClickListener {
-            openAccountPage()
+            layoutAccount.setOnClickListener {
+                openAccountPage()
+            }
+
+            imageNext.setOnClickListener {
+                viewModel.onNextPeriodDate()
+            }
+
+            imagePrevious.setOnClickListener {
+                viewModel.onPreviousPeriodDate()
+            }
         }
     }
 
     override fun observer() {
-        viewModel.details.observe(this) {
-            when (it) {
-                is State.Loading -> {
-                    showLoading()
+        with(viewModel) {
+            details.observe(this@DashboardActivity) {
+                when (it) {
+                    is State.Loading -> {
+                        showLoading(it.data?.account)
+                    }
+                    is State.Success -> {
+                        setUpDataAccount(it.data?.account)
+                        setUpDataTransaction(it.data?.transactions)
+                        hideLoading()
+                    }
+                    is State.Error -> {
+                        hideLoading()
+                    }
                 }
-                is State.Success -> {
-                    setUpDataAccount(it.data?.account)
-                    setUpDataTransaction(it.data?.transactions)
-                    hideLoading()
-                }
-                is State.Error -> {
-                    hideLoading()
-                }
+            }
+
+            periodDate.observe(this@DashboardActivity) { period ->
+                binding.textMonth.text = period
             }
         }
     }
@@ -117,6 +136,10 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         openTransactionPage(transaction?.id)
     }
 
+    private fun setUpMonth() {
+
+    }
+
     private fun setUpDataTransaction(transactions: List<Transaction>?) {
         if (transactions.isNullOrEmpty()) {
             showMessageEmptyTransaction()
@@ -135,12 +158,19 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         }
     }
 
-    private fun showLoading() {
+    private fun showLoading(account: Account?) {
         with(binding) {
-            progressBarAccount.show()
+            if (account == null) {
+                progressBarAccount.show()
+                textAccountName.gone()
+                textAccountBalance.gone()
+            } else {
+                progressBarAccount.hide()
+                textAccountName.visible()
+                textAccountBalance.visible()
+            }
+
             progressBarTransaction.show()
-            textAccountName.gone()
-            textAccountBalance.gone()
             imageArrowRight.gone()
         }
     }

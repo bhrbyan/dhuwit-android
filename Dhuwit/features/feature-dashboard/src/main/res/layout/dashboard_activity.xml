@@ -129,6 +129,71 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_month"
+                style="@style/Uikit.Style.CardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_account">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_small"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/uikit_margin_padding_size_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_left" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/image_next"
+                        app:layout_constraintStart_toEndOf="@+id/image_previous"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="December" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
+                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/uikit_margin_padding_size_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_title_transaction"
                 android:layout_width="wrap_content"
@@ -139,7 +204,7 @@
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_account" />
+                app:layout_constraintTop_toBottomOf="@+id/card_month" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image_list"

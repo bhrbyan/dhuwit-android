@@ -8,10 +8,24 @@ object DateHelper {
     const val PATTERN_DATE_DATABASE: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     const val PATTERN_TIME_DATABASE: String = "HH:mm:ss"
     const val PATTERN_TIME: String = "HH:mm"
+    const val PATTERN_PERIOD_DATE: String = "MMMM yyyy"
 
     fun getCurrentDate(pattern: String): String {
         return Calendar.getInstance()
             .patternFormat(pattern)
+    }
+
+    fun getPeriodDate(count: Int, pattern: String): String {
+        return Calendar.getInstance()
+            .apply { add(Calendar.MONTH, count) }
+            .patternFormat(pattern)
+    }
+
+    fun isTransactionDateWithinRangePeriodDate(
+        transactionDate: String,
+        periodDate: String
+    ): Boolean {
+        return periodDate == transactionDate
     }
 
     /* Extension */
