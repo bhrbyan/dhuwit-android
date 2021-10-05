@@ -8,6 +8,7 @@ import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.dashboard.databinding.DashboardTransactionHeaderBinding
 import id.dhuwit.feature.dashboard.databinding.DashboardTransactionItemBinding
 import id.dhuwit.feature.dashboard.model.DashboardTransactionSection
@@ -42,29 +43,62 @@ class DashboardTransactionAdapter(
             if (sections.size <= 0) {
                 // Create first section
                 val section = DashboardTransactionSection()
-                section.date = formattedDate
-                section.amountDaily += transaction.amount
-                section.transactions.add(transaction)
+                    .apply {
+                        this.date = formattedDate
+                        this.transactions.add(transaction)
+                        this.amountDaily = calculateAmountDaily(
+                            transaction.type,
+                            amountDaily,
+                            transaction.amount
+                        )
+                    }
+
                 sections.add(section)
             } else {
                 val lastIndex = sections.size.minus(1)
 
                 if (formattedDate == sections[lastIndex].dateHeader) {
                     // Add new child to existing section
-                    sections[lastIndex].amountDaily += transaction.amount
                     sections[lastIndex].transactions.add(transaction)
+                    sections[lastIndex].amountDaily = calculateAmountDaily(
+                        transaction.type,
+                        sections[lastIndex].amountDaily,
+                        transaction.amount
+                    )
                 } else {
                     // Add new section
                     val section = DashboardTransactionSection()
-                    section.date = formattedDate
-                    section.transactions.add(transaction)
-                    section.amountDaily += transaction.amount
+                        .apply {
+                            this.date = formattedDate
+                            this.transactions.add(transaction)
+                            this.amountDaily = calculateAmountDaily(
+                                transaction.type,
+                                amountDaily,
+                                transaction.amount
+                            )
+                        }
+
                     sections.add(section)
                 }
             }
         }
 
         notifyDataChanged(sections)
+    }
+
+    private fun calculateAmountDaily(
+        type: TransactionType,
+        amountDaily: Double,
+        transactionAmount: Double
+    ): Double {
+        return when (type) {
+            is TransactionType.Expense -> {
+                amountDaily - transactionAmount
+            }
+            is TransactionType.Income -> {
+                amountDaily + transactionAmount
+            }
+        }
     }
 
     override fun onCreateSectionViewHolder(

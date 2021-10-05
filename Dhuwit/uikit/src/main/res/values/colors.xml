@@ -16,6 +16,10 @@
     <!-- Text On Minor -->
     <color name="colorOnMinor">@color/white</color>
 
+    <!-- Transaction -->
+    <color name="colorTransactionExpense">@color/monza</color>
+    <color name="colorTransactionIncome">@color/apple</color>
+
     <!-- Error -->
     <color name="colorError">@color/monza</color>
 

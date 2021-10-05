@@ -39,13 +39,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintBottom_toBottomOf="@+id/text_title_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_title_account"
+                app:srcCompat="@drawable/ic_wallet" />
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_account"
                 style="@style/Uikit.Style.CardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                 app:cardElevation="@dimen/cardview_default_elevation"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,12 +134,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
                 android:text="@string/dashboard_transactions_title"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_account" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintBottom_toBottomOf="@+id/text_title_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_title_transaction"
+                app:srcCompat="@drawable/ic_list" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_empty_transaction"
@@ -149,7 +169,7 @@
                 android:id="@+id/recycler_view_transaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 android:paddingBottom="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
