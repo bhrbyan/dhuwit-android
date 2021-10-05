@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.helper.DateHelper
-import id.dhuwit.core.helper.DateHelper.PATTERN_PERIOD_DATE
+import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_PERIOD
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.repository.TransactionDataSource
@@ -73,7 +73,7 @@ class DashboardViewModel @Inject constructor(
         return DateHelper.isTransactionDateWithinRangePeriodDate(
             transactionDate = transaction.date.convertPattern(
                 DateHelper.PATTERN_DATE_DATABASE,
-                PATTERN_PERIOD_DATE
+                PATTERN_DATE_PERIOD
             ),
             periodDate = _periodDate.value ?: ""
         )
@@ -94,7 +94,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun setPeriodDate(periodMonth: Int) {
-        _periodDate.value = DateHelper.getPeriodDate(periodMonth, PATTERN_PERIOD_DATE)
+        _periodDate.value = DateHelper.getPeriodDate(periodMonth, PATTERN_DATE_PERIOD)
     }
 
     companion object {

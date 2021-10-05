@@ -6,9 +6,10 @@ import java.util.*
 object DateHelper {
     const val PATTERN_DATE_TRANSACTION: String = "EEEE, dd MMMM yyyy"
     const val PATTERN_DATE_DATABASE: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    const val PATTERN_DATE_PERIOD: String = "MMMM yyyy"
+
     const val PATTERN_TIME_DATABASE: String = "HH:mm:ss"
     const val PATTERN_TIME: String = "HH:mm"
-    const val PATTERN_PERIOD_DATE: String = "MMMM yyyy"
 
     fun getCurrentDate(pattern: String): String {
         return Calendar.getInstance()
