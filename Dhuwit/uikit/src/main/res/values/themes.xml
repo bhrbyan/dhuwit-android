@@ -181,8 +181,14 @@
     </style>
 
     <!-- Card View-->
-    <style name="Uikit.Style.CardView" parent="@style/Widget.MaterialComponents.CardView">
+    <style name="Uikit.Style.CardView" />
+
+    <style name="Uikit.Style.CardView.All" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/Uikit.Style.CardView.Corner</item>
+    </style>
+
+    <style name="Uikit.Style.CardView.Top" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/Uikit.Style.CardView.Corner.Top</item>
     </style>
 
     <style name="Uikit.Style.CardView.Corner">
@@ -193,18 +199,10 @@
         <item name="cornerSizeBottomLeft">8dp</item>
     </style>
 
-    <style name="Uikit.Style.CardView.Top" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/Uikit.Style.CardView.Corner.Top</item>
-    </style>
-
     <style name="Uikit.Style.CardView.Corner.Top">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">8dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
-
 
     <!-- Date Picker -->
     <style name="Uikit.Style.DatePicker.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
