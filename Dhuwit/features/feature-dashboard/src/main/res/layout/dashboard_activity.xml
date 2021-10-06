@@ -150,105 +150,85 @@
                 app:layout_constraintTop_toTopOf="@+id/text_title_transaction"
                 app:srcCompat="@drawable/ic_list" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_transaction"
-                style="@style/Uikit.Style.CardView.Top"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                app:layout_constraintBottom_toBottomOf="@+id/image_next"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image_next"
+                tools:text="December" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/uikit_margin_padding_size_small"
+                app:layout_constraintBottom_toBottomOf="@+id/image_next"
+                app:layout_constraintEnd_toStartOf="@+id/image_next"
+                app:layout_constraintTop_toBottomOf="@+id/text_title_transaction"
+                app:srcCompat="@drawable/ic_arrow_left" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/uikit_margin_padding_size_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_title_transaction"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_transaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                app:cardElevation="@dimen/cardview_default_elevation"
+                android:paddingBottom="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_title_transaction">
+                app:layout_constraintTop_toBottomOf="@+id/image_next" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_month"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxlarge"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxlarge"
+                android:text="@string/dashboard_transactions_empty"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_next" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                        app:layout_constraintBottom_toBottomOf="@+id/image_next"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/image_next"
-                        tools:text="December" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/image_previous"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/uikit_margin_padding_size_small"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="@dimen/uikit_margin_padding_size_small"
-                        app:layout_constraintBottom_toBottomOf="@+id/image_next"
-                        app:layout_constraintEnd_toStartOf="@+id/image_next"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_left" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/image_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
-                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
-                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="@dimen/uikit_margin_padding_size_small"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_transaction"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                        android:paddingBottom="80dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_next" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_empty_transaction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxlarge"
-                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxlarge"
-                        android:text="@string/dashboard_transactions_empty"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_next" />
-
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/progress_bar_transaction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxlarge"
-                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxlarge"
-                        android:elevation="8dp"
-                        android:indeterminate="true"
-                        app:indicatorColor="@color/colorMinor"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_next"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_bar_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxlarge"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxlarge"
+                android:elevation="8dp"
+                android:indeterminate="true"
+                app:indicatorColor="@color/colorMinor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_next"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
