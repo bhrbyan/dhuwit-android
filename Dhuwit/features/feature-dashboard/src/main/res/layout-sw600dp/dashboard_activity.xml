@@ -239,6 +239,7 @@
                         android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxlarge"
                         android:elevation="8dp"
                         android:indeterminate="true"
+                        android:visibility="gone"
                         app:indicatorColor="@color/colorMinor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

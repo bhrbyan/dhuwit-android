@@ -164,14 +164,15 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
                 progressBarAccount.show()
                 textAccountName.gone()
                 textAccountBalance.gone()
+                imageArrowRight.gone()
             } else {
                 progressBarAccount.hide()
                 textAccountName.visible()
                 textAccountBalance.visible()
+                imageArrowRight.visible()
             }
 
             progressBarTransaction.show()
-            imageArrowRight.gone()
         }
     }
 
