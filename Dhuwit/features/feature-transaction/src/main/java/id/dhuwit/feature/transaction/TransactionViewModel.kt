@@ -37,7 +37,7 @@ class TransactionViewModel @Inject constructor(
     private val _note = MutableLiveData<String?>()
     private val _transactionType = MutableLiveData<TransactionType>()
     private val _openCategory = MutableLiveData<CategoryType?>()
-    private val _openNote = MutableLiveData<String?>()
+    private val _openNote = MutableLiveData<Boolean?>()
     private val _processTransaction = MutableLiveData<State<Boolean>>()
 
     val amount: LiveData<Double?> = _amount
@@ -46,7 +46,7 @@ class TransactionViewModel @Inject constructor(
     val note: LiveData<String?> = _note
     val transactionType: LiveData<TransactionType> = _transactionType
     val openCategory: LiveData<CategoryType?> = _openCategory
-    val openNote: LiveData<String?> = _openNote
+    val openNote: LiveData<Boolean?> = _openNote
     val processTransaction: LiveData<State<Boolean>> = _processTransaction
 
     fun setUpTransaction(transactionId: Long) {
@@ -189,7 +189,7 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun onOpenNote() {
-        _openNote.value = _note.value
+        _openNote.value = true
     }
 
     fun processTransaction() {
@@ -256,6 +256,10 @@ class TransactionViewModel @Inject constructor(
                 _transaction?.amount ?: 0.0,
             )
         }
+    }
+
+    fun successOpenNote() {
+        _openNote.value = null
     }
 
     companion object {

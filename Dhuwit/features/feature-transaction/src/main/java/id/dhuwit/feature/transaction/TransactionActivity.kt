@@ -186,8 +186,11 @@ class TransactionActivity : BaseActivity() {
                     viewModel.successOpenCategory()
                 }
             }
-            openNote.observe(this@TransactionActivity) { note ->
-                openNotePage(note)
+            openNote.observe(this@TransactionActivity) { openNote ->
+                openNote?.let {
+                    openNotePage(viewModel.note.value)
+                    viewModel.successOpenNote()
+                }
             }
             processTransaction.observe(this@TransactionActivity) {
                 when (it) {
