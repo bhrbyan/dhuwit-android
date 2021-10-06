@@ -34,7 +34,7 @@
         android:id="@+id/guideline_mid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -44,7 +44,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_zero"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid"
         app:layout_constraintTop_toBottomOf="@+id/button_seven"
         tools:srcCompat="@drawable/ic_delete" />
 
@@ -78,7 +78,7 @@
         android:text="@string/transaction_calculator_seven"
         app:layout_constraintBottom_toTopOf="@+id/button_delete"
         app:layout_constraintEnd_toStartOf="@+id/button_eight"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid"
         app:layout_constraintTop_toBottomOf="@+id/button_four" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -111,7 +111,7 @@
         android:text="@string/transaction_calculator_four"
         app:layout_constraintBottom_toTopOf="@+id/button_seven"
         app:layout_constraintEnd_toStartOf="@+id/button_five"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid"
         app:layout_constraintTop_toBottomOf="@+id/button_one" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -144,8 +144,8 @@
         android:text="@string/transaction_calculator_one"
         app:layout_constraintBottom_toTopOf="@+id/button_four"
         app:layout_constraintEnd_toStartOf="@+id/button_two"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_mid"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid"
+        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -157,7 +157,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_five"
         app:layout_constraintEnd_toStartOf="@+id/button_three"
         app:layout_constraintStart_toEndOf="@+id/button_one"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_mid"
+        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -169,7 +169,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_six"
         app:layout_constraintEnd_toStartOf="@+id/button_date"
         app:layout_constraintStart_toEndOf="@+id/button_two"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_mid"
+        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <LinearLayout
@@ -186,6 +186,7 @@
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabSize="mini"
             app:srcCompat="@drawable/ic_done" />
 
     </LinearLayout>
@@ -292,13 +293,14 @@
         android:id="@+id/layout_button_toggle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_small"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:theme="@style/Uikit.Theme.Dhuwit.Button.Toggle"
         android:weightSum="2"
         app:checkedButton="@+id/button_toggle_expense"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:singleSelection="true">
 
         <Button
@@ -323,12 +325,13 @@
         android:id="@+id/text_caption_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         android:text="@string/transaction_caption_note_with_separator"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:textStyle="bold"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toTopOf="@+id/text_note"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -336,13 +339,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/layout_button_toggle"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintStart_toEndOf="@+id/text_caption_note"
         tools:text="Note"
         tools:visibility="visible" />
@@ -372,25 +376,27 @@
         android:id="@+id/text_caption_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
         android:text="@string/transaction_caption_category"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_category"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end" />
+        app:layout_constraintEnd_toEndOf="@+id/guideline_mid" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
         android:ellipsize="end"
         android:gravity="end"
         android:lines="1"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         app:layout_constraintBottom_toTopOf="@+id/text_note"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintStart_toEndOf="@+id/text_date"
         tools:text="Salary" />
 
@@ -407,7 +413,7 @@
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/text_caption_category"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:text="Rp2.000.000" />
@@ -420,7 +426,7 @@
         android:indeterminate="true"
         app:indicatorColor="@color/colorMinor"
         app:layout_constraintBottom_toBottomOf="@+id/text_caption_category"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:visibility="visible" />

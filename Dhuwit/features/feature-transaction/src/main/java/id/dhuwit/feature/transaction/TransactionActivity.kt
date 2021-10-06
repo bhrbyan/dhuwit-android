@@ -64,6 +64,7 @@ class TransactionActivity : BaseActivity() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        showLoadingGetTransaction()
         val transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
         viewModel.setUpTransaction(transactionId)
 
@@ -166,7 +167,10 @@ class TransactionActivity : BaseActivity() {
 
     override fun observer() {
         with(viewModel) {
-            amount.observe(this@TransactionActivity) { amount -> setTextAmount(amount) }
+            amount.observe(this@TransactionActivity) { amount ->
+                setTextAmount(amount)
+                hideLoadingGetTransaction()
+            }
             date.observe(this@TransactionActivity) { date -> setTextDate(date) }
             category.observe(this@TransactionActivity) { category -> setTextCategory(category) }
             note.observe(this@TransactionActivity) { note -> setTextNote(note) }
