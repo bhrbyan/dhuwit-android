@@ -1,9 +1,6 @@
 package id.dhuwit.feature.transaction
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.category.model.Category
@@ -15,6 +12,7 @@ import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
+import id.dhuwit.feature.transaction.router.TransactionRouterImpl
 import id.dhuwit.state.State
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,13 +21,16 @@ import javax.inject.Inject
 class TransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionDataSource,
     private val categoryRepository: CategoryDataSource,
-    private val accountRepository: AccountDataSource
+    private val accountRepository: AccountDataSource,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var _categories: List<Category>? = null
     private var _counter: String = DEFAULT_AMOUNT.convertDoubleToString()
-    private var _transactionId: Long = DEFAULT_TRANSACTION_ID
     private var _transaction: Transaction? = null
+    private var _transactionId: Long =
+        savedStateHandle.get<Long>(TransactionRouterImpl.KEY_TRANSACTION_ID)
+            ?: DEFAULT_TRANSACTION_ID
 
     private val _amount = MutableLiveData<Double?>()
     private val _date = MutableLiveData<String>()
@@ -49,8 +50,11 @@ class TransactionViewModel @Inject constructor(
     val openNote: LiveData<Boolean?> = _openNote
     val processTransaction: LiveData<State<Boolean>> = _processTransaction
 
-    fun setUpTransaction(transactionId: Long) {
-        setTransactionId(transactionId)
+    init {
+        setUpTransaction(_transactionId)
+    }
+
+    private fun setUpTransaction(transactionId: Long) {
         viewModelScope.launch {
             if (isCreateTransaction()) {
                 _categories = categoryRepository.getCategories(CategoryType.Expense).data
@@ -77,10 +81,6 @@ class TransactionViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun setTransactionId(transactionId: Long) {
-        _transactionId = transactionId
     }
 
     private fun isCreateTransaction(): Boolean {

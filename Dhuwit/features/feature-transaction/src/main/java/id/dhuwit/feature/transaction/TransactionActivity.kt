@@ -66,8 +66,6 @@ class TransactionActivity : BaseActivity() {
 
         showLoadingGetTransaction()
         val transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
-        viewModel.setUpTransaction(transactionId)
-
         if (transactionId == DEFAULT_TRANSACTION_ID) {
             setUpToolbar(getString(R.string.transaction_toolbar_title_add))
             disableButtonDelete()
