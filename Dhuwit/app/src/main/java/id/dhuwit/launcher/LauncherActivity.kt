@@ -1,6 +1,5 @@
 package id.dhuwit.launcher
 
-import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
@@ -38,7 +37,7 @@ class LauncherActivity : BaseActivity() {
                 if (success) {
                     openOnBoardingPage()
                 } else {
-                    Log.d("LauncherActivity", "Error store data")
+                    finishAffinity()
                 }
             }
 
