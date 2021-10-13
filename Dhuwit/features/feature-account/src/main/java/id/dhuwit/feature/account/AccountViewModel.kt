@@ -1,9 +1,6 @@
 package id.dhuwit.feature.account
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
@@ -13,7 +10,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val accountRepository: AccountDataSource
+    private val accountRepository: AccountDataSource,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var name: String = ""
@@ -28,7 +26,11 @@ class AccountViewModel @Inject constructor(
     private var _updateAccount = MutableLiveData<State<Boolean>>()
     val updateAccount: LiveData<State<Boolean>> = _updateAccount
 
-    fun getAccount() {
+    init {
+        getAccount()
+    }
+
+    private fun getAccount() {
         viewModelScope.launch {
             _account.value = accountRepository.getAccount()
         }

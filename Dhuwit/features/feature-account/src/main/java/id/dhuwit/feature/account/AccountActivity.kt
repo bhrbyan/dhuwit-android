@@ -29,8 +29,6 @@ class AccountActivity : BaseActivity() {
         setContentView(binding.root)
 
         setUpToolbar()
-
-        viewModel.getAccount()
     }
 
     override fun listener() {
