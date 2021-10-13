@@ -22,13 +22,15 @@ import id.dhuwit.feature.category.router.CategoryRouter
 import id.dhuwit.feature.note.NoteConstants.KEY_INPUT_NOTE
 import id.dhuwit.feature.note.router.NoteRouter
 import id.dhuwit.feature.transaction.databinding.TransactionActivityBinding
+import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListener
+import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
 import id.dhuwit.feature.transaction.router.TransactionRouterImpl.KEY_TRANSACTION_ID
 import id.dhuwit.state.State
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionActivity : BaseActivity() {
+class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener {
 
     private lateinit var binding: TransactionActivityBinding
     private val viewModel: TransactionViewModel by viewModels()
@@ -158,7 +160,7 @@ class TransactionActivity : BaseActivity() {
             }
 
             buttonDelete.setOnClickListener {
-                viewModel.deleteTransaction()
+                showDialogDeleteConfirmation()
             }
         }
     }
@@ -328,6 +330,17 @@ class TransactionActivity : BaseActivity() {
             getString(R.string.general_error_message),
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun showDialogDeleteConfirmation() {
+        TransactionDeleteDialogFragment().show(
+            supportFragmentManager,
+            TransactionDeleteDialogFragment::class.java.simpleName
+        )
+    }
+
+    override fun onClickButtonPositive() {
+        viewModel.deleteTransaction()
     }
 
     companion object {

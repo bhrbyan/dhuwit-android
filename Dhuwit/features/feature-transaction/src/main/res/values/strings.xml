@@ -34,4 +34,9 @@
     <string name="transaction_date_tomorrow">Tomorrow</string>
     <string name="transaction_date_yesterday">Yesterday</string>
 
+    <string name="transaction_delete_title">Delete Transaction</string>
+    <string name="transaction_delete_message">Are you sure want to delete this transaction?</string>
+    <string name="transaction_delete_button_positive">Delete</string>
+    <string name="transaction_delete_button_negative">Cancel</string>
+
 </resources>
