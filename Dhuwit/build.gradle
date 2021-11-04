@@ -1,23 +1,112 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.5.10"
-    ext.hilt_version = "2.38.1"
-    ext.room_version = "2.3.0"
+    ext.ver = [
+            'app'         : [
+                    'sdk'       : [
+                            'compile': 30,
+                            'target' : 30,
+                            'min' : 21
+                    ],
+                    'buildTools': '30.0.3',
+                    'compat'    : [
+                            'source': JavaVersion.VERSION_1_8,
+                            'target': JavaVersion.VERSION_1_8
+                    ]
+            ],
+            'kotlin'      : '1.5.10',
+            'jUnit'       : '4.13',
+            'android'     : [
+                    'gradle': '4.1.3'
+            ],
+            'google'      : [
+                    'material': '1.4.0',
+                    'hilt'    : '2.38.1',
+                    'gson'    : '2.8.6',
+                    'services': '4.3.10',
+                    'firebase': [
+                            'bom'              : '28.4.2',
+                            'crashlyticsGradle': '2.7.1'
+                    ]
+            ],
+            'androidX'    : [
+                    'appCompat'       : '1.3.1',
+                    'constraintLayout': '2.1.0',
+                    'kotlinExt'       : '1.6.0',
+                    'room'            : '2.3.0',
+                    'hilt'            : '1.0.0',
+                    'test'            : [
+                            'extension'   : '1.1.3',
+                            'espressoCore': '3.4.0',
+                    ],
+                    'viewModelExt'    : '1.3.6'
+            ],
+            'thirdParties': [
+                    'inputText'   : [
+                            'currency': '1.1'
+                    ],
+                    'recyclerView': [
+                            'section': '2.1.1'
+                    ]
+            ]
+    ]
+
+    ext.deps = [
+            'kotlin'      : "org.jetbrains.kotlin:kotlin-stdlib:${ver.kotlin}",
+            'jUnit'       : "junit:junit:${ver.jUnit}",
+            'google'      : [
+                    'material': "com.google.android.material:material:${ver.google.material}",
+                    'gson'    : "com.google.code.gson:gson:${ver.google.gson}",
+                    'hilt'    : [
+                            'android' : "com.google.dagger:hilt-android:${ver.google.hilt}",
+                            'compiler': "com.google.dagger:hilt-android-compiler:${ver.google.hilt}"
+                    ],
+                    'firebase': [
+                            'bom'        : "com.google.firebase:firebase-bom:${ver.google.firebase.bom}",
+                            'analytics'  : "com.google.firebase:firebase-analytics",
+                            'crashlytics': "com.google.firebase:firebase-crashlytics"
+                    ]
+            ],
+            'androidX'    : [
+                    'appCompat'       : "androidx.appcompat:appcompat:${ver.androidX.appCompat}",
+                    'constraintLayout': "androidx.constraintlayout:constraintlayout:${ver.androidX.constraintLayout}",
+                    'kotlinExt'       : "androidx.core:core-ktx:${ver.androidX.kotlinExt}",
+                    'hiltCompiler'    : "androidx.hilt:hilt-compiler:${ver.androidX.hilt}",
+                    'viewModelExt'    : "androidx.fragment:fragment-ktx:${ver.androidX.viewModelExt}",
+                    'room'            : [
+                            'runtime'  : "androidx.room:room-runtime:${ver.androidX.room}",
+                            'compiler' : "androidx.room:room-compiler:${ver.androidX.room}",
+                            'extension': "androidx.room:room-ktx:${ver.androidX.room}",
+                    ],
+                    'test'            : [
+                            'extension'   : "androidx.test.ext:junit:${ver.androidX.extension}",
+                            'espressoCore': "androidx.test.espresso:espresso-core:${ver.androidX.espressoCore}",
+                    ]
+            ],
+            'thirdParties': [
+                    'inputText'   : [
+                            'currency': "me.abhinay.input:currency-edittext:${ver.thirdParties.inputText.currency}"
+                    ],
+                    'recyclerView': [
+                            'section': "com.github.IntruderShanky:Sectioned-RecyclerView:${ver.thirdParties.recyclerView.section}"
+                    ]
+            ]
+    ]
 
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.3"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-        classpath 'com.google.gms:google-services:4.3.10'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+        classpath "com.android.tools.build:gradle:${ver.android.gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${ver.kotlin}"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:${ver.google.hilt}"
+        classpath "com.google.gms:google-services:${ver.google.services}"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:${ver.google.firebase.crashlyticsGradle}"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
 }
 
 allprojects {

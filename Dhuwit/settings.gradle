@@ -1,16 +1,21 @@
-include ':features:feature-account'
-include ':features:feature-note'
-include ':features:feature-category'
-include ':cores:core-transaction'
-include ':features:feature-transaction'
-include ':features:feature-dashboard'
-include ':cores:core-account'
-include ':uikit'
-include ':features:feature-onboarding'
-include ':cores:core-category'
+rootProject.name = "Dhuwit"
+/* Base */
+include ':app'
 include ':core'
-include ':cores:core-currency'
 include ':storage'
 include ':state'
-include ':app'
-rootProject.name = "Dhuwit"
+include ':uikit'
+
+/* Core */
+include ':cores:core-account'
+include ':cores:core-category'
+include ':cores:core-currency'
+include ':cores:core-transaction'
+
+/* Feature*/
+include ':features:feature-account'
+include ':features:feature-category'
+include ':features:feature-dashboard'
+include ':features:feature-note'
+include ':features:feature-onboarding'
+include ':features:feature-transaction'
