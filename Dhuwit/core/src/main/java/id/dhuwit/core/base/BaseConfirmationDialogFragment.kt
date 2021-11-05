@@ -43,11 +43,4 @@ abstract class BaseConfirmationDialogFragment : DialogFragment() {
         init()
     }
 
-    private fun DialogFragment.setWidthToMatchParent() {
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-    }
-
 }

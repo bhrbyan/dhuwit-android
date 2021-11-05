@@ -2,22 +2,20 @@ package id.dhuwit.feature.category
 
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
-import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_ID
-import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
 import id.dhuwit.state.State
-import id.dhuwit.uikit.widget.DividerMarginItemDecoration
 
 @AndroidEntryPoint
 class CategoryListActivity : BaseActivity(), CategoryListListener {
@@ -30,16 +28,14 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         binding = CategoryListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpToolbar()
         initAdapter()
-
-        val categoryType = intent.getStringExtra(KEY_CATEGORY_TYPE)
-        viewModel.getCategories(CategoryType.getCategoryType(categoryType))
     }
 
     override fun listener() {
-        binding.imageClose.setOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+        binding.inputTextSearch.addTextChangedListener {
+            val keywords = it?.toString()?.lowercase() ?: ""
+            viewModel.searchCategories(keywords)
         }
     }
 
@@ -50,10 +46,12 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                 is State.Success -> {
                     hideLoading()
                     if (it.data.isNullOrEmpty()) {
-                        showMessageEmptyCategories()
+                        showMessageEmptyCategories(getString(R.string.category_list_message_empty))
                     } else {
-                        adapterCategoryList.submitList(it.data)
-                        hideMessageEmptyCategories()
+                        it.data?.let { categories ->
+                            adapterCategoryList.updateList(categories)
+                            hideMessageEmptyCategories()
+                        }
                     }
                 }
                 is State.Error -> {
@@ -61,6 +59,27 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                     showError()
                 }
             }
+        }
+
+        viewModel.searchedCategories.observe(this) { categories ->
+            if (categories.isNullOrEmpty()) {
+                showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
+            } else {
+                adapterCategoryList.updateList(categories)
+                hideMessageEmptyCategories()
+            }
+        }
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = getString(R.string.category_list_toolbar_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.toolbar.setNavigationOnClickListener {
+            setResult(RESULT_CANCELED)
+            finish()
         }
     }
 
@@ -72,10 +91,9 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
             adapter = adapterCategoryList
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
-                DividerMarginItemDecoration(
-                    context,
-                    DividerItemDecoration.VERTICAL,
-                    resources.getDimensionPixelSize(R.dimen.uikit_margin_padding_size_medium)
+                DividerItemDecoration(
+                    this@CategoryListActivity,
+                    DividerItemDecoration.VERTICAL
                 )
             )
         }
@@ -87,11 +105,14 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         finish()
     }
 
-    private fun showMessageEmptyCategories() {
+    private fun showMessageEmptyCategories(message: String) {
         with(binding) {
             progressBar.hide()
             recyclerViewCategory.gone()
-            textMessageEmptyCategory.visible()
+            textMessageEmptyCategory.apply {
+                text = message
+                visible()
+            }
         }
     }
 
@@ -99,7 +120,10 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         with(binding) {
             progressBar.hide()
             recyclerViewCategory.visible()
-            textMessageEmptyCategory.gone()
+            textMessageEmptyCategory.apply {
+                text = null
+                gone()
+            }
         }
     }
 

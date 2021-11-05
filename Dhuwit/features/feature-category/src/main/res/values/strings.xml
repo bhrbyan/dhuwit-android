@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="category_list_toolbar_title">Select Category</string>
-    <string name="category_list_empty_message">Categories not found!</string>
+    <string name="category_list_message_empty">Categories empty!</string>
+    <string name="category_list_message_not_found">Categories not found!</string>
 </resources>
