@@ -2,5 +2,6 @@
 <resources>
     <string name="category_list_toolbar_title">Select Category</string>
     <string name="category_list_message_empty">Categories empty!</string>
-    <string name="category_list_message_not_found">Categories not found!</string>
+    <string name="category_list_message_not_found">Category not found!</string>
+    <string name="category_list_message_add_category">Select and add \"%1$s\" to category</string>
 </resources>

@@ -11,7 +11,8 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
-import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_ID
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
@@ -33,40 +34,71 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
     }
 
     override fun listener() {
-        binding.inputTextSearch.addTextChangedListener {
-            val keywords = it?.toString()?.lowercase() ?: ""
-            viewModel.searchCategories(keywords)
+        with(binding) {
+            inputTextSearch.addTextChangedListener {
+                val keywords = it?.toString()?.lowercase() ?: ""
+                viewModel.searchCategories(keywords)
+            }
+
+            layoutAddCategory?.setOnClickListener {
+                val categoryName: String = inputTextSearch.text
+                    .toString()
+                    .replaceFirstChar { char -> char.uppercase() }
+
+                viewModel.addCategory(categoryName)
+            }
         }
     }
 
     override fun observer() {
-        viewModel.categories.observe(this) {
-            when (it) {
-                is State.Loading -> showLoading()
-                is State.Success -> {
-                    hideLoading()
-                    if (it.data.isNullOrEmpty()) {
-                        showMessageEmptyCategories(getString(R.string.category_list_message_empty))
-                    } else {
-                        it.data?.let { categories ->
-                            adapterCategoryList.updateList(categories)
-                            hideMessageEmptyCategories()
+        with(viewModel) {
+            categories.observe(this@CategoryListActivity) {
+                when (it) {
+                    is State.Loading -> showLoading()
+                    is State.Success -> {
+                        hideLoading()
+                        if (it.data.isNullOrEmpty()) {
+                            showMessageEmptyCategories(getString(R.string.category_list_message_empty))
+                        } else {
+                            it.data?.let { categories ->
+                                adapterCategoryList.updateList(categories)
+                                hideMessageEmptyCategories()
+                            }
                         }
                     }
-                }
-                is State.Error -> {
-                    hideLoading()
-                    showError()
+                    is State.Error -> {
+                        hideLoading()
+                        showError()
+                    }
                 }
             }
-        }
 
-        viewModel.searchedCategories.observe(this) { categories ->
-            if (categories.isNullOrEmpty()) {
-                showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
-            } else {
-                adapterCategoryList.updateList(categories)
-                hideMessageEmptyCategories()
+            searchedCategories.observe(this@CategoryListActivity) { search ->
+                if (search.categories.isNullOrEmpty()) {
+                    showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
+                    showMessageAddCategory(search.keywords)
+                } else {
+                    search.categories?.let { categories ->
+                        adapterCategoryList.updateList(categories)
+                        hideMessageEmptyCategories()
+                        hideMessageAddCategory()
+                    }
+                }
+            }
+
+            addCategory.observe(this@CategoryListActivity) {
+                when (it) {
+                    is State.Loading -> showLoading()
+                    is State.Success -> {
+                        it.data?.let { category ->
+                            onSelectCategory(category)
+                        }
+                    }
+                    is State.Error -> {
+                        hideLoading()
+                        showError()
+                    }
+                }
             }
         }
     }
@@ -100,7 +132,10 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
     }
 
     override fun onSelectCategory(category: Category) {
-        val data = Intent().apply { putExtra(KEY_CATEGORY_ID, category.id) }
+        val data = Intent().apply {
+            putExtra(KEY_SELECT_CATEGORY_ID, category.id)
+            putExtra(KEY_SELECT_CATEGORY_TYPE, category.type.toString())
+        }
         setResult(RESULT_OK, data)
         finish()
     }
@@ -127,10 +162,27 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         }
     }
 
+    private fun showMessageAddCategory(keyword: String) {
+        with(binding) {
+            layoutAddCategory?.visible()
+            textMessageAddCategory?.text =
+                getString(R.string.category_list_message_add_category, keyword)
+        }
+    }
+
+    private fun hideMessageAddCategory() {
+        with(binding) {
+            layoutAddCategory?.gone()
+            textMessageAddCategory?.text = null
+        }
+    }
+
     private fun showLoading() {
         with(binding) {
             progressBar.show()
             recyclerViewCategory.gone()
+            textMessageEmptyCategory.gone()
+            layoutAddCategory?.gone()
         }
     }
 

@@ -15,4 +15,8 @@ class CategoryRepository @Inject constructor(private val local: CategoryDataSour
     override suspend fun getCategories(type: CategoryType): State<List<Category>> {
         return local.getCategories(type)
     }
+
+    override suspend fun addCategory(category: Category): State<Category> {
+        return local.addCategory(category)
+    }
 }

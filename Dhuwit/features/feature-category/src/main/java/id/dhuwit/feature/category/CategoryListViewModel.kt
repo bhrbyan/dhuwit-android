@@ -3,6 +3,7 @@ package id.dhuwit.feature.category
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.category.model.Category
+import id.dhuwit.core.category.model.CategorySearch
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.state.State
@@ -20,10 +21,12 @@ class CategoryListViewModel @Inject constructor(
     )
 
     private val _categories = MutableLiveData<State<List<Category>>>()
-    val categories: LiveData<State<List<Category>>> = _categories
+    private val _searchedCategories = MutableLiveData<CategorySearch>()
+    private val _addCategory = MutableLiveData<State<Category>>()
 
-    private val _searchedCategories = MutableLiveData<List<Category>>()
-    val searchedCategories: LiveData<List<Category>> = _searchedCategories
+    val categories: LiveData<State<List<Category>>> = _categories
+    val searchedCategories: LiveData<CategorySearch> = _searchedCategories
+    val addCategory: LiveData<State<Category>> = _addCategory
 
     init {
         getCategories(categoryType)
@@ -37,8 +40,18 @@ class CategoryListViewModel @Inject constructor(
     }
 
     fun searchCategories(keywords: String) {
-        _searchedCategories.value = _categories.value?.data?.filter {
-            it.name.lowercase().contains(keywords)
+        _searchedCategories.value = CategorySearch(
+            keywords = keywords,
+            categories = _categories.value?.data?.filter { it.name.lowercase().contains(keywords) }
+        )
+    }
+
+    fun addCategory(categoryName: String) {
+        _addCategory.value = State.Loading()
+        viewModelScope.launch {
+            _addCategory.value = categoryRepository.addCategory(
+                Category(categoryName, categoryType)
+            )
         }
     }
 

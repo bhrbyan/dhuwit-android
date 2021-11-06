@@ -17,7 +17,8 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_ID
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
 import id.dhuwit.feature.note.NoteConstants.KEY_INPUT_NOTE
 import id.dhuwit.feature.note.router.NoteRouter
@@ -48,8 +49,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK && result.data != null) {
-            val categoryId = result.data?.getLongExtra(KEY_CATEGORY_ID, -1)
-            viewModel.onSelectCategory(categoryId)
+            val categoryId = result.data?.getLongExtra(KEY_SELECT_CATEGORY_ID, -1)
+            val categoryType = result.data?.getStringExtra(KEY_SELECT_CATEGORY_TYPE)
+            viewModel.updateCategories(CategoryType.getCategoryType(categoryType), categoryId)
         }
     }
 
