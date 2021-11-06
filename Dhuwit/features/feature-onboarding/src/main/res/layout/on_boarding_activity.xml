@@ -97,6 +97,7 @@
                 <me.abhinay.input.CurrencyEditText
                     android:id="@+id/input_text_account_balance"
                     style="@style/Uikit.Style.Input.Decimal"
+                    android:maxLength="13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
