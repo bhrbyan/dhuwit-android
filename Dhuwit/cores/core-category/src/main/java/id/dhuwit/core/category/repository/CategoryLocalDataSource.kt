@@ -33,4 +33,16 @@ class CategoryLocalDataSource @Inject constructor(private val dao: CategoryDao) 
         }
     }
 
+    override suspend fun addCategory(category: Category): State<Category> {
+        return withContext(Dispatchers.IO) {
+            try {
+                dao.storeCategory(category.toEntity())
+
+                val addedCategory = dao.getCategory().toModel()
+                State.Success(addedCategory)
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage ?: "")
+            }
+        }
+    }
 }

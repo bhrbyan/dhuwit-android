@@ -2,22 +2,21 @@ package id.dhuwit.feature.category
 
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
-import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
-import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_ID
-import id.dhuwit.feature.category.CategoryListConstants.KEY_CATEGORY_TYPE
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
+import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
 import id.dhuwit.state.State
-import id.dhuwit.uikit.widget.DividerMarginItemDecoration
 
 @AndroidEntryPoint
 class CategoryListActivity : BaseActivity(), CategoryListListener {
@@ -30,37 +29,89 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         binding = CategoryListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpToolbar()
         initAdapter()
-
-        val categoryType = intent.getStringExtra(KEY_CATEGORY_TYPE)
-        viewModel.getCategories(CategoryType.getCategoryType(categoryType))
     }
 
     override fun listener() {
-        binding.imageClose.setOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+        with(binding) {
+            inputTextSearch.addTextChangedListener {
+                val keywords = it?.toString()?.lowercase() ?: ""
+                viewModel.searchCategories(keywords)
+            }
+
+            layoutAddCategory?.setOnClickListener {
+                val categoryName: String = inputTextSearch.text
+                    .toString()
+                    .replaceFirstChar { char -> char.uppercase() }
+
+                viewModel.addCategory(categoryName)
+            }
         }
     }
 
     override fun observer() {
-        viewModel.categories.observe(this) {
-            when (it) {
-                is State.Loading -> showLoading()
-                is State.Success -> {
-                    hideLoading()
-                    if (it.data.isNullOrEmpty()) {
-                        showMessageEmptyCategories()
-                    } else {
-                        adapterCategoryList.submitList(it.data)
-                        hideMessageEmptyCategories()
+        with(viewModel) {
+            categories.observe(this@CategoryListActivity) {
+                when (it) {
+                    is State.Loading -> showLoading()
+                    is State.Success -> {
+                        hideLoading()
+                        if (it.data.isNullOrEmpty()) {
+                            showMessageEmptyCategories(getString(R.string.category_list_message_empty))
+                        } else {
+                            it.data?.let { categories ->
+                                adapterCategoryList.updateList(categories)
+                                hideMessageEmptyCategories()
+                            }
+                        }
+                    }
+                    is State.Error -> {
+                        hideLoading()
+                        showError()
                     }
                 }
-                is State.Error -> {
-                    hideLoading()
-                    showError()
+            }
+
+            searchedCategories.observe(this@CategoryListActivity) { search ->
+                if (search.categories.isNullOrEmpty()) {
+                    showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
+                    showMessageAddCategory(search.keywords)
+                } else {
+                    search.categories?.let { categories ->
+                        adapterCategoryList.updateList(categories)
+                        hideMessageEmptyCategories()
+                        hideMessageAddCategory()
+                    }
                 }
             }
+
+            addCategory.observe(this@CategoryListActivity) {
+                when (it) {
+                    is State.Loading -> showLoading()
+                    is State.Success -> {
+                        it.data?.let { category ->
+                            onSelectCategory(category)
+                        }
+                    }
+                    is State.Error -> {
+                        hideLoading()
+                        showError()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = getString(R.string.category_list_toolbar_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.toolbar.setNavigationOnClickListener {
+            setResult(RESULT_CANCELED)
+            finish()
         }
     }
 
@@ -72,26 +123,31 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
             adapter = adapterCategoryList
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
-                DividerMarginItemDecoration(
-                    context,
-                    DividerItemDecoration.VERTICAL,
-                    resources.getDimensionPixelSize(R.dimen.uikit_margin_padding_size_medium)
+                DividerItemDecoration(
+                    this@CategoryListActivity,
+                    DividerItemDecoration.VERTICAL
                 )
             )
         }
     }
 
     override fun onSelectCategory(category: Category) {
-        val data = Intent().apply { putExtra(KEY_CATEGORY_ID, category.id) }
+        val data = Intent().apply {
+            putExtra(KEY_SELECT_CATEGORY_ID, category.id)
+            putExtra(KEY_SELECT_CATEGORY_TYPE, category.type.toString())
+        }
         setResult(RESULT_OK, data)
         finish()
     }
 
-    private fun showMessageEmptyCategories() {
+    private fun showMessageEmptyCategories(message: String) {
         with(binding) {
             progressBar.hide()
             recyclerViewCategory.gone()
-            textMessageEmptyCategory.visible()
+            textMessageEmptyCategory.apply {
+                text = message
+                visible()
+            }
         }
     }
 
@@ -99,7 +155,25 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         with(binding) {
             progressBar.hide()
             recyclerViewCategory.visible()
-            textMessageEmptyCategory.gone()
+            textMessageEmptyCategory.apply {
+                text = null
+                gone()
+            }
+        }
+    }
+
+    private fun showMessageAddCategory(keyword: String) {
+        with(binding) {
+            layoutAddCategory?.visible()
+            textMessageAddCategory?.text =
+                getString(R.string.category_list_message_add_category, keyword)
+        }
+    }
+
+    private fun hideMessageAddCategory() {
+        with(binding) {
+            layoutAddCategory?.gone()
+            textMessageAddCategory?.text = null
         }
     }
 
@@ -107,6 +181,8 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         with(binding) {
             progressBar.show()
             recyclerViewCategory.gone()
+            textMessageEmptyCategory.gone()
+            layoutAddCategory?.gone()
         }
     }
 

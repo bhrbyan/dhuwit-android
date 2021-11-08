@@ -7,4 +7,5 @@ import id.dhuwit.state.State
 interface CategoryDataSource {
     suspend fun storeCategories(categories: List<Category>): State<Boolean>
     suspend fun getCategories(type: CategoryType): State<List<Category>>
+    suspend fun addCategory(category: Category): State<Category>
 }

@@ -158,10 +158,14 @@ class TransactionViewModel @Inject constructor(
         _transactionType.value = transactionType
     }
 
-    fun updateCategories(categoryType: CategoryType) {
+    fun updateCategories(categoryType: CategoryType, categoryId: Long? = null) {
         viewModelScope.launch {
             _categories = categoryRepository.getCategories(categoryType).data
-            val category = _categories?.first()
+            val category = if (categoryId == null) {
+                _categories?.first()
+            } else {
+                _categories?.find { it.id == categoryId }
+            }
 
             setCategory(category)
         }
@@ -177,11 +181,6 @@ class TransactionViewModel @Inject constructor(
 
     fun successOpenCategory() {
         _openCategory.value = null
-    }
-
-    fun onSelectCategory(categoryId: Long?) {
-        val category = _categories?.find { it.id == categoryId }
-        setCategory(category)
     }
 
     fun setNote(note: String?) {

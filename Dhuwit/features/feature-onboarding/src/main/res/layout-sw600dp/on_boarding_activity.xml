@@ -98,7 +98,8 @@
                     android:id="@+id/input_text_account_balance"
                     style="@style/Uikit.Style.Input.Decimal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:maxLength="13" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

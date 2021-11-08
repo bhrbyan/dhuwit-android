@@ -1,6 +1,7 @@
 package id.dhuwit.core.base
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -15,5 +16,11 @@ abstract class BaseActivity : AppCompatActivity() {
         init()
         listener()
         observer()
+
+        hideSoftKeyboard()
+    }
+
+    private fun hideSoftKeyboard() {
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 }

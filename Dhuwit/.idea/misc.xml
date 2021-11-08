@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="features/feature-account/src/main/res/layout/account_activity.xml" value="0.2296875" />
+        <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
+        <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
+        <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_activity.xml" value="0.20833333333333334" />
+        <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_item.xml" value="0.20833333333333334" />
+        <entry key="features/feature-category/src/main/res/layout/category_list_activity.xml" value="0.28574940425988266" />
+        <entry key="features/feature-category/src/main/res/layout/category_list_item.xml" value="0.20833333333333334" />
+        <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
+        <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
+        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.20833333333333334" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.12409420289855072" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

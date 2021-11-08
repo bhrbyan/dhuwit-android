@@ -12,4 +12,7 @@ interface CategoryDao {
 
     @Query("SELECT * FROM CATEGORY_TABLE WHERE type = :type")
     suspend fun getCategories(type: String): List<CategoryEntity>
+
+    @Query("SELECT * FROM CATEGORY_TABLE ORDER BY id DESC LIMIT 1")
+    suspend fun getCategory(): CategoryEntity
 }
