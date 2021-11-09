@@ -24,21 +24,10 @@ class LauncherViewModel @Inject constructor(
     private val _storeCurrency = MutableLiveData<State<Boolean>>()
     private val _storeCategory = MutableLiveData<State<Boolean>>()
 
-    private val _openDashboard = MutableLiveData<Boolean>()
-    val openDashboard: LiveData<Boolean> = _openDashboard
-
     private val _storeData = MutableLiveData<Boolean>()
     val storeData: LiveData<Boolean> = _storeData
 
-    fun validationUserStatus(currencies: List<Currency>, categories: List<Category>) {
-        if (storage.isFirstTimeUser()) {
-            storeDefaultData(currencies, categories)
-        } else {
-            _openDashboard.value = true
-        }
-    }
-
-    private fun storeDefaultData(currencies: List<Currency>, categories: List<Category>) {
+    fun storeDefaultData(currencies: List<Currency>, categories: List<Category>) {
         viewModelScope.launch {
             _storeCurrency.value = currencyRepository.storeCurrencies(currencies)
             _storeCategory.value = categoryRepository.storeCategories(categories)

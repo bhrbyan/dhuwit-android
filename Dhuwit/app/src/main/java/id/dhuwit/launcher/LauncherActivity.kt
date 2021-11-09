@@ -7,6 +7,7 @@ import id.dhuwit.core.category.util.CategoryUtil
 import id.dhuwit.core.currency.util.CurrencyUtil
 import id.dhuwit.feature.dashboard.router.DashboardRouter
 import id.dhuwit.feature.onboarding.router.OnBoardingRouter
+import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -20,11 +21,11 @@ class LauncherActivity : BaseActivity() {
     @Inject
     lateinit var dashboardRouter: DashboardRouter
 
-    override fun init() {
-        val currencies = CurrencyUtil.getCurrencies(this)
-        val categories = CategoryUtil.getCategories(this)
+    @Inject
+    lateinit var storage: Storage
 
-        viewModel.validationUserStatus(currencies, categories)
+    override fun init() {
+        validateUserStatus()
     }
 
     override fun listener() {
@@ -40,14 +41,18 @@ class LauncherActivity : BaseActivity() {
                     finishAffinity()
                 }
             }
-
-            openDashboard.observe(this@LauncherActivity) { isOpenDashboard ->
-                if (isOpenDashboard) {
-                    openDashboardPage()
-                }
-            }
         }
+    }
 
+    private fun validateUserStatus() {
+        if (storage.isFirstTimeUser()) {
+            val currencies = CurrencyUtil.getCurrencies(this)
+            val categories = CategoryUtil.getCategories(this)
+
+            viewModel.storeDefaultData(currencies, categories)
+        } else {
+            openDashboardPage()
+        }
     }
 
     private fun openOnBoardingPage() {
