@@ -15,8 +15,8 @@ android {
         applicationId "id.dhuwit"
         minSdkVersion ver.app.sdk.min
         targetSdkVersion ver.app.sdk.target
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 3
+        versionName "1.1.1"
         dimension "version"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
