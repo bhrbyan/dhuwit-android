@@ -36,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-        android:hint="@string/account_hint_name"
+        android:hint="@string/account_form_hint_name"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -54,7 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
-        android:hint="@string/account_hint_balance"
+        android:hint="@string/account_form_hint_balance"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/input_layout_account_name">

@@ -8,11 +8,17 @@ interface AccountDao {
     suspend fun storeAccount(account: AccountEntity)
 
     @Query("SELECT * FROM account_table")
-    suspend fun getAccount(): AccountEntity
+    suspend fun getAccounts(): List<AccountEntity>
+
+    @Query("SELECT * FROM account_table WHERE id = :accountId")
+    suspend fun getAccount(accountId: Long): AccountEntity
 
     @Update
     suspend fun updateAccount(account: AccountEntity)
 
     @Query("UPDATE account_table SET balance = :balance")
     suspend fun updateBalance(balance: Double)
+
+    @Query("DELETE FROM account_table WHERE id = :id")
+    suspend fun deleteAccount(id: Long)
 }

@@ -36,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-        android:hint="@string/account_hint_name"
+        android:hint="@string/account_form_hint_name"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -54,7 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
-        android:hint="@string/account_hint_balance"
+        android:hint="@string/account_form_hint_balance"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/input_layout_account_name">
@@ -66,15 +66,75 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_switch_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:text="@string/account_form_switch_caption"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_account_balance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_switch_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
+        android:text="@string/account_form_switch_description"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+        app:layout_constraintEnd_toStartOf="@+id/switch_primary_account"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/text_switch_caption" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_primary_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/text_switch_description"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/text_switch_caption" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_save"
         style="@style/Uikit.Style.Button.Fill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        tools:text="@string/general_save"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_update"
+        style="@style/Uikit.Style.Button.Fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/button_delete"
+        tools:text="@string/general_save" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_delete"
+        style="@style/Uikit.Style.Button.Fill"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+        android:padding="@dimen/uikit_margin_padding_size_medium"
+        android:src="@drawable/ic_delete_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/button_update"
+        app:layout_constraintEnd_toStartOf="@+id/button_update"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toTopOf="@+id/button_update"
         tools:text="@string/general_save" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

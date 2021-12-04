@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="account_hint_toolbar_title">Account</string>
-    <string name="account_hint_name">Name</string>
-    <string name="account_hint_balance">Balance</string>
+    <!-- Form -->
+    <string name="account_form_update_toolbar_title">Update Account</string>
+    <string name="account_form_create_toolbar_title">Create Account</string>
+    <string name="account_form_hint_name">Name</string>
+    <string name="account_form_hint_balance">Balance</string>
+    <string name="account_form_switch_caption">Set as primary account</string>
+    <string name="account_form_switch_description">Switch on will make this account pre-selecting when creating transactions.</string>
+
+    <!-- List -->
+    <string name="account_list_title">Account</string>
+    <string name="account_list_add_title">Create new account!</string>
+    <string name="account_list_add_description">Separate your accounts based on their usage.</string>
 </resources>

@@ -10,12 +10,20 @@ class AccountRepository @Inject constructor(private val local: AccountDataSource
         return local.storeAccount(account)
     }
 
-    override suspend fun getAccount(): State<Account> {
-        return local.getAccount()
+    override suspend fun getAccounts(): State<List<Account>> {
+        return local.getAccounts()
+    }
+
+    override suspend fun getAccount(id: Long): State<Account> {
+        return local.getAccount(id)
     }
 
     override suspend fun updateAccount(account: Account): State<Boolean> {
         return local.updateAccount(account)
+    }
+
+    override suspend fun deleteAccount(id: Long): State<Boolean> {
+        return local.deleteAccount(id)
     }
 
     override suspend fun updateBalance(

@@ -4,16 +4,27 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="features/feature-account/src/main/res/layout/account_activity.xml" value="0.2296875" />
+        <entry key="features/feature-account/src/main/res/layout/account_list.xml" value="0.2947916666666667" />
+        <entry key="features/feature-account/src/main/res/layout/account_list_add.xml" value="0.2734375" />
+        <entry key="features/feature-account/src/main/res/layout/account_list_item.xml" value="0.2734375" />
+        <entry key="features/feature-account/src/main/res/layout/account_list_section.xml" value="0.27314814814814814" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_activity.xml" value="0.20833333333333334" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_item.xml" value="0.20833333333333334" />
         <entry key="features/feature-category/src/main/res/layout/category_list_activity.xml" value="0.28574940425988266" />
         <entry key="features/feature-category/src/main/res/layout/category_list_item.xml" value="0.20833333333333334" />
+        <entry key="features/feature-dashboard/src/main/res/layout-land/dashboard_activity.xml" value="0.15364583333333334" />
+        <entry key="features/feature-dashboard/src/main/res/layout-sw600dp-land/dashboard_activity.xml" value="0.15364583333333334" />
+        <entry key="features/feature-dashboard/src/main/res/layout-sw600dp/dashboard_activity.xml" value="0.1" />
+        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.27314814814814814" />
+        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_header.xml" value="0.27314814814814814" />
         <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.20833333333333334" />
         <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.12409420289855072" />
+        <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
+        <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />
       </map>
     </option>
   </component>

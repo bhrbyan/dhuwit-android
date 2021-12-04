@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dashboard_account_title">Account</string>
     <string name="dashboard_transactions_title">Transactions</string>
     <string name="dashboard_transactions_empty">You don\'t have transaction</string>
     <string name="dashboard_transactions_header_negative">-%1$s</string>
     <string name="dashboard_transactions_item_expense">-%1$s</string>
     <string name="dashboard_transactions_item_income">+%1$s</string>
+    <string name="dashboard_transactions_content_fab">Add Transaction</string>
 </resources>

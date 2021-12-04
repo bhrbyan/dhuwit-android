@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : AccountDataSource {
+
     override suspend fun storeAccount(account: Account): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
@@ -21,10 +22,24 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         }
     }
 
-    override suspend fun getAccount(): State<Account> {
+    override suspend fun getAccounts(): State<List<Account>> {
         return withContext(Dispatchers.IO) {
             try {
-                val account = dao.getAccount().toModel()
+                val accounts = dao.getAccounts().map { account ->
+                    account.toModel()
+                }
+
+                State.Success(accounts)
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage ?: "")
+            }
+        }
+    }
+
+    override suspend fun getAccount(id: Long): State<Account> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val account = dao.getAccount(id).toModel()
 
                 State.Success(account)
             } catch (e: Exception) {
@@ -45,6 +60,18 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         }
     }
 
+    override suspend fun deleteAccount(id: Long): State<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                dao.deleteAccount(id)
+
+                State.Success(true)
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage ?: "")
+            }
+        }
+    }
+
     /* Called when new transaction */
     override suspend fun updateBalance(
         totalTransaction: Double,
@@ -52,7 +79,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount().toModel().balance
+                val accountBalance = dao.getAccount(-1).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     accountBalance - totalTransaction
@@ -76,7 +103,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount().toModel().balance
+                val accountBalance = dao.getAccount(-1).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     resultBalanceExpenseTransaction(
@@ -133,7 +160,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount().toModel().balance
+                val accountBalance = dao.getAccount(-1).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     accountBalance + totalTransaction

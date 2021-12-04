@@ -28,106 +28,14 @@
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_title_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:text="@string/dashboard_account_title"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
-                android:textStyle="bold"
+            <include
+                android:id="@+id/include_accounts"
+                layout="@layout/account_list_section"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image_wallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                app:layout_constraintBottom_toBottomOf="@+id/text_title_account"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_title_account"
-                app:srcCompat="@drawable/ic_wallet" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_account"
-                style="@style/Uikit.Style.CardView.All"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_title_account">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_account"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_account_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/dashboard_account_title"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                        app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_account_balance"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
-                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_account_name"
-                        tools:text="Rp1.500.000" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/image_arrow_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right" />
-
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/progress_bar_account"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:elevation="8dp"
-                        android:indeterminate="true"
-                        app:indicatorColor="@color/colorMinor"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_title_transaction"
@@ -139,7 +47,7 @@
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_account" />
+                app:layout_constraintTop_toBottomOf="@+id/include_accounts" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image_list"
@@ -241,6 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:contentDescription="@string/dashboard_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
