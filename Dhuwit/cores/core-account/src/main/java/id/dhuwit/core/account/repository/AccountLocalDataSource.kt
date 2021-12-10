@@ -1,6 +1,7 @@
 package id.dhuwit.core.account.repository
 
 import id.dhuwit.core.account.database.AccountDao
+import id.dhuwit.core.account.database.AccountEntity
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
@@ -10,9 +11,26 @@ import kotlin.math.abs
 
 class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : AccountDataSource {
 
-    override suspend fun storeAccount(account: Account): State<Boolean> {
+    override suspend fun createAccount(account: Account): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
+                if (account.isPrimary) {
+                    val allAccountsData = dao.getAccounts()
+                    if (allAccountsData.isNotEmpty()) {
+                        val primaryAccountData = allAccountsData.find { it.isPrimary }
+                        if (primaryAccountData != null) {
+                            dao.updateAccount(
+                                AccountEntity(
+                                    id = primaryAccountData.id,
+                                    name = primaryAccountData.name,
+                                    balance = primaryAccountData.balance,
+                                    isPrimary = false
+                                )
+                            )
+                        }
+                    }
+                }
+
                 dao.storeAccount(account.toEntity())
 
                 State.Success(true)
@@ -51,6 +69,24 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
     override suspend fun updateAccount(account: Account): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
+                val currentAccountData = dao.getAccount(account.id)
+                if (currentAccountData.isPrimary != account.isPrimary) {
+                    if (account.isPrimary) {
+                        val allAccountsData = dao.getAccounts()
+                        val primaryAccountData = allAccountsData.find { it.isPrimary }
+                        if (primaryAccountData != null) {
+                            dao.updateAccount(
+                                AccountEntity(
+                                    id = primaryAccountData.id,
+                                    name = primaryAccountData.name,
+                                    balance = primaryAccountData.balance,
+                                    isPrimary = false
+                                )
+                            )
+                        }
+                    }
+                }
+
                 dao.updateAccount(account.toEntity())
 
                 State.Success(true)

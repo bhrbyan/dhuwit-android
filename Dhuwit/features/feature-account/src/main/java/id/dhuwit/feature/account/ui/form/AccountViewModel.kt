@@ -59,7 +59,7 @@ class AccountViewModel @Inject constructor(
     fun createAccount() {
         _action.value = State.Loading()
         viewModelScope.launch {
-            _action.value = accountRepository.storeAccount(Account(name, balance, isPrimary))
+            _action.value = accountRepository.createAccount(Account(name, balance, isPrimary))
         }
     }
 

@@ -4,7 +4,7 @@ import id.dhuwit.core.account.model.Account
 import id.dhuwit.state.State
 
 interface AccountDataSource {
-    suspend fun storeAccount(account: Account): State<Boolean>
+    suspend fun createAccount(account: Account): State<Boolean>
 
     suspend fun getAccounts(): State<List<Account>>
 

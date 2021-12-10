@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class AccountRepository @Inject constructor(private val local: AccountDataSource) :
     AccountDataSource {
-    override suspend fun storeAccount(account: Account): State<Boolean> {
-        return local.storeAccount(account)
+    override suspend fun createAccount(account: Account): State<Boolean> {
+        return local.createAccount(account)
     }
 
     override suspend fun getAccounts(): State<List<Account>> {
