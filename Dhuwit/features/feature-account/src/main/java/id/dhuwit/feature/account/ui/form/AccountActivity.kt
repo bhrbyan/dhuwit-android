@@ -54,11 +54,18 @@ class AccountActivity : BaseActivity() {
                     viewModel.checkInputField()
                 }
             }
+
+            switchPrimaryAccount?.setOnCheckedChangeListener { button, isChecked ->
+                if (button.isPressed) {
+                    viewModel.setStatusPrimaryAccount(isChecked)
+                }
+            }
         }
     }
 
     override fun observer() {
         with(viewModel) {
+
             account.observe(this@AccountActivity) {
                 when (it) {
                     is State.Loading -> {
@@ -140,12 +147,16 @@ class AccountActivity : BaseActivity() {
             buttonDelete?.visible()
             inputTextAccountName.setText(data?.name)
             inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
+            switchPrimaryAccount?.isChecked = data?.isPrimary ?: false
         }
     }
 
     private fun setUpViewCreateAccount() {
         supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
-        binding.buttonSave.visible()
+        with(binding) {
+            buttonSave.visible()
+            switchPrimaryAccount?.isChecked = false
+        }
     }
 
     private fun showLoading() {

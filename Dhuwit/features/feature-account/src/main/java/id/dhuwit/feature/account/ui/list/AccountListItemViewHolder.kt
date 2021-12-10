@@ -3,6 +3,8 @@ package id.dhuwit.feature.account.ui.list
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.extension.gone
+import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.account.databinding.AccountListItemBinding
 import id.dhuwit.storage.Storage
 
@@ -15,6 +17,11 @@ class AccountListItemViewHolder(private val binding: AccountListItemBinding) :
             textAccountBalance.text = account.balance.convertPriceWithCurrencyFormat(
                 storage.getSymbolCurrency()
             )
+            if (account.isPrimary) {
+                imagePrimaryAccount.visible()
+            } else {
+                imagePrimaryAccount.gone()
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ class AccountViewModel @Inject constructor(
 
     private var name: String = ""
     private var balance: Double = 0.0
+    private var isPrimary: Boolean = false
 
     private var _accountId: Long = savedStateHandle.get<Long>(KEY_ACCOUNT_ID) ?: DEFAULT_ACCOUNT_ID
 
@@ -47,6 +48,10 @@ class AccountViewModel @Inject constructor(
         this.balance = balance
     }
 
+    fun setStatusPrimaryAccount(isPrimary: Boolean) {
+        this.isPrimary = isPrimary
+    }
+
     fun checkInputField() {
         _isFieldEmpty.value = name.isEmpty() && balance == 0.0
     }
@@ -54,7 +59,7 @@ class AccountViewModel @Inject constructor(
     fun createAccount() {
         _action.value = State.Loading()
         viewModelScope.launch {
-            _action.value = accountRepository.storeAccount(Account(name, balance))
+            _action.value = accountRepository.storeAccount(Account(name, balance, isPrimary))
         }
     }
 
@@ -62,7 +67,7 @@ class AccountViewModel @Inject constructor(
         _action.value = State.Loading()
         viewModelScope.launch {
             _action.value = accountRepository.updateAccount(
-                Account(name, balance, _account.value?.data?.id ?: 0)
+                Account(name, balance, isPrimary, _account.value?.data?.id ?: 0)
             )
         }
     }

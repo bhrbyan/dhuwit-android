@@ -9,9 +9,10 @@ import id.dhuwit.core.account.model.Account
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "balance") var balance: Double
+    @ColumnInfo(name = "balance") var balance: Double,
+    @ColumnInfo(name = "is_primary") var isPrimary: Boolean
 ) {
     fun toModel(): Account {
-        return Account(name, balance, id)
+        return Account(name, balance, isPrimary, id)
     }
 }
