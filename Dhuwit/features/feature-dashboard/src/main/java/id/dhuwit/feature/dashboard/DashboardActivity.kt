@@ -1,5 +1,6 @@
 package id.dhuwit.feature.dashboard
 
+import android.content.res.Configuration
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.*
@@ -9,7 +10,6 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.feature.account.databinding.AccountListSectionBinding
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.list.AccountListAdapter
 import id.dhuwit.feature.account.ui.list.AccountListListener
@@ -29,8 +29,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
     private lateinit var binding: DashboardActivityBinding
     private lateinit var adapterTransaction: DashboardTransactionAdapter
     private lateinit var adapterAccount: AccountListAdapter
-
-    private var bindingAccounts: AccountListSectionBinding? = null
 
     private val viewModelDashboard: DashboardViewModel by viewModels()
     private val viewModelAccountList: AccountListViewModel by viewModels()
@@ -62,7 +60,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
 
     override fun init() {
         binding = DashboardActivityBinding.inflate(layoutInflater)
-        bindingAccounts = binding.includeAccounts
         setContentView(binding.root)
 
 
@@ -132,6 +129,34 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         supportActionBar?.title = getString(R.string.app_name)
     }
 
+    private fun setUpAdapterAccount() {
+        adapterAccount = AccountListAdapter(storage).apply {
+            listener = this@DashboardActivity
+        }
+
+        val orientation: Int = resources.configuration.orientation
+        val layoutManagerOrientation = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayoutManager.HORIZONTAL
+        } else {
+            LinearLayoutManager.VERTICAL
+        }
+
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        binding.recyclerViewAccount.apply {
+            adapter = adapterAccount
+            layoutManager = LinearLayoutManager(context, layoutManagerOrientation, false)
+            snapHelper.attachToRecyclerView(this)
+        }
+    }
+
+    override fun onClickAccount(accountId: Long) {
+        openAccountPage(accountId)
+    }
+
+    override fun onClickAddAccount() {
+        openAccountPage(null)
+    }
+
     private fun setUpAdapterTransaction() {
         adapterTransaction = DashboardTransactionAdapter(this, emptyList()).apply {
             listener = this@DashboardActivity
@@ -152,27 +177,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
 
     override fun onClickTransaction(transaction: Transaction?) {
         openTransactionPage(transaction?.id)
-    }
-
-    private fun setUpAdapterAccount() {
-        adapterAccount = AccountListAdapter(storage).apply {
-            listener = this@DashboardActivity
-        }
-
-        val snapHelper: SnapHelper = LinearSnapHelper()
-        bindingAccounts?.viewPagerAccount?.apply {
-            adapter = adapterAccount
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            snapHelper.attachToRecyclerView(this)
-        }
-    }
-
-    override fun onClickAccount(accountId: Long) {
-        openAccountPage(accountId)
-    }
-
-    override fun onClickAddAccount() {
-        openAccountPage(null)
     }
 
     private fun setUpDataTransaction(transactions: List<Transaction>?) {
@@ -220,8 +224,4 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         accountResult.launch(accountRouter.openAccountPage(this, accountId))
     }
 
-    override fun onDestroy() {
-        bindingAccounts = null
-        super.onDestroy()
-    }
 }

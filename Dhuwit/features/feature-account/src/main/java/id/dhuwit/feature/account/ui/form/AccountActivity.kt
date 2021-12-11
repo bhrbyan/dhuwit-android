@@ -40,11 +40,11 @@ class AccountActivity : BaseActivity() {
                 viewModel.createAccount()
             }
 
-            buttonUpdate?.setOnClickListener {
+            buttonUpdate.setOnClickListener {
                 viewModel.updateAccount()
             }
 
-            buttonDelete?.setOnClickListener {
+            buttonDelete.setOnClickListener {
                 viewModel.deleteAccount()
             }
 
@@ -55,7 +55,7 @@ class AccountActivity : BaseActivity() {
                 }
             }
 
-            switchPrimaryAccount?.setOnCheckedChangeListener { button, isChecked ->
+            switchPrimaryAccount.setOnCheckedChangeListener { button, isChecked ->
                 if (button.isPressed) {
                     viewModel.setStatusPrimaryAccount(isChecked)
                 }
@@ -143,11 +143,11 @@ class AccountActivity : BaseActivity() {
     private fun setUpViewUpdateAccount(data: Account?) {
         supportActionBar?.title = getString(R.string.account_form_update_toolbar_title)
         with(binding) {
-            buttonUpdate?.visible()
-            buttonDelete?.visible()
+            buttonUpdate.visible()
+            buttonDelete.visible()
             inputTextAccountName.setText(data?.name)
             inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
-            switchPrimaryAccount?.isChecked = data?.isPrimary ?: false
+            switchPrimaryAccount.isChecked = data?.isPrimary ?: false
         }
     }
 
@@ -155,7 +155,7 @@ class AccountActivity : BaseActivity() {
         supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
         with(binding) {
             buttonSave.visible()
-            switchPrimaryAccount?.isChecked = false
+            switchPrimaryAccount.isChecked = false
         }
     }
 
@@ -164,11 +164,11 @@ class AccountActivity : BaseActivity() {
             progressBar.show()
 
             buttonSave.text = null
-            buttonUpdate?.text = null
+            buttonUpdate.text = null
 
             buttonSave.disabled()
-            buttonUpdate?.disabled()
-            buttonDelete?.disabled()
+            buttonUpdate.disabled()
+            buttonDelete.disabled()
         }
     }
 
@@ -177,11 +177,11 @@ class AccountActivity : BaseActivity() {
             progressBar.hide()
 
             buttonSave.text = getString(R.string.general_save)
-            buttonUpdate?.text = getString(R.string.general_update)
+            buttonUpdate.text = getString(R.string.general_update)
 
             buttonSave.enabled()
-            buttonUpdate?.enabled()
-            buttonDelete?.enabled()
+            buttonUpdate.enabled()
+            buttonDelete.enabled()
         }
     }
 
