@@ -3,21 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:maxWidth="300dp">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_account"
         style="@style/Uikit.Style.CardView.All"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_margin="2dp"
+        android:layout_margin="@dimen/uikit_margin_padding_size_xxsmall"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="300dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_account"
@@ -32,7 +30,7 @@
                 android:id="@+id/image_primary_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/text_account_name"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +57,7 @@
                 android:id="@+id/text_account_balance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
                 android:textStyle="bold"

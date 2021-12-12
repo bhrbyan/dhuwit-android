@@ -199,8 +199,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_small"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
+        android:paddingStart="@dimen/uikit_margin_padding_size_xsmall"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_xsmall"
         app:layout_constraintBottom_toBottomOf="@+id/button_nine"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_nine"
@@ -209,7 +209,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
             app:srcCompat="@drawable/ic_note" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -232,8 +232,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_small"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
+        android:paddingStart="@dimen/uikit_margin_padding_size_xsmall"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_xsmall"
         app:layout_constraintBottom_toBottomOf="@+id/button_six"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_six"
@@ -242,7 +242,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
             app:srcCompat="@drawable/ic_category" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -264,8 +264,8 @@
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="@dimen/uikit_margin_padding_size_small"
-        android:paddingEnd="@dimen/uikit_margin_padding_size_small"
+        android:paddingStart="@dimen/uikit_margin_padding_size_xsmall"
+        android:paddingEnd="@dimen/uikit_margin_padding_size_xsmall"
         app:layout_constraintBottom_toBottomOf="@+id/button_three"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toEndOf="@+id/button_three"
@@ -274,7 +274,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
             app:srcCompat="@drawable/ic_calendar" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -292,7 +292,7 @@
         android:id="@+id/layout_button_toggle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_small"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:theme="@style/Uikit.Theme.Dhuwit.Button.Toggle"
         android:weightSum="2"
@@ -337,8 +337,8 @@
         android:id="@+id/text_note"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         android:ellipsize="end"
         android:maxLines="1"
@@ -354,7 +354,7 @@
         android:id="@+id/text_caption_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
         android:text="@string/transaction_caption_date"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:textStyle="bold"
@@ -365,7 +365,7 @@
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         app:layout_constraintBottom_toTopOf="@+id/text_note"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -375,8 +375,8 @@
         android:id="@+id/text_caption_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
         android:text="@string/transaction_caption_category"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         android:textStyle="bold"
@@ -388,8 +388,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_small"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_small"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
         android:ellipsize="end"
         android:gravity="end"
         android:lines="1"
