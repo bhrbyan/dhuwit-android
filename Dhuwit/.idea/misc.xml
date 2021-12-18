@@ -24,12 +24,22 @@
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.27314814814814814" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_header.xml" value="0.27314814814814814" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_item.xml" value="0.3885416666666667" />
+        <entry key="features/feature-note/src/main/res/layout-land/note_activity.xml" value="0.2018018018018018" />
+        <entry key="features/feature-note/src/main/res/layout-sw600dp/note_activity.xml" value="0.37333333333333335" />
+        <entry key="features/feature-note/src/main/res/layout/note_activity.xml" value="0.33155555555555555" />
         <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.1531677825296113" />
-        <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.12409420289855072" />
+        <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
+        <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
+        <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.27158853655400395" />
+        <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.28958333333333336" />
+        <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/background_border_primary_account.xml" value="0.4046875" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />
+        <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/ic_star.xml" value="0.4046875" />
       </map>
     </option>
