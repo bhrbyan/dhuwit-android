@@ -45,6 +45,7 @@ dependencies {
     implementation project(":cores:core-account")
     implementation project(":cores:core-category")
     implementation project(":cores:core-transaction")
+    implementation project(":features:feature-account")
     implementation project(":features:feature-category")
     implementation project(":features:feature-note")
     implementation project(":state")

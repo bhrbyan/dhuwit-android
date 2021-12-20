@@ -25,7 +25,7 @@ class TransactionDeleteDialogFragment : BaseConfirmationDialogFragment() {
             this?.buttonPositive?.apply {
                 text = getString(R.string.transaction_delete_button_positive)
                 setOnClickListener {
-                    listener?.onClickButtonPositive()
+                    listener?.onConfirmDeleteTransaction()
                     dismiss()
                 }
             }

@@ -47,6 +47,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             viewModelDashboard.getDetails()
+            viewModelAccountList.getAccounts()
         }
     }
 

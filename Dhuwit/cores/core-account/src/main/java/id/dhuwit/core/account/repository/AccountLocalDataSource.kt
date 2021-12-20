@@ -110,12 +110,13 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
 
     /* Called when new transaction */
     override suspend fun updateBalance(
+        accountId: Long,
         totalTransaction: Double,
         isExpenseTransaction: Boolean
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount(-1).toModel().balance
+                val accountBalance = dao.getAccount(accountId).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     accountBalance - totalTransaction
@@ -133,13 +134,14 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
 
     /* Called when update transaction */
     override suspend fun updateBalance(
+        accountId: Long,
         totalTransaction: Double,
         originalTotalTransaction: Double,
         isExpenseTransaction: Boolean
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount(-1).toModel().balance
+                val accountBalance = dao.getAccount(accountId).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     resultBalanceExpenseTransaction(
@@ -191,12 +193,13 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
 
     /* Called when delete transaction */
     override suspend fun updateBalance(
+        accountId: Long,
         isExpenseTransaction: Boolean,
         totalTransaction: Double
     ): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val accountBalance = dao.getAccount(-1).toModel().balance
+                val accountBalance = dao.getAccount(accountId).toModel().balance
 
                 val balance = if (isExpenseTransaction) {
                     accountBalance + totalTransaction

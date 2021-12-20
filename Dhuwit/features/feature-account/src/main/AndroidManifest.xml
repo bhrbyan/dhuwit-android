@@ -6,6 +6,8 @@
         <activity
             android:name=".ui.form.AccountActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".ui.selection.AccountSelectionActivity" />
     </application>
 
 </manifest>

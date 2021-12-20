@@ -29,6 +29,12 @@
     <!-- Divider -->
     <color name="colorDivider">@color/silver</color>
 
+    <!-- Primary Account -->
+    <color name="colorPrimaryAccount">@color/ecstasy</color>
+
+    <!-- Border Calculator -->
+    <color name="colorBorderCalculator">@color/silver</color>
+
     <!-- Color Name -->
     <color name="apple">#388e3c</color>
     <color name="mantis">#6abf69</color>

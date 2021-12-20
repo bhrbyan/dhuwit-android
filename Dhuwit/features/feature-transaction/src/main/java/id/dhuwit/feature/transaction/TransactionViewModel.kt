@@ -2,6 +2,7 @@ package id.dhuwit.feature.transaction
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
@@ -26,6 +27,7 @@ class TransactionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _categories: List<Category>? = null
+    private var _accounts: List<Account>? = null
     private var _counter: String = DEFAULT_AMOUNT.convertDoubleToString()
     private var _transaction: Transaction? = null
     private var _transactionId: Long =
@@ -36,18 +38,18 @@ class TransactionViewModel @Inject constructor(
     private val _date = MutableLiveData<String>()
     private val _category = MutableLiveData<Category?>()
     private val _note = MutableLiveData<String?>()
+    private val _account = MutableLiveData<Account?>()
     private val _transactionType = MutableLiveData<TransactionType>()
     private val _openCategory = MutableLiveData<CategoryType?>()
-    private val _openNote = MutableLiveData<Boolean?>()
     private val _processTransaction = MutableLiveData<State<Boolean>>()
 
     val amount: LiveData<Double?> = _amount
     val date: LiveData<String> = _date
     val category: LiveData<Category?> = _category
     val note: LiveData<String?> = _note
+    val account: LiveData<Account?> = _account
     val transactionType: LiveData<TransactionType> = _transactionType
     val openCategory: LiveData<CategoryType?> = _openCategory
-    val openNote: LiveData<Boolean?> = _openNote
     val processTransaction: LiveData<State<Boolean>> = _processTransaction
 
     init {
@@ -57,27 +59,38 @@ class TransactionViewModel @Inject constructor(
     private fun setUpTransaction(transactionId: Long) {
         viewModelScope.launch {
             if (isCreateTransaction()) {
-                _categories = categoryRepository.getCategories(CategoryType.Expense).data
-
                 setCounter(_counter)
                 setTransactionDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
                 setTransactionType(TransactionType.Expense)
                 setTransactionNote(null)
+
+                _categories = categoryRepository.getCategories(CategoryType.Expense).data
                 setCategory(_categories?.first())
+
+                _accounts = accountRepository.getAccounts().data
+                val account = _accounts?.find { it.isPrimary } ?: _accounts?.first()
+                setAccount(account)
             } else {
                 _transaction = transactionRepository.getTransaction(transactionId).data
 
                 _transaction?.let { transaction ->
-                    val categoryType = getCategoryType(transaction.type)
-                    _categories = categoryRepository.getCategories(categoryType).data
-                    val category =
-                        _categories?.find { category -> category.id == transaction.category?.id }
-
                     setCounter(transaction.amount.convertDoubleToString())
                     setTransactionDate(transaction.date)
                     setTransactionType(transaction.type)
                     setTransactionNote(transaction.note)
+
+                    val categoryType = getCategoryType(transaction.type)
+                    _categories = categoryRepository.getCategories(categoryType).data
+                    val category = _categories?.find { category ->
+                        category.id == transaction.category?.id
+                    }
                     setCategory(category)
+
+                    _accounts = accountRepository.getAccounts().data
+                    val account = _accounts?.find {
+                        it.id == _transaction?.accountId
+                    } ?: _accounts?.first()
+                    setAccount(account)
                 }
             }
         }
@@ -138,6 +151,10 @@ class TransactionViewModel @Inject constructor(
         _category.value = category
     }
 
+    private fun setAccount(account: Account?) {
+        _account.value = account
+    }
+
     private fun setAmount(amount: Double?) {
         _amount.value = amount
     }
@@ -187,8 +204,11 @@ class TransactionViewModel @Inject constructor(
         _note.value = note
     }
 
-    fun onOpenNote() {
-        _openNote.value = true
+    fun updateAccount(accountId: Long) {
+        viewModelScope.launch {
+            val account = accountRepository.getAccount(accountId).data
+            setAccount(account)
+        }
     }
 
     fun processTransaction() {
@@ -204,6 +224,7 @@ class TransactionViewModel @Inject constructor(
         viewModelScope.launch {
             transactionRepository.saveTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
+                _account.value?.id ?: 1,
                 _amount.value ?: DEFAULT_AMOUNT,
                 _transactionType.value == TransactionType.Expense
             )
@@ -215,6 +236,7 @@ class TransactionViewModel @Inject constructor(
         viewModelScope.launch {
             transactionRepository.updateTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
+                accountId = _account.value?.id ?: 1,
                 totalTransaction = _amount.value ?: DEFAULT_AMOUNT,
                 originalTotalTransaction = _transaction?.amount ?: 0.0,
                 isExpenseTransaction = _transactionType.value == TransactionType.Expense
@@ -230,7 +252,8 @@ class TransactionViewModel @Inject constructor(
                 note = _note.value,
                 date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = _category.value
+                category = _category.value,
+                accountId = _account.value?.id ?: 1
             )
         } else {
             Transaction(
@@ -240,7 +263,8 @@ class TransactionViewModel @Inject constructor(
                 note = _note.value,
                 date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = _category.value
+                category = _category.value,
+                accountId = _account.value?.id ?: 1
             )
         }
     }
@@ -251,14 +275,11 @@ class TransactionViewModel @Inject constructor(
             transactionRepository.deleteTransaction(_transactionId)
 
             _processTransaction.value = accountRepository.updateBalance(
+                _account.value?.id ?: 1,
                 _transactionType.value == TransactionType.Expense,
                 _transaction?.amount ?: 0.0,
             )
         }
-    }
-
-    fun successOpenNote() {
-        _openNote.value = null
     }
 
     companion object {

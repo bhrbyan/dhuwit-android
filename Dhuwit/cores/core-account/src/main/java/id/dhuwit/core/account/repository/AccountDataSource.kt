@@ -15,17 +15,20 @@ interface AccountDataSource {
     suspend fun deleteAccount(id: Long): State<Boolean>
 
     suspend fun updateBalance(
+        accountId: Long,
         totalTransaction: Double,
         isExpenseTransaction: Boolean
     ): State<Boolean>
 
     suspend fun updateBalance(
+        accountId: Long,
         totalTransaction: Double,
         originalTotalTransaction: Double,
         isExpenseTransaction: Boolean,
     ): State<Boolean>
 
     suspend fun updateBalance(
+        accountId: Long,
         isExpenseTransaction: Boolean,
         totalTransaction: Double
     ): State<Boolean>

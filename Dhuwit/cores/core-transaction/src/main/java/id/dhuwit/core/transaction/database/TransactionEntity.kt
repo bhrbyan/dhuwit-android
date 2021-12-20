@@ -19,16 +19,22 @@ data class TransactionEntity(
     @ColumnInfo(name = "category_id") var categoryId: Long,
     @ColumnInfo(name = "category_name") var categoryName: String,
     @ColumnInfo(name = "category_type") var categoryType: String,
+    @ColumnInfo(name = "account_id") var accountId: Long
 ) {
     fun toModel(): Transaction {
         return Transaction(
-            TransactionType.getTransactionType(type),
-            amount,
-            note,
-            date,
-            createdAt,
-            Category(categoryName, CategoryType.getCategoryType(categoryType), categoryId),
-            id
+            type = TransactionType.getTransactionType(type),
+            amount = amount,
+            note = note,
+            date = date,
+            createdAt = createdAt,
+            category = Category(
+                categoryName,
+                CategoryType.getCategoryType(categoryType),
+                categoryId
+            ),
+            accountId = accountId,
+            id = id
         )
     }
 }

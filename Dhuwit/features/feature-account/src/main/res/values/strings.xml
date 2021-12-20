@@ -12,4 +12,7 @@
     <string name="account_list_title">Account</string>
     <string name="account_list_add_title">Create new account!</string>
     <string name="account_list_add_description">Separate your accounts based on their usage.</string>
+
+    <!-- Selection -->
+    <string name="account_selection_toolbar_title">Select Account</string>
 </resources>

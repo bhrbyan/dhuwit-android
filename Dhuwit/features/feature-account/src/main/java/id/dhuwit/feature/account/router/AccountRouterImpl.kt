@@ -3,6 +3,7 @@ package id.dhuwit.feature.account.router
 import android.content.Context
 import android.content.Intent
 import id.dhuwit.feature.account.ui.form.AccountActivity
+import id.dhuwit.feature.account.ui.selection.AccountSelectionActivity
 
 internal object AccountRouterImpl : AccountRouter {
 
@@ -12,5 +13,9 @@ internal object AccountRouterImpl : AccountRouter {
         return Intent(context, AccountActivity::class.java).apply {
             putExtra(KEY_ACCOUNT_ID, accountId)
         }
+    }
+
+    override fun openAccountSelectionPage(context: Context): Intent {
+        return Intent(context, AccountSelectionActivity::class.java)
     }
 }
