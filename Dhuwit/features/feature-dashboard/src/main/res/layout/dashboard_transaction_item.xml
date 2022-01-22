@@ -7,7 +7,10 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:padding="@dimen/uikit_margin_padding_size_medium">
+    android:paddingStart="@dimen/uikit_margin_padding_size_large"
+    android:paddingTop="@dimen/uikit_margin_padding_size_medium"
+    android:paddingEnd="@dimen/uikit_margin_padding_size_large"
+    android:paddingBottom="@dimen/uikit_margin_padding_size_medium">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_category_name"
@@ -37,7 +40,7 @@
         android:id="@+id/text_note"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
         android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +53,7 @@
         android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
         android:gravity="end"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
         app:layout_constraintEnd_toEndOf="parent"

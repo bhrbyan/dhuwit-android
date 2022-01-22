@@ -1,4 +1,4 @@
-package id.dhuwit.uikit.widget
+package id.dhuwit.uikit.divider
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -13,7 +13,6 @@ class DividerMarginItemDecoration(
 ) : DividerItemDecoration(context, orientation) {
 
     init {
-
         val attributes: IntArray = intArrayOf(android.R.attr.listDivider)
         val attribute: TypedArray = context.obtainStyledAttributes(attributes)
         val divider: Drawable? = attribute.getDrawable(0)

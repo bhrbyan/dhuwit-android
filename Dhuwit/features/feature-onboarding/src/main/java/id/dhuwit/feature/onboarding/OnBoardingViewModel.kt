@@ -42,7 +42,7 @@ class OnBoardingViewModel @Inject constructor(
     fun createAccount() {
         _createAccount.value = State.Loading()
         viewModelScope.launch {
-            _createAccount.value = accountRepository.storeAccount(Account(name, balance))
+            _createAccount.value = accountRepository.createAccount(Account(name, balance, true))
         }
     }
 

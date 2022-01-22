@@ -19,8 +19,10 @@
     <string name="transaction_calculator_clear">C</string>
 
     <string name="transaction_caption_note">Note</string>
+    <string name="transaction_caption_note_empty">-</string>
     <string name="transaction_caption_date">Date</string>
     <string name="transaction_caption_category">Category</string>
+    <string name="transaction_caption_account">Account</string>
 
     <string name="transaction_toggle_income">Income</string>
     <string name="transaction_toggle_expense">Expense</string>

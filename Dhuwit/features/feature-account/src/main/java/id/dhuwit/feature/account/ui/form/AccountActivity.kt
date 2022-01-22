@@ -1,4 +1,4 @@
-package id.dhuwit.feature.account
+package id.dhuwit.feature.account.ui.form
 
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -9,6 +9,8 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.convertDoubleToString
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
+import id.dhuwit.core.extension.visible
+import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountActivityBinding
 import id.dhuwit.state.State
 import id.dhuwit.storage.Storage
@@ -32,22 +34,50 @@ class AccountActivity : BaseActivity() {
     }
 
     override fun listener() {
+        setUpInputTextBalance()
+        with(binding) {
+            buttonSave.setOnClickListener {
+                viewModel.createAccount()
+            }
 
+            buttonUpdate.setOnClickListener {
+                viewModel.updateAccount()
+            }
+
+            buttonDelete.setOnClickListener {
+                viewModel.deleteAccount()
+            }
+
+            inputTextAccountName.apply {
+                addTextChangedListener {
+                    viewModel.setAccountName(it.toString())
+                    viewModel.checkInputField()
+                }
+            }
+
+            switchPrimaryAccount.setOnCheckedChangeListener { button, isChecked ->
+                if (button.isPressed) {
+                    viewModel.setStatusPrimaryAccount(isChecked)
+                }
+            }
+        }
     }
 
     override fun observer() {
         with(viewModel) {
+
             account.observe(this@AccountActivity) {
                 when (it) {
                     is State.Loading -> {
                         showLoading()
                     }
                     is State.Success -> {
-                        setUpView(it.data)
                         hideLoading()
+                        setUpViewUpdateAccount(it.data)
                     }
                     is State.Error -> {
                         hideLoading()
+                        setUpViewCreateAccount()
                     }
                 }
             }
@@ -60,7 +90,7 @@ class AccountActivity : BaseActivity() {
                 }
             }
 
-            updateAccount.observe(this@AccountActivity) {
+            action.observe(this@AccountActivity) {
                 when (it) {
                     is State.Loading -> {
                         showLoading()
@@ -81,12 +111,24 @@ class AccountActivity : BaseActivity() {
 
     private fun setUpToolbar() {
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = getString(R.string.account_hint_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
+        }
+    }
+
+    private fun setUpInputTextBalance() {
+        binding.inputTextAccountBalance.apply {
+            setCurrency(storage.getSymbolCurrency())
+            setDecimals(false)
+            setSeparator(SEPARATOR)
+            addTextChangedListener {
+                val balance = binding.inputTextAccountBalance.cleanDoubleValue
+                viewModel.setAccountBalance(balance)
+                viewModel.checkInputField()
+            }
         }
     }
 
@@ -98,48 +140,48 @@ class AccountActivity : BaseActivity() {
         ).show()
     }
 
-    private fun setUpView(data: Account?) {
+    private fun setUpViewUpdateAccount(data: Account?) {
+        supportActionBar?.title = getString(R.string.account_form_update_toolbar_title)
         with(binding) {
-            inputTextAccountName.apply {
-                addTextChangedListener {
-                    viewModel.setAccountName(it.toString())
-                    viewModel.checkInputField()
-                }
-                setText(data?.name)
-            }
+            buttonUpdate.visible()
+            buttonDelete.visible()
+            inputTextAccountName.setText(data?.name)
+            inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
+            switchPrimaryAccount.isChecked = data?.isPrimary ?: false
+        }
+    }
 
-            inputTextAccountBalance.apply {
-                setCurrency(storage.getSymbolCurrency())
-                setDecimals(false)
-                setSeparator(SEPARATOR)
-                addTextChangedListener {
-                    val balance = binding.inputTextAccountBalance.cleanDoubleValue
-                    viewModel.setAccountBalance(balance)
-                    viewModel.checkInputField()
-                }
-
-                setText(data?.balance?.convertDoubleToString())
-            }
-
-            buttonSave.setOnClickListener {
-                viewModel.saveAccount()
-            }
+    private fun setUpViewCreateAccount() {
+        supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
+        with(binding) {
+            buttonSave.visible()
+            switchPrimaryAccount.isChecked = false
         }
     }
 
     private fun showLoading() {
         with(binding) {
             progressBar.show()
+
             buttonSave.text = null
+            buttonUpdate.text = null
+
             buttonSave.disabled()
+            buttonUpdate.disabled()
+            buttonDelete.disabled()
         }
     }
 
     private fun hideLoading() {
         with(binding) {
             progressBar.hide()
+
             buttonSave.text = getString(R.string.general_save)
+            buttonUpdate.text = getString(R.string.general_update)
+
             buttonSave.enabled()
+            buttonUpdate.enabled()
+            buttonDelete.enabled()
         }
     }
 

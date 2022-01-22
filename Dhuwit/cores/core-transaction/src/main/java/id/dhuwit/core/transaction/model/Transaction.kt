@@ -11,6 +11,7 @@ data class Transaction(
     var date: String,
     var createdAt: String,
     var category: Category?,
+    var accountId: Long,
     var id: Long = 0,
 ) {
     fun toEntity(): TransactionEntity {
@@ -23,7 +24,8 @@ data class Transaction(
             createdAt = createdAt,
             categoryId = category?.id ?: 0,
             categoryName = category?.name ?: "",
-            categoryType = category?.type.toString()
+            categoryType = category?.type.toString(),
+            accountId = accountId
         )
     }
 }

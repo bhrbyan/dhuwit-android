@@ -1,32 +1,38 @@
 package id.dhuwit.feature.dashboard
 
+import android.content.res.Configuration
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.*
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.account.router.AccountRouter
+import id.dhuwit.feature.account.ui.list.AccountListAdapter
+import id.dhuwit.feature.account.ui.list.AccountListListener
+import id.dhuwit.feature.account.ui.list.AccountListViewModel
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
 import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.State
 import id.dhuwit.storage.Storage
-import id.dhuwit.uikit.widget.DividerMarginItemDecoration
+import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
+class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, AccountListListener {
 
     private lateinit var binding: DashboardActivityBinding
     private lateinit var adapterTransaction: DashboardTransactionAdapter
-    private val viewModel: DashboardViewModel by viewModels()
+    private lateinit var adapterAccount: AccountListAdapter
+
+    private val viewModelDashboard: DashboardViewModel by viewModels()
+    private val viewModelAccountList: AccountListViewModel by viewModels()
 
     @Inject
     lateinit var transactionRouter: TransactionRouter
@@ -41,7 +47,8 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            viewModel.getDetails()
+            viewModelDashboard.getDetails()
+            viewModelAccountList.getAccounts()
         }
     }
 
@@ -49,7 +56,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            viewModel.getDetails()
+            viewModelAccountList.getAccounts()
         }
     }
 
@@ -57,12 +64,13 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         binding = DashboardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUpToolbar()
-        setUpAdapter()
-        setUpMonth()
 
-        viewModel.setDefaultPeriodDate()
-        viewModel.getDetails()
+        setUpToolbar()
+        setUpAdapterAccount()
+        setUpAdapterTransaction()
+
+        viewModelDashboard.setDefaultPeriodDate()
+        viewModelDashboard.getDetails()
     }
 
     override fun listener() {
@@ -71,30 +79,25 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
                 openTransactionPage(null)
             }
 
-            layoutAccount.setOnClickListener {
-                openAccountPage()
-            }
-
             imageNext.setOnClickListener {
-                viewModel.onNextPeriodDate()
+                viewModelDashboard.onNextPeriodDate()
             }
 
             imagePrevious.setOnClickListener {
-                viewModel.onPreviousPeriodDate()
+                viewModelDashboard.onPreviousPeriodDate()
             }
         }
     }
 
     override fun observer() {
-        with(viewModel) {
-            details.observe(this@DashboardActivity) {
-                when (it) {
+        with(viewModelDashboard) {
+            details.observe(this@DashboardActivity) { state ->
+                when (state) {
                     is State.Loading -> {
-                        showLoading(it.data?.account)
+                        showLoading()
                     }
                     is State.Success -> {
-                        setUpDataAccount(it.data?.account)
-                        setUpDataTransaction(it.data?.transactions)
+                        setUpDataTransaction(state.data?.transactions)
                         hideLoading()
                     }
                     is State.Error -> {
@@ -107,6 +110,21 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
                 binding.textMonth.text = period
             }
         }
+
+        viewModelAccountList.accounts.observe(this) { state ->
+            when (state) {
+                is State.Loading -> {
+                    // Do something
+                }
+                is State.Success -> {
+                    val sortedAccount = state.data?.sortedByDescending { it.isPrimary }
+                    setUpDataAccount(sortedAccount)
+                }
+                is State.Error -> {
+                    showError()
+                }
+            }
+        }
     }
 
     private fun setUpToolbar() {
@@ -114,7 +132,35 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         supportActionBar?.title = getString(R.string.app_name)
     }
 
-    private fun setUpAdapter() {
+    private fun setUpAdapterAccount() {
+        adapterAccount = AccountListAdapter(storage).apply {
+            listener = this@DashboardActivity
+        }
+
+        val orientation: Int = resources.configuration.orientation
+        val layoutManagerOrientation = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayoutManager.HORIZONTAL
+        } else {
+            LinearLayoutManager.VERTICAL
+        }
+
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        binding.recyclerViewAccount.apply {
+            adapter = adapterAccount
+            layoutManager = LinearLayoutManager(context, layoutManagerOrientation, false)
+            snapHelper.attachToRecyclerView(this)
+        }
+    }
+
+    override fun onClickAccount(accountId: Long) {
+        openAccountPage(accountId)
+    }
+
+    override fun onClickAddAccount() {
+        openAccountPage(null)
+    }
+
+    private fun setUpAdapterTransaction() {
         adapterTransaction = DashboardTransactionAdapter(this, emptyList()).apply {
             listener = this@DashboardActivity
         }
@@ -136,10 +182,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         openTransactionPage(transaction?.id)
     }
 
-    private fun setUpMonth() {
-
-    }
-
     private fun setUpDataTransaction(transactions: List<Transaction>?) {
         if (transactions.isNullOrEmpty()) {
             showMessageEmptyTransaction()
@@ -149,41 +191,18 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         }
     }
 
-    private fun setUpDataAccount(account: Account?) {
-        with(binding) {
-            textAccountName.text = account?.name
-            textAccountBalance.text = account?.balance?.convertPriceWithCurrencyFormat(
-                storage.getSymbolCurrency()
-            )
+    private fun setUpDataAccount(accounts: List<Account>?) {
+        accounts?.let {
+            adapterAccount.updateAccounts(accounts)
         }
     }
 
-    private fun showLoading(account: Account?) {
-        with(binding) {
-            if (account == null) {
-                progressBarAccount.show()
-                textAccountName.gone()
-                textAccountBalance.gone()
-                imageArrowRight.gone()
-            } else {
-                progressBarAccount.hide()
-                textAccountName.visible()
-                textAccountBalance.visible()
-                imageArrowRight.visible()
-            }
-
-            progressBarTransaction.show()
-        }
+    private fun showLoading() {
+        binding.progressBarTransaction.show()
     }
 
     private fun hideLoading() {
-        with(binding) {
-            progressBarAccount.hide()
-            progressBarTransaction.hide()
-            textAccountName.visible()
-            textAccountBalance.visible()
-            imageArrowRight.visible()
-        }
+        binding.progressBarTransaction.hide()
     }
 
     private fun showTransaction() {
@@ -204,7 +223,16 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener {
         transactionResult.launch(transactionRouter.openTransactionPage(this, transactionId))
     }
 
-    private fun openAccountPage() {
-        accountResult.launch(accountRouter.openAccountPage(this))
+    private fun openAccountPage(accountId: Long?) {
+        accountResult.launch(accountRouter.openAccountPage(this, accountId))
     }
+
+    private fun showError() {
+        Snackbar.make(
+            binding.root,
+            getString(id.dhuwit.feature.transaction.R.string.general_error_message),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
 }
