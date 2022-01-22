@@ -2,10 +2,10 @@ package id.dhuwit.feature.transaction
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
@@ -17,6 +17,8 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.TransactionType
+import id.dhuwit.feature.account.AccountConstants.KEY_ACCOUNT_ID
+import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
@@ -45,6 +47,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     @Inject
     lateinit var noteRouter: NoteRouter
 
+    @Inject
+    lateinit var accountRouter: AccountRouter
+
     private val categoryResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -64,6 +69,16 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         }
     }
 
+    private val accountResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val accountId = result.data?.getLongExtra(KEY_ACCOUNT_ID, 1) ?: 1
+            viewModel.updateAccount(accountId)
+        }
+
+    }
+
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -72,10 +87,10 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         val transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
         if (transactionId == DEFAULT_TRANSACTION_ID) {
             setUpToolbar(getString(R.string.transaction_toolbar_title_add))
-            disableButtonDelete()
+            hideButtonDelete()
         } else {
             setUpToolbar(getString(R.string.transaction_toolbar_title_update))
-            enableButtonDelete()
+            showButtonDelete()
         }
     }
 
@@ -154,7 +169,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             }
 
             buttonNote.setOnClickListener {
-                viewModel.onOpenNote()
+                openNotePage(viewModel.note.value)
             }
 
             buttonSave.setOnClickListener {
@@ -163,6 +178,10 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
             buttonDelete.setOnClickListener {
                 showDialogDeleteConfirmation()
+            }
+
+            buttonAccount.setOnClickListener {
+                openAccountPage()
             }
         }
     }
@@ -176,6 +195,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             date.observe(this@TransactionActivity) { date -> setTextDate(date) }
             category.observe(this@TransactionActivity) { category -> setTextCategory(category) }
             note.observe(this@TransactionActivity) { note -> setTextNote(note) }
+            account.observe(this@TransactionActivity) { account -> setTextAccount(account) }
             transactionType.observe(this@TransactionActivity) { transactionType ->
                 when (transactionType) {
                     TransactionType.Expense -> binding.layoutButtonToggle.check(binding.buttonToggleExpense.id)
@@ -186,12 +206,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                 categoryType?.let { type ->
                     openCategoryPage(type)
                     viewModel.successOpenCategory()
-                }
-            }
-            openNote.observe(this@TransactionActivity) { openNote ->
-                openNote?.let {
-                    openNotePage(viewModel.note.value)
-                    viewModel.successOpenNote()
                 }
             }
             processTransaction.observe(this@TransactionActivity) {
@@ -213,19 +227,12 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         }
     }
 
-    private fun enableButtonDelete() {
-        binding.buttonDelete.enabled()
-        binding.buttonDelete.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.ic_delete
-            )
-        )
+    private fun showButtonDelete() {
+        binding.buttonDelete.visible()
     }
 
-    private fun disableButtonDelete() {
-        binding.buttonDelete.disabled()
-        binding.buttonDelete.setImageDrawable(null)
+    private fun hideButtonDelete() {
+        binding.buttonDelete.gone()
     }
 
     private fun openDatePicker(selectionDate: Long?) {
@@ -244,18 +251,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun setTextNote(note: String?) {
-        with(binding) {
-            if (note.isNullOrEmpty()) {
-                textNote.gone()
-                textCaptionNote.gone()
-            } else {
-                textCaptionNote.visible()
-                textNote.apply {
-                    visible()
-                    text = note
-                }
-            }
+        binding.textNote.text = if (note.isNullOrEmpty()) {
+            getString(R.string.transaction_caption_note_empty)
+        } else {
+            note
         }
+    }
+
+    private fun setTextAccount(account: Account?) {
+        binding.textAccount?.text = account?.name
     }
 
     private fun setTextCategory(category: Category?) {
@@ -310,12 +314,12 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     private fun showLoadingSaveTransaction() {
         binding.progressBarSave.show()
-        binding.buttonSave.gone()
+        binding.buttonSave.disabled()
     }
 
     private fun hideLoadingSaveTransaction() {
         binding.progressBarSave.hide()
-        binding.buttonSave.visible()
+        binding.buttonSave.enabled()
     }
 
     private fun openCategoryPage(categoryType: CategoryType) {
@@ -341,8 +345,14 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         )
     }
 
-    override fun onClickButtonPositive() {
+    override fun onConfirmDeleteTransaction() {
         viewModel.deleteTransaction()
+    }
+
+    private fun openAccountPage() {
+        accountResult.launch(
+            accountRouter.openAccountSelectionPage(this)
+        )
     }
 
     companion object {

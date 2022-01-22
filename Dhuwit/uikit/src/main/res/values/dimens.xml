@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Margin Padding -->
-    <dimen name="uikit_margin_padding_size_xsmall">4dp</dimen>
-    <dimen name="uikit_margin_padding_size_small">8dp</dimen>
+    <dimen name="uikit_margin_padding_size_xxsmall">4dp</dimen>
+    <dimen name="uikit_margin_padding_size_xsmall">8dp</dimen>
+    <dimen name="uikit_margin_padding_size_small">12dp</dimen>
     <dimen name="uikit_margin_padding_size_medium">16dp</dimen>
-    <dimen name="uikit_margin_padding_size_large">24dp</dimen>
-    <dimen name="uikit_margin_padding_size_xlarge">32dp</dimen>
-    <dimen name="uikit_margin_padding_size_xxlarge">40dp</dimen>
+    <dimen name="uikit_margin_padding_size_large">20dp</dimen>
+    <dimen name="uikit_margin_padding_size_xlarge">24dp</dimen>
+    <dimen name="uikit_margin_padding_size_xxlarge">32dp</dimen>
+    <dimen name="uikit_margin_padding_size_xxxlarge">40dp</dimen>
 
     <!-- Text Size-->
     <dimen name="uikit_text_size_micro">12sp</dimen>
@@ -22,4 +24,5 @@
     <dimen name="uikit_corner_radius_medium">8dp</dimen>
     <dimen name="uikit_corner_radius_large">16dp</dimen>
     <dimen name="uikit_corner_radius_xlarge">20dp</dimen>
+
 </resources>

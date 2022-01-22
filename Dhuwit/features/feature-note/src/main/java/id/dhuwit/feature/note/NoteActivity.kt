@@ -14,6 +14,8 @@ class NoteActivity : BaseActivity() {
         binding = NoteActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpToolbar()
+
         val note = intent.getStringExtra(KEY_NOTE)
         setNote(note)
     }
@@ -26,16 +28,23 @@ class NoteActivity : BaseActivity() {
                 setResult(RESULT_OK, data)
                 finish()
             }
-
-            imageClose.setOnClickListener {
-                setResult(RESULT_CANCELED)
-                finish()
-            }
         }
     }
 
     override fun observer() {
         // Do nothing
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = getString(R.string.note_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.toolbar.setNavigationOnClickListener {
+            setResult(RESULT_CANCELED)
+            finish()
+        }
     }
 
     private fun setNote(note: String?) {

@@ -173,7 +173,7 @@
     </style>
 
     <style name="Uikit.Style.Button.Toggle" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">8dp</item>
+        <item name="cornerRadius">@dimen/uikit_corner_radius_medium</item>
         <item name="strokeWidth">2dp</item>
         <item name="strokeColor">@color/colorMinor</item>
         <item name="android:textAppearance">@style/Uikit.Style.TextAppearance.Body2</item>

@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import id.dhuwit.core.transaction.database.TransactionMigration.MIGRATION_1_2
 
 @Database(
     entities = [TransactionEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TransactionDatabase : RoomDatabase() {
@@ -30,6 +31,7 @@ abstract class TransactionDatabase : RoomDatabase() {
                         TransactionDatabase::class.java, DATABASE_NAME
                     )
                         .fallbackToDestructiveMigration()
+                        .addMigrations(MIGRATION_1_2)
                         .build()
                         .also { INSTANCE = it }
                 }
