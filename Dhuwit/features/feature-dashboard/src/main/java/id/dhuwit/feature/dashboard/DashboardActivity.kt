@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.*
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
@@ -120,7 +121,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
                     setUpDataAccount(sortedAccount)
                 }
                 is State.Error -> {
-                    // Do something
+                    showError()
                 }
             }
         }
@@ -224,6 +225,14 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
 
     private fun openAccountPage(accountId: Long?) {
         accountResult.launch(accountRouter.openAccountPage(this, accountId))
+    }
+
+    private fun showError() {
+        Snackbar.make(
+            binding.root,
+            getString(id.dhuwit.feature.transaction.R.string.general_error_message),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
 }
