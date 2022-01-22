@@ -118,13 +118,13 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
             try {
                 val accountBalance = dao.getAccount(accountId).toModel().balance
 
-                val balance = if (isExpenseTransaction) {
+                val newBalance = if (isExpenseTransaction) {
                     accountBalance - totalTransaction
                 } else {
                     accountBalance + totalTransaction
                 }
 
-                dao.updateBalance(balance)
+                dao.updateBalance(newBalance, accountId)
                 State.Success(true)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage ?: "")
@@ -143,7 +143,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
             try {
                 val accountBalance = dao.getAccount(accountId).toModel().balance
 
-                val balance = if (isExpenseTransaction) {
+                val newBalance = if (isExpenseTransaction) {
                     resultBalanceExpenseTransaction(
                         totalTransaction,
                         originalTotalTransaction,
@@ -157,7 +157,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
                     )
                 }
 
-                dao.updateBalance(balance)
+                dao.updateBalance(newBalance, accountId)
                 State.Success(true)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage ?: "")
@@ -201,13 +201,13 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
             try {
                 val accountBalance = dao.getAccount(accountId).toModel().balance
 
-                val balance = if (isExpenseTransaction) {
+                val newBalance = if (isExpenseTransaction) {
                     accountBalance + totalTransaction
                 } else {
                     accountBalance - totalTransaction
                 }
 
-                dao.updateBalance(balance)
+                dao.updateBalance(newBalance, accountId)
                 State.Success(true)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage ?: "")
