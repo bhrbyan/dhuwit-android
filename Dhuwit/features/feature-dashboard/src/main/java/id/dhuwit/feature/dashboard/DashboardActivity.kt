@@ -116,7 +116,8 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
                     // Do something
                 }
                 is State.Success -> {
-                    setUpDataAccount(state.data)
+                    val sortedAccount = state.data?.sortedByDescending { it.isPrimary }
+                    setUpDataAccount(sortedAccount)
                 }
                 is State.Error -> {
                     // Do something
