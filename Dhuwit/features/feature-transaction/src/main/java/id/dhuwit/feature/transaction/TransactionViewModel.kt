@@ -109,12 +109,12 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun setCounter(counter: String) {
-        if (isCounterLengthMoreThanOne() && isFirstCharZero()) {
-            removeFirstChar()
-        }
-
         var fullCounter: String = _counter
         fullCounter += counter
+
+        if (isCounterLengthMoreThanOne(fullCounter) && isFirstCharZero(fullCounter)) {
+            fullCounter = removeFirstChar(fullCounter)
+        }
 
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
             _counter = fullCounter
@@ -126,16 +126,16 @@ class TransactionViewModel @Inject constructor(
         return fullCounter.length <= 9
     }
 
-    private fun isFirstCharZero(): Boolean {
-        return _counter.first() == '0'
+    private fun isFirstCharZero(counter: String): Boolean {
+        return counter.first() == '0'
     }
 
-    private fun isCounterLengthMoreThanOne(): Boolean {
-        return _counter.length > 1
+    private fun isCounterLengthMoreThanOne(counter: String): Boolean {
+        return counter.length > 1
     }
 
-    private fun removeFirstChar() {
-        _counter = _counter.removePrefix("0")
+    private fun removeFirstChar(counter: String): String {
+        return counter.removePrefix("0")
     }
 
     fun setTransactionDate(date: String) {
