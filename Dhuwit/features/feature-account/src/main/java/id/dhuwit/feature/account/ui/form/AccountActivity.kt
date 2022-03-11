@@ -68,9 +68,6 @@ class AccountActivity : BaseActivity() {
 
             account.observe(this@AccountActivity) {
                 when (it) {
-                    is State.Loading -> {
-                        showLoading()
-                    }
                     is State.Success -> {
                         hideLoading()
                         setUpViewUpdateAccount(it.data)
@@ -92,9 +89,6 @@ class AccountActivity : BaseActivity() {
 
             action.observe(this@AccountActivity) {
                 when (it) {
-                    is State.Loading -> {
-                        showLoading()
-                    }
                     is State.Success -> {
                         hideLoading()
                         setResult(RESULT_OK)

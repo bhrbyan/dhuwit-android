@@ -49,9 +49,6 @@ class OnBoardingActivity : BaseActivity() {
 
             createAccount.observe(this@OnBoardingActivity) {
                 when (it) {
-                    is State.Loading -> {
-                        showLoading()
-                    }
                     is State.Success -> {
                         hideLoading()
 

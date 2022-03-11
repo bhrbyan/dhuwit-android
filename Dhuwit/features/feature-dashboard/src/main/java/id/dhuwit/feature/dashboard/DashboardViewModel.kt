@@ -30,7 +30,6 @@ class DashboardViewModel @Inject constructor(
     private var periodMonth: Int = CURRENT_MONTH
 
     fun getDetails() {
-        _details.value = State.Loading()
         viewModelScope.launch {
             val transactions = getTransactions()
 
@@ -39,7 +38,6 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun updateTransactions() {
-        _details.value = State.Loading(Dashboard(null))
         viewModelScope.launch {
             val transactions = getTransactions()
 

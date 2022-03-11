@@ -57,14 +57,12 @@ class AccountViewModel @Inject constructor(
     }
 
     fun createAccount() {
-        _action.value = State.Loading()
         viewModelScope.launch {
             _action.value = accountRepository.createAccount(Account(name, balance, isPrimary))
         }
     }
 
     fun updateAccount() {
-        _action.value = State.Loading()
         viewModelScope.launch {
             _action.value = accountRepository.updateAccount(
                 Account(name, balance, isPrimary, _account.value?.data?.id ?: 0)
@@ -73,7 +71,6 @@ class AccountViewModel @Inject constructor(
     }
 
     fun deleteAccount() {
-        _action.value = State.Loading()
         viewModelScope.launch {
             _action.value = accountRepository.deleteAccount(_account.value?.data?.id ?: 0)
         }

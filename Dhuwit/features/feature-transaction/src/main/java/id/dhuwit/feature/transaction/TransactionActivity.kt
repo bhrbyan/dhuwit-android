@@ -210,9 +210,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             }
             processTransaction.observe(this@TransactionActivity) {
                 when (it) {
-                    is State.Loading -> {
-                        showLoadingSaveTransaction()
-                    }
                     is State.Success -> {
                         hideLoadingSaveTransaction()
                         setResult(RESULT_OK)

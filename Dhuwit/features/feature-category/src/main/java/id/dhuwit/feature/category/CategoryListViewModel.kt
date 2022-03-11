@@ -33,7 +33,6 @@ class CategoryListViewModel @Inject constructor(
     }
 
     private fun getCategories(categoryType: CategoryType) {
-        _categories.value = State.Loading()
         viewModelScope.launch {
             _categories.value = categoryRepository.getCategories(categoryType)
         }
@@ -47,7 +46,6 @@ class CategoryListViewModel @Inject constructor(
     }
 
     fun addCategory(categoryName: String) {
-        _addCategory.value = State.Loading()
         viewModelScope.launch {
             _addCategory.value = categoryRepository.addCategory(
                 Category(categoryName, categoryType)

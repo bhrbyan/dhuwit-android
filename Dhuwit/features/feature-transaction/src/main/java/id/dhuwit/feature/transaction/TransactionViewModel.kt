@@ -220,7 +220,6 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun saveTransaction() {
-        _processTransaction.value = State.Loading()
         viewModelScope.launch {
             transactionRepository.saveTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
@@ -232,7 +231,6 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun updateTransaction() {
-        _processTransaction.value = State.Loading()
         viewModelScope.launch {
             transactionRepository.updateTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
@@ -270,7 +268,6 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun deleteTransaction() {
-        _processTransaction.value = State.Loading()
         viewModelScope.launch {
             transactionRepository.deleteTransaction(_transactionId)
 

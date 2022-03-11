@@ -3,7 +3,10 @@ package id.dhuwit.feature.dashboard
 import android.content.res.Configuration
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
@@ -93,9 +96,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         with(viewModelDashboard) {
             details.observe(this@DashboardActivity) { state ->
                 when (state) {
-                    is State.Loading -> {
-                        showLoading()
-                    }
                     is State.Success -> {
                         setUpDataTransaction(state.data?.transactions)
                         hideLoading()
@@ -113,9 +113,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
 
         viewModelAccountList.accounts.observe(this) { state ->
             when (state) {
-                is State.Loading -> {
-                    // Do something
-                }
                 is State.Success -> {
                     val sortedAccount = state.data?.sortedByDescending { it.isPrimary }
                     setUpDataAccount(sortedAccount)

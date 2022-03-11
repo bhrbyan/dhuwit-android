@@ -54,7 +54,6 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         with(viewModel) {
             categories.observe(this@CategoryListActivity) {
                 when (it) {
-                    is State.Loading -> showLoading()
                     is State.Success -> {
                         hideLoading()
                         if (it.data.isNullOrEmpty()) {
@@ -88,7 +87,6 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
 
             addCategory.observe(this@CategoryListActivity) {
                 when (it) {
-                    is State.Loading -> showLoading()
                     is State.Success -> {
                         it.data?.let { category ->
                             onSelectCategory(category)

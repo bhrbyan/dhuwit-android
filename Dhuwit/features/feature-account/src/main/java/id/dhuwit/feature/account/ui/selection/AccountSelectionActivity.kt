@@ -37,8 +37,6 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
     override fun observer() {
         viewModel.accounts.observe(this) { state ->
             when (state) {
-                is State.Loading -> {
-                }
                 is State.Success -> {
                     adapterAccountSelection.submitList(state.data)
                 }
