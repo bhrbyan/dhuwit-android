@@ -6,13 +6,10 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.extension.convertDoubleToString
-import id.dhuwit.core.extension.disabled
-import id.dhuwit.core.extension.enabled
-import id.dhuwit.core.extension.visible
+import id.dhuwit.core.extension.*
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountActivityBinding
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
@@ -34,69 +31,64 @@ class AccountActivity : BaseActivity() {
     }
 
     override fun listener() {
-        setUpInputTextBalance()
         with(binding) {
+            inputTextAccountName.apply {
+                addTextChangedListener {
+                    validationRequirement()
+                }
+            }
+
+            inputTextAccountBalance.apply {
+                setCurrency(storage.getSymbolCurrency())
+                setDecimals(false)
+                setSeparator(SEPARATOR)
+                addTextChangedListener {
+                    validationRequirement()
+                }
+            }
+
             buttonSave.setOnClickListener {
-                viewModel.createAccount()
+                with(binding) {
+                    viewModel.createAccount(
+                        name = inputTextAccountName.text.toString(),
+                        balance = inputTextAccountBalance.cleanDoubleValue,
+                        isPrimary = switchPrimaryAccount.isChecked
+                    )
+                }
             }
 
             buttonUpdate.setOnClickListener {
-                viewModel.updateAccount()
+                viewModel.updateAccount(
+                    name = inputTextAccountName.text.toString(),
+                    balance = inputTextAccountBalance.cleanDoubleValue,
+                    isPrimary = switchPrimaryAccount.isChecked
+                )
             }
 
             buttonDelete.setOnClickListener {
                 viewModel.deleteAccount()
-            }
-
-            inputTextAccountName.apply {
-                addTextChangedListener {
-                    viewModel.setAccountName(it.toString())
-                    viewModel.checkInputField()
-                }
-            }
-
-            switchPrimaryAccount.setOnCheckedChangeListener { button, isChecked ->
-                if (button.isPressed) {
-                    viewModel.setStatusPrimaryAccount(isChecked)
-                }
             }
         }
     }
 
     override fun observer() {
         with(viewModel) {
-
-            account.observe(this@AccountActivity) {
+            viewState.observe(this@AccountActivity) {
                 when (it) {
-                    is State.Success -> {
-                        hideLoading()
-                        setUpViewUpdateAccount(it.data)
-                    }
-                    is State.Error -> {
-                        hideLoading()
+                    is AccountViewState.CreateAccount -> {
                         setUpViewCreateAccount()
                     }
-                }
-            }
-
-            isFieldEmpty.observe(this@AccountActivity) { isEmpty ->
-                if (isEmpty) {
-                    disableButtonCreate()
-                } else {
-                    enableButtonCreate()
-                }
-            }
-
-            action.observe(this@AccountActivity) {
-                when (it) {
-                    is State.Success -> {
-                        hideLoading()
-                        setResult(RESULT_OK)
-                        finish()
+                    is AccountViewState.GetAccount -> {
+                        setUpViewUpdateAccount(it.account, it.accountsMoreThanOne)
                     }
-                    is State.Error -> {
-                        hideLoading()
+                    is AccountViewState.Success -> {
+                        closePage()
+                    }
+                    is ViewState.Error -> {
                         showError()
+                    }
+                    else -> {
+                        // Do nothing
                     }
                 }
             }
@@ -113,15 +105,41 @@ class AccountActivity : BaseActivity() {
         }
     }
 
-    private fun setUpInputTextBalance() {
-        binding.inputTextAccountBalance.apply {
-            setCurrency(storage.getSymbolCurrency())
-            setDecimals(false)
-            setSeparator(SEPARATOR)
-            addTextChangedListener {
-                val balance = binding.inputTextAccountBalance.cleanDoubleValue
-                viewModel.setAccountBalance(balance)
-                viewModel.checkInputField()
+    private fun setUpViewCreateAccount() {
+        supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
+        with(binding) {
+            buttonSave.visible()
+            switchPrimaryAccount.isChecked = false
+        }
+    }
+
+    private fun setUpViewUpdateAccount(data: Account?, accountsMoreThanOne: Boolean) {
+        supportActionBar?.title = getString(R.string.account_form_update_toolbar_title)
+        with(binding) {
+            buttonUpdate.visible()
+            if (accountsMoreThanOne) {
+                buttonDelete.visible()
+            } else {
+                buttonDelete.gone()
+            }
+
+            inputTextAccountName.setText(data?.name)
+            inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
+            switchPrimaryAccount.isChecked = data?.isPrimary ?: false
+        }
+    }
+
+    private fun validationRequirement() {
+        with(binding) {
+            if (inputTextAccountName.text.isNullOrEmpty() ||
+                inputTextAccountBalance.text.isNullOrEmpty() ||
+                inputTextAccountBalance.cleanDoubleValue == 0.0
+            ) {
+                buttonSave.disabled()
+                buttonUpdate.disabled()
+            } else {
+                buttonSave.enabled()
+                buttonUpdate.enabled()
             }
         }
     }
@@ -134,57 +152,9 @@ class AccountActivity : BaseActivity() {
         ).show()
     }
 
-    private fun setUpViewUpdateAccount(data: Account?) {
-        supportActionBar?.title = getString(R.string.account_form_update_toolbar_title)
-        with(binding) {
-            buttonUpdate.visible()
-            buttonDelete.visible()
-            inputTextAccountName.setText(data?.name)
-            inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
-            switchPrimaryAccount.isChecked = data?.isPrimary ?: false
-        }
-    }
-
-    private fun setUpViewCreateAccount() {
-        supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
-        with(binding) {
-            buttonSave.visible()
-            switchPrimaryAccount.isChecked = false
-        }
-    }
-
-    private fun showLoading() {
-        with(binding) {
-            progressBar.show()
-
-            buttonSave.text = null
-            buttonUpdate.text = null
-
-            buttonSave.disabled()
-            buttonUpdate.disabled()
-            buttonDelete.disabled()
-        }
-    }
-
-    private fun hideLoading() {
-        with(binding) {
-            progressBar.hide()
-
-            buttonSave.text = getString(R.string.general_save)
-            buttonUpdate.text = getString(R.string.general_update)
-
-            buttonSave.enabled()
-            buttonUpdate.enabled()
-            buttonDelete.enabled()
-        }
-    }
-
-    private fun enableButtonCreate() {
-        binding.buttonSave.enabled()
-    }
-
-    private fun disableButtonCreate() {
-        binding.buttonSave.disabled()
+    private fun closePage() {
+        setResult(RESULT_OK)
+        finish()
     }
 
     companion object {

@@ -10,9 +10,9 @@ interface AccountDataSource {
 
     suspend fun getAccount(id: Long): State<Account>
 
-    suspend fun updateAccount(account: Account): State<Boolean>
+    suspend fun updateAccount(account: Account?): State<Boolean>
 
-    suspend fun deleteAccount(id: Long): State<Boolean>
+    suspend fun deleteAccount(id: Long?): State<Boolean>
 
     suspend fun updateBalance(
         accountId: Long,

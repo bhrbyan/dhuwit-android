@@ -120,11 +120,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:enabled="false"
+        android:text="@string/general_save"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        tools:text="@string/general_save"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -134,11 +135,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:enabled="false"
+        android:text="@string/general_update"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toEndOf="@+id/button_delete"
-        tools:text="@string/general_save" />
+        app:layout_constraintStart_toEndOf="@+id/button_delete" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button_delete"
@@ -154,19 +156,5 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toTopOf="@+id/button_update"
         tools:text="@string/general_save" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/colorMinor"
-        app:layout_constraintBottom_toBottomOf="@+id/button_save"
-        app:layout_constraintEnd_toEndOf="@+id/button_save"
-        app:layout_constraintStart_toStartOf="@+id/button_save"
-        app:layout_constraintTop_toTopOf="@+id/button_save"
-        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

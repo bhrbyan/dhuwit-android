@@ -5,10 +5,10 @@ import id.dhuwit.feature.account.ui.list.AccountListAdapter.Companion.VIEW_TYPE_
 
 sealed class AccountListViewType {
 
-    abstract val id: Long
+    abstract val id: Long?
 
     data class Item(val account: Account) : AccountListViewType() {
-        override val id: Long = account.id
+        override val id: Long? = account.id
     }
 
     object Add : AccountListViewType() {

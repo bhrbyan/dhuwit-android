@@ -76,7 +76,7 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
         }
     }
 
-    override fun onClickAccount(accountId: Long) {
+    override fun onClickAccount(accountId: Long?) {
         setResult(RESULT_OK, Intent().apply {
             putExtra(AccountConstants.KEY_ACCOUNT_ID, accountId)
         })

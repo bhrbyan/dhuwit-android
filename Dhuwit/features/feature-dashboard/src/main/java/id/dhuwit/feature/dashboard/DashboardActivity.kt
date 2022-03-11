@@ -149,7 +149,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         }
     }
 
-    override fun onClickAccount(accountId: Long) {
+    override fun onClickAccount(accountId: Long?) {
         openAccountPage(accountId)
     }
 

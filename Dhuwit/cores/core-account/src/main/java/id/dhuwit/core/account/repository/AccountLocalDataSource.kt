@@ -66,12 +66,12 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         }
     }
 
-    override suspend fun updateAccount(account: Account): State<Boolean> {
+    override suspend fun updateAccount(account: Account?): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val currentAccountData = dao.getAccount(account.id)
-                if (currentAccountData.isPrimary != account.isPrimary) {
-                    if (account.isPrimary) {
+                val currentAccountData = dao.getAccount(account?.id)
+                if (currentAccountData.isPrimary != account?.isPrimary) {
+                    if (account?.isPrimary == true) {
                         val allAccountsData = dao.getAccounts()
                         val primaryAccountData = allAccountsData.find { it.isPrimary }
                         if (primaryAccountData != null) {
@@ -87,7 +87,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
                     }
                 }
 
-                dao.updateAccount(account.toEntity())
+                dao.updateAccount(account?.toEntity())
 
                 State.Success(true)
             } catch (e: Exception) {
@@ -96,7 +96,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         }
     }
 
-    override suspend fun deleteAccount(id: Long): State<Boolean> {
+    override suspend fun deleteAccount(id: Long?): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
                 dao.deleteAccount(id)

@@ -18,11 +18,11 @@ class AccountRepository @Inject constructor(private val local: AccountDataSource
         return local.getAccount(id)
     }
 
-    override suspend fun updateAccount(account: Account): State<Boolean> {
+    override suspend fun updateAccount(account: Account?): State<Boolean> {
         return local.updateAccount(account)
     }
 
-    override suspend fun deleteAccount(id: Long): State<Boolean> {
+    override suspend fun deleteAccount(id: Long?): State<Boolean> {
         return local.deleteAccount(id)
     }
 
