@@ -1,4 +1,4 @@
-package id.dhuwit.feature.transaction
+package id.dhuwit.feature.transaction.ui
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -25,10 +25,10 @@ import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
 import id.dhuwit.feature.note.NoteConstants.KEY_INPUT_NOTE
 import id.dhuwit.feature.note.router.NoteRouter
+import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionActivityBinding
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListener
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
-import id.dhuwit.feature.transaction.router.TransactionRouterImpl.KEY_TRANSACTION_ID
 import id.dhuwit.state.State
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -85,14 +85,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         setContentView(binding.root)
 
         showLoadingGetTransaction()
-        val transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
-        if (transactionId == DEFAULT_TRANSACTION_ID) {
-            setUpToolbar(getString(R.string.transaction_toolbar_title_add))
-            hideButtonDelete()
-        } else {
-            setUpToolbar(getString(R.string.transaction_toolbar_title_update))
-            showButtonDelete()
-        }
     }
 
     override fun listener() {
@@ -189,9 +181,21 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     override fun observer() {
         with(viewModel) {
-            amount.observe(this@TransactionActivity) { amount ->
-                setTextAmount(amount)
-                hideLoadingGetTransaction()
+            viewState.observe(this@TransactionActivity) {
+                when (it) {
+                    is TransactionViewState.SetUpViewNewTransaction -> {
+                        setUpToolbar(getString(R.string.transaction_toolbar_title_add))
+                        hideButtonDelete()
+                    }
+                    is TransactionViewState.SetUpViewUpdateTransaction -> {
+                        setUpToolbar(getString(R.string.transaction_toolbar_title_update))
+                        showButtonDelete()
+                    }
+                    is TransactionViewState.SetAmount -> {
+                        setTextAmount(it.amount)
+                        hideLoadingGetTransaction()
+                    }
+                }
             }
             date.observe(this@TransactionActivity) { date -> setTextDate(date) }
             category.observe(this@TransactionActivity) { category -> setTextCategory(category) }

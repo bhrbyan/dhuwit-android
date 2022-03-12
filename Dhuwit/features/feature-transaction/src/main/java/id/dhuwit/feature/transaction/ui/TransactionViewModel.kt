@@ -1,4 +1,4 @@
-package id.dhuwit.feature.transaction
+package id.dhuwit.feature.transaction.ui
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +15,7 @@ import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.transaction.router.TransactionRouterImpl
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,15 +27,25 @@ class TransactionViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private var counterAmount: String = DEFAULT_AMOUNT.convertDoubleToString()
+
+    private var amount: Double? = null
+
+    private var _viewState = MutableLiveData<ViewState>()
+    var viewState: LiveData<ViewState> = _viewState
+
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
+    }
+
     private var _categories: List<Category>? = null
     private var _accounts: List<Account>? = null
-    private var _counter: String = DEFAULT_AMOUNT.convertDoubleToString()
+
     private var _transaction: Transaction? = null
     private var _transactionId: Long =
         savedStateHandle.get<Long>(TransactionRouterImpl.KEY_TRANSACTION_ID)
             ?: DEFAULT_TRANSACTION_ID
 
-    private val _amount = MutableLiveData<Double?>()
     private val _date = MutableLiveData<String>()
     private val _category = MutableLiveData<Category?>()
     private val _note = MutableLiveData<String?>()
@@ -43,7 +54,6 @@ class TransactionViewModel @Inject constructor(
     private val _openCategory = MutableLiveData<CategoryType?>()
     private val _processTransaction = MutableLiveData<State<Boolean>>()
 
-    val amount: LiveData<Double?> = _amount
     val date: LiveData<String> = _date
     val category: LiveData<Category?> = _category
     val note: LiveData<String?> = _note
@@ -59,7 +69,9 @@ class TransactionViewModel @Inject constructor(
     private fun setUpTransaction(transactionId: Long) {
         viewModelScope.launch {
             if (isCreateTransaction()) {
-                setCounter(_counter)
+                updateViewState(TransactionViewState.SetUpViewNewTransaction)
+
+                setCounter(counterAmount)
                 setTransactionDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
                 setTransactionType(TransactionType.Expense)
                 setTransactionNote(null)
@@ -71,6 +83,8 @@ class TransactionViewModel @Inject constructor(
                 val account = _accounts?.find { it.isPrimary } ?: _accounts?.first()
                 setAccount(account)
             } else {
+                updateViewState(TransactionViewState.SetUpViewUpdateTransaction)
+
                 _transaction = transactionRepository.getTransaction(transactionId).data
 
                 _transaction?.let { transaction ->
@@ -109,7 +123,7 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun setCounter(counter: String) {
-        var fullCounter: String = _counter
+        var fullCounter: String = counterAmount
         fullCounter += counter
 
         if (isCounterLengthMoreThanOne(fullCounter) && isFirstCharZero(fullCounter)) {
@@ -117,8 +131,11 @@ class TransactionViewModel @Inject constructor(
         }
 
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
-            _counter = fullCounter
-            setAmount(_counter.toDouble())
+            counterAmount = fullCounter
+            amount = counterAmount.toDouble()
+            updateViewState(
+                TransactionViewState.SetAmount(amount)
+            )
         }
     }
 
@@ -155,20 +172,20 @@ class TransactionViewModel @Inject constructor(
         _account.value = account
     }
 
-    private fun setAmount(amount: Double?) {
-        _amount.value = amount
-    }
-
     fun onClearCounter() {
-        val counter = _counter.dropLast(1)
+        val counter = counterAmount.dropLast(1)
 
-        _counter = counter
+        counterAmount = counter
         val amount = if (counter.isEmpty()) {
             DEFAULT_AMOUNT
         } else {
             counter.toDouble()
         }
-        setAmount(amount)
+
+        this.amount = amount
+        updateViewState(
+            TransactionViewState.SetAmount(amount)
+        )
     }
 
     fun setTransactionType(transactionType: TransactionType) {
@@ -224,7 +241,7 @@ class TransactionViewModel @Inject constructor(
             transactionRepository.saveTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
                 _account.value?.id ?: 1,
-                _amount.value ?: DEFAULT_AMOUNT,
+                totalTransaction = amount ?: DEFAULT_AMOUNT,
                 _transactionType.value == TransactionType.Expense
             )
         }
@@ -235,7 +252,7 @@ class TransactionViewModel @Inject constructor(
             transactionRepository.updateTransaction(mapTransaction())
             _processTransaction.value = accountRepository.updateBalance(
                 accountId = _account.value?.id ?: 1,
-                totalTransaction = _amount.value ?: DEFAULT_AMOUNT,
+                totalTransaction = amount ?: DEFAULT_AMOUNT,
                 originalTotalTransaction = _transaction?.amount ?: 0.0,
                 isExpenseTransaction = _transactionType.value == TransactionType.Expense
             )
@@ -246,7 +263,7 @@ class TransactionViewModel @Inject constructor(
         return if (isCreateTransaction()) {
             Transaction(
                 type = _transactionType.value ?: TransactionType.Expense,
-                amount = _amount.value ?: DEFAULT_AMOUNT,
+                amount = amount ?: DEFAULT_AMOUNT,
                 note = _note.value,
                 date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
@@ -257,7 +274,7 @@ class TransactionViewModel @Inject constructor(
             Transaction(
                 id = _transactionId,
                 type = _transactionType.value ?: TransactionType.Expense,
-                amount = _amount.value ?: DEFAULT_AMOUNT,
+                amount = amount ?: DEFAULT_AMOUNT,
                 note = _note.value,
                 date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
