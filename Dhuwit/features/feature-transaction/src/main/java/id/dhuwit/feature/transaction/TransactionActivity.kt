@@ -2,6 +2,7 @@ package id.dhuwit.feature.transaction
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -256,7 +257,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun setTextAccount(account: Account?) {
-        binding.textAccount?.text = account?.name
+        binding.textAccount.apply {
+            if (account != null) {
+                text = account.name
+                setTextColor(ContextCompat.getColor(context, R.color.colorOnMajor))
+            } else {
+                text = getString(R.string.transaction_caption_select_account)
+                setTextColor(ContextCompat.getColor(context, R.color.colorError))
+            }
+        }
     }
 
     private fun setTextCategory(category: Category?) {

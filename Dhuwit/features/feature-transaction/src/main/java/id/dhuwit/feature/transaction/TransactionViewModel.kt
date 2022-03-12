@@ -89,7 +89,7 @@ class TransactionViewModel @Inject constructor(
                     _accounts = accountRepository.getAccounts().data
                     val account = _accounts?.find {
                         it.id == _transaction?.accountId
-                    } ?: _accounts?.first()
+                    }
                     setAccount(account)
                 }
             }
