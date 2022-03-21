@@ -11,7 +11,7 @@ interface AccountDao {
     suspend fun getAccounts(): List<AccountEntity>
 
     @Query("SELECT * FROM account_table WHERE id = :accountId")
-    suspend fun getAccount(accountId: Long?): AccountEntity
+    suspend fun getAccount(accountId: Long?): AccountEntity?
 
     @Update
     suspend fun updateAccount(account: AccountEntity?)

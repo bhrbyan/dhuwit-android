@@ -7,7 +7,6 @@ import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.math.abs
 
 class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : AccountDataSource {
 
@@ -57,9 +56,13 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
     override suspend fun getAccount(id: Long): State<Account> {
         return withContext(Dispatchers.IO) {
             try {
-                val account = dao.getAccount(id).toModel()
+                val account = dao.getAccount(id)?.toModel()
 
-                State.Success(account)
+                if (account != null) {
+                    State.Success(account)
+                } else {
+                    State.Error("Account not found")
+                }
             } catch (e: Exception) {
                 State.Error(e.localizedMessage ?: "")
             }
@@ -70,7 +73,7 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         return withContext(Dispatchers.IO) {
             try {
                 val currentAccountData = dao.getAccount(account?.id)
-                if (currentAccountData.isPrimary != account?.isPrimary) {
+                if (currentAccountData?.isPrimary != account?.isPrimary) {
                     if (account?.isPrimary == true) {
                         val allAccountsData = dao.getAccounts()
                         val primaryAccountData = allAccountsData.find { it.isPrimary }
@@ -108,110 +111,4 @@ class AccountLocalDataSource @Inject constructor(private val dao: AccountDao) : 
         }
     }
 
-    /* Called when new transaction */
-    override suspend fun updateBalance(
-        accountId: Long,
-        totalTransaction: Double,
-        isExpenseTransaction: Boolean
-    ): State<Boolean> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val accountBalance = dao.getAccount(accountId).toModel().balance
-
-                val newBalance = if (isExpenseTransaction) {
-                    accountBalance - totalTransaction
-                } else {
-                    accountBalance + totalTransaction
-                }
-
-                dao.updateBalance(newBalance, accountId)
-                State.Success(true)
-            } catch (e: Exception) {
-                State.Error(e.localizedMessage ?: "")
-            }
-        }
-    }
-
-    /* Called when update transaction */
-    override suspend fun updateBalance(
-        accountId: Long,
-        totalTransaction: Double,
-        originalTotalTransaction: Double,
-        isExpenseTransaction: Boolean
-    ): State<Boolean> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val accountBalance = dao.getAccount(accountId).toModel().balance
-
-                val newBalance = if (isExpenseTransaction) {
-                    resultBalanceExpenseTransaction(
-                        totalTransaction,
-                        originalTotalTransaction,
-                        accountBalance
-                    )
-                } else {
-                    resultBalanceIncomeTransaction(
-                        totalTransaction,
-                        originalTotalTransaction,
-                        accountBalance
-                    )
-                }
-
-                dao.updateBalance(newBalance, accountId)
-                State.Success(true)
-            } catch (e: Exception) {
-                State.Error(e.localizedMessage ?: "")
-            }
-        }
-    }
-
-    private fun resultBalanceExpenseTransaction(
-        totalTransaction: Double,
-        originalTotalTransaction: Double,
-        accountBalance: Double
-    ): Double {
-        val difference = originalTotalTransaction - totalTransaction
-        return if (difference >= 0) {
-            accountBalance + difference
-        } else {
-            accountBalance - abs(difference)
-        }
-    }
-
-    private fun resultBalanceIncomeTransaction(
-        totalTransaction: Double,
-        originalTotalTransaction: Double,
-        accountBalance: Double
-    ): Double {
-        val difference = originalTotalTransaction - totalTransaction
-        return if (difference >= 0) {
-            accountBalance - difference
-        } else {
-            accountBalance + abs(difference)
-        }
-    }
-
-    /* Called when delete transaction */
-    override suspend fun updateBalance(
-        accountId: Long,
-        isExpenseTransaction: Boolean,
-        totalTransaction: Double
-    ): State<Boolean> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val accountBalance = dao.getAccount(accountId).toModel().balance
-
-                val newBalance = if (isExpenseTransaction) {
-                    accountBalance + totalTransaction
-                } else {
-                    accountBalance - totalTransaction
-                }
-
-                dao.updateBalance(newBalance, accountId)
-                State.Success(true)
-            } catch (e: Exception) {
-                State.Error(e.localizedMessage ?: "")
-            }
-        }
-    }
 }

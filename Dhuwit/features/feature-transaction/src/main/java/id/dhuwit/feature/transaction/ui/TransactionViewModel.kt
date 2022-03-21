@@ -10,6 +10,7 @@ import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.core.extension.convertDoubleToString
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
+import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
@@ -27,43 +28,30 @@ class TransactionViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private var transactionId: Long =
+        savedStateHandle.get<Long>(TransactionRouterImpl.KEY_TRANSACTION_ID)
+            ?: DEFAULT_TRANSACTION_ID
+
     private var counterAmount: String = DEFAULT_AMOUNT.convertDoubleToString()
 
     private var amount: Double? = null
+    private var date: String? = null
+    private var type: TransactionType? = null
+    private var note: String? = null
+    private var accounts: List<Account>? = null
+    private var account: Account? = null
+    private var category: Category? = null
+    private var transaction: Transaction? = null
 
     private var _viewState = MutableLiveData<ViewState>()
     var viewState: LiveData<ViewState> = _viewState
 
-    private fun updateViewState(viewState: ViewState) {
-        _viewState.value = viewState
+    init {
+        setUpTransaction(transactionId)
     }
 
-    private var _categories: List<Category>? = null
-    private var _accounts: List<Account>? = null
-
-    private var _transaction: Transaction? = null
-    private var _transactionId: Long =
-        savedStateHandle.get<Long>(TransactionRouterImpl.KEY_TRANSACTION_ID)
-            ?: DEFAULT_TRANSACTION_ID
-
-    private val _date = MutableLiveData<String>()
-    private val _category = MutableLiveData<Category?>()
-    private val _note = MutableLiveData<String?>()
-    private val _account = MutableLiveData<Account?>()
-    private val _transactionType = MutableLiveData<TransactionType>()
-    private val _openCategory = MutableLiveData<CategoryType?>()
-    private val _processTransaction = MutableLiveData<State<Boolean>>()
-
-    val date: LiveData<String> = _date
-    val category: LiveData<Category?> = _category
-    val note: LiveData<String?> = _note
-    val account: LiveData<Account?> = _account
-    val transactionType: LiveData<TransactionType> = _transactionType
-    val openCategory: LiveData<CategoryType?> = _openCategory
-    val processTransaction: LiveData<State<Boolean>> = _processTransaction
-
-    init {
-        setUpTransaction(_transactionId)
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
     }
 
     private fun setUpTransaction(transactionId: Long) {
@@ -71,50 +59,120 @@ class TransactionViewModel @Inject constructor(
             if (isCreateTransaction()) {
                 updateViewState(TransactionViewState.SetUpViewNewTransaction)
 
-                setCounter(counterAmount)
-                setTransactionDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
-                setTransactionType(TransactionType.Expense)
-                setTransactionNote(null)
+                setCounter(counterAmount, false)
+                setDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
+                setType(TransactionType.Expense)
+                setNote(null)
 
-                _categories = categoryRepository.getCategories(CategoryType.Expense).data
-                setCategory(_categories?.first())
+                when (val result = accountRepository.getAccounts()) {
+                    is State.Success -> {
+                        accounts = result.data
+                        setAccount(
+                            accounts?.find { it.isPrimary } ?: accounts?.first()
+                        )
+                    }
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
+                    }
+                }
 
-                _accounts = accountRepository.getAccounts().data
-                val account = _accounts?.find { it.isPrimary } ?: _accounts?.first()
-                setAccount(account)
+                when (val result = categoryRepository.getCategories(CategoryType.Expense)) {
+                    is State.Success -> {
+                        setCategory(result.data?.first())
+                    }
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
+                    }
+                }
+
+                updateViewState(
+                    TransactionViewState.SetUpTransaction(
+                        amount = amount,
+                        date = date,
+                        type = type,
+                        note = note,
+                        account = account,
+                        category = category
+                    )
+                )
             } else {
                 updateViewState(TransactionViewState.SetUpViewUpdateTransaction)
 
-                _transaction = transactionRepository.getTransaction(transactionId).data
+                transaction = transactionRepository.getTransaction(transactionId).data
 
-                _transaction?.let { transaction ->
-                    setCounter(transaction.amount.convertDoubleToString())
-                    setTransactionDate(transaction.date)
-                    setTransactionType(transaction.type)
-                    setTransactionNote(transaction.note)
+                setCounter(transaction?.amount?.convertDoubleToString(), false)
+                setDate(transaction?.date)
+                setType(transaction?.type)
+                setNote(transaction?.note)
 
-                    val categoryType = getCategoryType(transaction.type)
-                    _categories = categoryRepository.getCategories(categoryType).data
-                    val category = _categories?.find { category ->
-                        category.id == transaction.category?.id
+                when (val result = accountRepository.getAccounts()) {
+                    is State.Success -> {
+                        accounts = result.data
+
+                        setAccount(
+                            accounts?.find { it.id == transaction?.accountId }
+                        )
                     }
-                    setCategory(category)
-
-                    _accounts = accountRepository.getAccounts().data
-                    val account = _accounts?.find {
-                        it.id == _transaction?.accountId
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
                     }
-                    setAccount(account)
                 }
+
+                val categoryType = getCategoryType(transaction?.type)
+                when (val result = categoryRepository.getCategories(categoryType)) {
+                    is State.Success -> {
+                        setCategory(result.data?.find {
+                            it.id == transaction?.category?.id
+                        })
+                    }
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
+                    }
+                }
+
+                updateViewState(
+                    TransactionViewState.SetUpTransaction(
+                        amount = amount,
+                        date = date,
+                        type = type,
+                        note = note,
+                        account = account,
+                        category = category
+                    )
+                )
             }
         }
     }
 
     private fun isCreateTransaction(): Boolean {
-        return _transactionId == DEFAULT_TRANSACTION_ID
+        return transactionId == DEFAULT_TRANSACTION_ID
     }
 
-    private fun getCategoryType(transactionType: TransactionType): CategoryType {
+    private fun setAmount(amount: Double?) {
+        this.amount = amount
+    }
+
+    private fun setDate(date: String?) {
+        this.date = date
+    }
+
+    fun setType(type: TransactionType?) {
+        this.type = type
+    }
+
+    private fun setNote(note: String?) {
+        this.note = note
+    }
+
+    private fun setAccount(account: Account?) {
+        this.account = account
+    }
+
+    private fun setCategory(category: Category?) {
+        this.category = category
+    }
+
+    private fun getCategoryType(transactionType: TransactionType?): CategoryType {
         return when (transactionType) {
             is TransactionType.Expense -> CategoryType.Expense
             is TransactionType.Income -> CategoryType.Income
@@ -122,7 +180,7 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    fun setCounter(counter: String) {
+    fun setCounter(counter: String?, sourceFromKeyboard: Boolean = true) {
         var fullCounter: String = counterAmount
         fullCounter += counter
 
@@ -132,10 +190,11 @@ class TransactionViewModel @Inject constructor(
 
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
             counterAmount = fullCounter
-            amount = counterAmount.toDouble()
-            updateViewState(
-                TransactionViewState.SetAmount(amount)
-            )
+            setAmount(counterAmount.toDouble())
+
+            if (sourceFromKeyboard) {
+                updateViewState(TransactionViewState.UpdateAmount(amount))
+            }
         }
     }
 
@@ -155,77 +214,57 @@ class TransactionViewModel @Inject constructor(
         return counter.removePrefix("0")
     }
 
-    fun setTransactionDate(date: String) {
-        _date.value = date
-    }
-
-
-    private fun setTransactionNote(note: String?) {
-        _note.value = note
-    }
-
-    private fun setCategory(category: Category?) {
-        _category.value = category
-    }
-
-    private fun setAccount(account: Account?) {
-        _account.value = account
-    }
-
     fun onClearCounter() {
         val counter = counterAmount.dropLast(1)
 
         counterAmount = counter
-        val amount = if (counter.isEmpty()) {
+        val finalAmount = if (counter.isEmpty()) {
             DEFAULT_AMOUNT
         } else {
             counter.toDouble()
         }
 
-        this.amount = amount
-        updateViewState(
-            TransactionViewState.SetAmount(amount)
-        )
+        setAmount(finalAmount)
+        updateViewState(TransactionViewState.UpdateAmount(amount))
     }
 
-    fun setTransactionType(transactionType: TransactionType) {
-        _transactionType.value = transactionType
-    }
-
-    fun updateCategories(categoryType: CategoryType, categoryId: Long? = null) {
+    /* There are 2 reason why need to fetch categories from db
+    * 1. When user change transactionType need to update the categories
+    * 2. When user select category, there's a chance user add new category
+    * */
+    fun updateCategory(categoryType: CategoryType, categoryId: Long? = null) {
         viewModelScope.launch {
-            _categories = categoryRepository.getCategories(categoryType).data
-            val category = if (categoryId == null) {
-                _categories?.first()
-            } else {
-                _categories?.find { it.id == categoryId }
+            when (val result = categoryRepository.getCategories(categoryType)) {
+                is State.Success -> {
+                    val category = if (categoryId == null) {
+                        result.data?.first()
+                    } else {
+                        result.data?.find { it.id == categoryId }
+                    }
+
+                    setCategory(category)
+                    updateViewState(TransactionViewState.UpdateCategory(category))
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
             }
-
-            setCategory(category)
         }
     }
 
-    fun onOpenCategory() {
-        _openCategory.value = when (_transactionType.value) {
-            is TransactionType.Income -> CategoryType.Income
-            is TransactionType.Expense -> CategoryType.Expense
-            null -> throw Exception("Transaction Type Null")
-        }
+    fun updateDate(date: String?) {
+        setDate(date)
+        updateViewState(TransactionViewState.UpdateDate(date))
     }
 
-    fun successOpenCategory() {
-        _openCategory.value = null
-    }
-
-    fun setNote(note: String?) {
-        _note.value = note
+    fun updateNote(note: String?) {
+        setNote(note)
+        updateViewState(TransactionViewState.UpdateNote(note))
     }
 
     fun updateAccount(accountId: Long) {
-        viewModelScope.launch {
-            val account = accountRepository.getAccount(accountId).data
-            setAccount(account)
-        }
+        setAccount(accounts?.find { it.id == accountId })
+        updateViewState(TransactionViewState.UpdateAccount(account))
     }
 
     fun processTransaction() {
@@ -238,69 +277,103 @@ class TransactionViewModel @Inject constructor(
 
     private fun saveTransaction() {
         viewModelScope.launch {
-            transactionRepository.saveTransaction(mapTransaction())
-            _processTransaction.value = accountRepository.updateBalance(
-                _account.value?.id ?: 1,
-                totalTransaction = amount ?: DEFAULT_AMOUNT,
-                _transactionType.value == TransactionType.Expense
-            )
+            when (val result = transactionRepository.saveTransaction(mapTransaction())) {
+                is State.Success -> {
+                    updateViewState(
+                        TransactionViewState.SuccessSaveTransaction
+                    )
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
+            }
         }
     }
 
     private fun updateTransaction() {
+        if (account == null) {
+            updateViewState(TransactionViewState.ErrorAccountEmpty)
+            return
+        }
+
         viewModelScope.launch {
-            transactionRepository.updateTransaction(mapTransaction())
-            _processTransaction.value = accountRepository.updateBalance(
-                accountId = _account.value?.id ?: 1,
-                totalTransaction = amount ?: DEFAULT_AMOUNT,
-                originalTotalTransaction = _transaction?.amount ?: 0.0,
-                isExpenseTransaction = _transactionType.value == TransactionType.Expense
-            )
+            when (val result =
+                transactionRepository.updateTransaction(mapTransaction(), transaction)) {
+                is State.Success -> {
+                    updateViewState(TransactionViewState.SuccessSaveTransaction)
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
+            }
         }
     }
 
     private fun mapTransaction(): Transaction {
         return if (isCreateTransaction()) {
             Transaction(
-                type = _transactionType.value ?: TransactionType.Expense,
+                type = type ?: TransactionType.Expense,
                 amount = amount ?: DEFAULT_AMOUNT,
-                note = _note.value,
-                date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                note = note,
+                date = date ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = _category.value,
-                accountId = _account.value?.id ?: 1
+                category = category,
+                accountId = account?.id ?: 1
             )
         } else {
             Transaction(
-                id = _transactionId,
-                type = _transactionType.value ?: TransactionType.Expense,
+                id = transactionId,
+                type = type ?: TransactionType.Expense,
                 amount = amount ?: DEFAULT_AMOUNT,
-                note = _note.value,
-                date = _date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                note = note,
+                date = date ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = _category.value,
-                accountId = _account.value?.id ?: 1
+                category = category,
+                accountId = account?.id ?: 1
             )
         }
     }
 
     fun deleteTransaction() {
         viewModelScope.launch {
-            transactionRepository.deleteTransaction(_transactionId)
-
-            _processTransaction.value = accountRepository.updateBalance(
-                _account.value?.id ?: 1,
-                _transactionType.value == TransactionType.Expense,
-                _transaction?.amount ?: 0.0,
-            )
+            when (val result = transactionRepository.deleteTransaction(transactionId)) {
+                is State.Success -> {
+                    updateViewState(TransactionViewState.SuccessSaveTransaction)
+                }
+                is State.Error -> {
+                    updateViewState(
+                        ViewState.Error(result.message)
+                    )
+                }
+            }
         }
+    }
+
+    fun onOpenDatePicker() {
+        updateViewState(
+            TransactionViewState.OpenDatePicker(
+                date?.convertToMillis(
+                    PATTERN_DATE_DATABASE
+                )
+            )
+        )
+    }
+
+    fun onOpenNotePage() {
+        updateViewState(
+            TransactionViewState.OpenNotePage(note)
+        )
+    }
+
+    fun onOpenCategory() {
+        updateViewState(
+            TransactionViewState.OpenCategoryPage(getCategoryType(type))
+        )
     }
 
     companion object {
         private const val DEFAULT_TRANSACTION_ID: Long = -1
         private const val DEFAULT_AMOUNT: Double = 0.0
-        private const val DEFAULT_CATEGORY_ID: Long = 0
-        private const val DEFAULT_CATEGORY_NAME: String = "-"
     }
 
 }

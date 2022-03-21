@@ -16,7 +16,6 @@ import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
-import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.account.AccountConstants.KEY_ACCOUNT_ID
 import id.dhuwit.feature.account.router.AccountRouter
@@ -29,7 +28,7 @@ import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionActivityBinding
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListener
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
@@ -57,7 +56,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         if (result.resultCode == RESULT_OK && result.data != null) {
             val categoryId = result.data?.getLongExtra(KEY_SELECT_CATEGORY_ID, -1)
             val categoryType = result.data?.getStringExtra(KEY_SELECT_CATEGORY_TYPE)
-            viewModel.updateCategories(CategoryType.getCategoryType(categoryType), categoryId)
+            viewModel.updateCategory(CategoryType.getCategoryType(categoryType), categoryId)
         }
     }
 
@@ -66,7 +65,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     ) { result ->
         if (result.resultCode == RESULT_OK && result.data != null) {
             val note = result.data?.getStringExtra(KEY_INPUT_NOTE)
-            viewModel.setNote(note)
+            viewModel.updateNote(note)
         }
     }
 
@@ -137,12 +136,12 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                 if (isChecked) {
                     when (group.checkedButtonId) {
                         binding.buttonToggleIncome.id -> {
-                            viewModel.setTransactionType(TransactionType.Income)
-                            viewModel.updateCategories(CategoryType.Income)
+                            viewModel.setType(TransactionType.Income)
+                            viewModel.updateCategory(CategoryType.Income)
                         }
                         binding.buttonToggleExpense.id -> {
-                            viewModel.setTransactionType(TransactionType.Expense)
-                            viewModel.updateCategories(CategoryType.Expense)
+                            viewModel.setType(TransactionType.Expense)
+                            viewModel.updateCategory(CategoryType.Expense)
                         }
                     }
                 } else {
@@ -154,7 +153,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             }
 
             buttonDate.setOnClickListener {
-                openDatePicker(viewModel.date.value?.convertToMillis(PATTERN_DATE_DATABASE))
+                viewModel.onOpenDatePicker()
             }
 
             buttonCategory.setOnClickListener {
@@ -162,7 +161,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             }
 
             buttonNote.setOnClickListener {
-                openNotePage(viewModel.note.value)
+                viewModel.onOpenNotePage()
             }
 
             buttonSave.setOnClickListener {
@@ -180,50 +179,63 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     override fun observer() {
-        with(viewModel) {
-            viewState.observe(this@TransactionActivity) {
-                when (it) {
-                    is TransactionViewState.SetUpViewNewTransaction -> {
-                        setUpToolbar(getString(R.string.transaction_toolbar_title_add))
-                        hideButtonDelete()
-                    }
-                    is TransactionViewState.SetUpViewUpdateTransaction -> {
-                        setUpToolbar(getString(R.string.transaction_toolbar_title_update))
-                        showButtonDelete()
-                    }
-                    is TransactionViewState.SetAmount -> {
-                        setTextAmount(it.amount)
-                        hideLoadingGetTransaction()
-                    }
+        viewModel.viewState.observe(this@TransactionActivity) {
+            when (it) {
+                is TransactionViewState.SetUpViewNewTransaction -> {
+                    setUpToolbar(getString(R.string.transaction_toolbar_title_add))
+                    hideButtonDelete()
                 }
-            }
-            date.observe(this@TransactionActivity) { date -> setTextDate(date) }
-            category.observe(this@TransactionActivity) { category -> setTextCategory(category) }
-            note.observe(this@TransactionActivity) { note -> setTextNote(note) }
-            account.observe(this@TransactionActivity) { account -> setTextAccount(account) }
-            transactionType.observe(this@TransactionActivity) { transactionType ->
-                when (transactionType) {
-                    TransactionType.Expense -> binding.layoutButtonToggle.check(binding.buttonToggleExpense.id)
-                    TransactionType.Income -> binding.layoutButtonToggle.check(binding.buttonToggleIncome.id)
+                is TransactionViewState.SetUpViewUpdateTransaction -> {
+                    setUpToolbar(getString(R.string.transaction_toolbar_title_update))
+                    showButtonDelete()
                 }
-            }
-            openCategory.observe(this@TransactionActivity) { categoryType ->
-                categoryType?.let { type ->
-                    openCategoryPage(type)
-                    viewModel.successOpenCategory()
+                is TransactionViewState.SetUpTransaction -> {
+                    setTextAmount(it.amount)
+                    setTextDate(it.date)
+                    setToggleTransactionType(it.type)
+                    setTextNote(it.note)
+                    setTextAccount(it.account)
+                    setTextCategory(it.category)
+
+                    hideLoadingGetTransaction()
                 }
-            }
-            processTransaction.observe(this@TransactionActivity) {
-                when (it) {
-                    is State.Success -> {
-                        hideLoadingSaveTransaction()
-                        setResult(RESULT_OK)
-                        finish()
-                    }
-                    is State.Error -> {
-                        hideLoadingSaveTransaction()
-                        showError()
-                    }
+                is TransactionViewState.UpdateAmount -> {
+                    setTextAmount(it.amount)
+                }
+                is TransactionViewState.UpdateCategory -> {
+                    setTextCategory(it.category)
+                }
+                is TransactionViewState.UpdateAccount -> {
+                    setTextAccount(it.account)
+                }
+                is TransactionViewState.UpdateDate -> {
+                    setTextDate(it.date)
+                }
+                is TransactionViewState.UpdateNote -> {
+                    setTextNote(it.note)
+                }
+                is TransactionViewState.OpenDatePicker -> {
+                    openDatePicker(it.date)
+                }
+                is TransactionViewState.OpenNotePage -> {
+                    openNotePage(it.note)
+                }
+                is TransactionViewState.OpenCategoryPage -> {
+                    openCategoryPage(it.categoryType)
+                }
+                is TransactionViewState.SuccessSaveTransaction -> {
+                    hideLoadingSaveTransaction()
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                is TransactionViewState.ErrorAccountEmpty -> {
+                    showError(getString(R.string.transaction_caption_account_error))
+                }
+                is ViewState.Error -> {
+                    showError(getString(R.string.general_error_message))
+                }
+                else -> {
+                    throw Exception("View State Not Found")
                 }
             }
         }
@@ -245,7 +257,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
         datePicker.apply {
             addOnPositiveButtonClickListener { dateInMillis ->
-                viewModel.setTransactionDate(dateInMillis.convertToDate(PATTERN_DATE_DATABASE))
+                viewModel.updateDate(dateInMillis.convertToDate(PATTERN_DATE_DATABASE))
             }
 
             show(supportFragmentManager, MaterialDatePicker::class.java.simpleName)
@@ -282,8 +294,8 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         )
     }
 
-    private fun setTextDate(date: String) {
-        val convertedDate = date.convertPattern(PATTERN_DATE_DATABASE, PATTERN_DATE_TRANSACTION)
+    private fun setTextDate(date: String?) {
+        val convertedDate = date?.convertPattern(PATTERN_DATE_DATABASE, PATTERN_DATE_TRANSACTION)
         binding.textDate.text = when (convertedDate) {
             DateHelper.getDate(
                 PATTERN_DATE_TRANSACTION,
@@ -298,6 +310,13 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                 COUNT_YESTERDAY
             ) -> getString(R.string.transaction_date_yesterday)
             else -> convertedDate
+        }
+    }
+
+    private fun setToggleTransactionType(type: TransactionType?) {
+        when (type) {
+            TransactionType.Expense -> binding.layoutButtonToggle.check(binding.buttonToggleExpense.id)
+            TransactionType.Income -> binding.layoutButtonToggle.check(binding.buttonToggleIncome.id)
         }
     }
 
@@ -332,7 +351,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         binding.buttonSave.enabled()
     }
 
-    private fun openCategoryPage(categoryType: CategoryType) {
+    private fun openCategoryPage(categoryType: CategoryType?) {
         categoryResult.launch(categoryRouter.openCategoryListPage(this, categoryType.toString()))
     }
 
@@ -340,12 +359,8 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         noteResult.launch(noteRouter.openNotePage(this, note))
     }
 
-    private fun showError() {
-        Snackbar.make(
-            binding.root,
-            getString(R.string.general_error_message),
-            Snackbar.LENGTH_SHORT
-        ).show()
+    private fun showError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showDialogDeleteConfirmation() {
