@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.feature.account.AccountConstants
@@ -11,7 +12,7 @@ import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountSelectionActivityBinding
 import id.dhuwit.feature.account.ui.selection.adapter.AccountSelectionAdapter
 import id.dhuwit.feature.account.ui.selection.adapter.AccountSelectionListener
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 
 @AndroidEntryPoint
@@ -35,12 +36,13 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
     }
 
     override fun observer() {
-        viewModel.accounts.observe(this) { state ->
-            when (state) {
-                is State.Success -> {
-                    adapterAccountSelection.submitList(state.data)
+        viewModel.viewState.observe(this) {
+            when (it) {
+                is AccountSelectionViewState.GetAccounts -> {
+                    adapterAccountSelection.submitList(it.accounts)
                 }
-                is State.Error -> {
+                is ViewState.Error -> {
+                    showError()
                 }
             }
         }
@@ -81,5 +83,13 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
             putExtra(AccountConstants.KEY_ACCOUNT_ID, accountId)
         })
         finish()
+    }
+
+    private fun showError() {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.general_error_message),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }
