@@ -18,11 +18,13 @@ import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.list.AccountListAdapter
 import id.dhuwit.feature.account.ui.list.AccountListListener
 import id.dhuwit.feature.account.ui.list.AccountListViewModel
+import id.dhuwit.feature.account.ui.list.AccountListViewState
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
 import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 import javax.inject.Inject
@@ -98,10 +100,9 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
                 when (state) {
                     is State.Success -> {
                         setUpDataTransaction(state.data?.transactions)
-                        hideLoading()
                     }
                     is State.Error -> {
-                        hideLoading()
+                        showError()
                     }
                 }
             }
@@ -111,13 +112,14 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
             }
         }
 
-        viewModelAccountList.accounts.observe(this) { state ->
-            when (state) {
-                is State.Success -> {
-                    val sortedAccount = state.data?.sortedByDescending { it.isPrimary }
+        viewModelAccountList.viewState.observe(this) {
+            when (it) {
+                is AccountListViewState.GetAccounts -> {
+                    val sortedAccount =
+                        it.accounts?.sortedByDescending { account -> account.isPrimary }
                     setUpDataAccount(sortedAccount)
                 }
-                is State.Error -> {
+                is ViewState.Error -> {
                     showError()
                 }
             }
@@ -192,14 +194,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         accounts?.let {
             adapterAccount.updateAccounts(accounts)
         }
-    }
-
-    private fun showLoading() {
-        binding.progressBarTransaction.show()
-    }
-
-    private fun hideLoading() {
-        binding.progressBarTransaction.hide()
     }
 
     private fun showTransaction() {

@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,16 +15,29 @@ import javax.inject.Inject
 class AccountListViewModel @Inject constructor(private val accountRepository: AccountDataSource) :
     ViewModel() {
 
-    private val _accounts = MutableLiveData<State<List<Account>>>()
-    val accounts: LiveData<State<List<Account>>> = _accounts
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = _viewState
 
     init {
         getAccounts()
     }
 
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
+    }
+
     fun getAccounts() {
         viewModelScope.launch {
-            _accounts.value = accountRepository.getAccounts()
+            when (val result = accountRepository.getAccounts()) {
+                is State.Success -> {
+                    updateViewState(
+                        AccountListViewState.GetAccounts(result.data)
+                    )
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
+            }
         }
     }
 
