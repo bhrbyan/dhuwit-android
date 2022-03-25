@@ -7,6 +7,7 @@ import id.dhuwit.core.category.model.CategorySearch
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,17 +17,18 @@ class CategoryListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private var categories: List<Category>? = null
+
     private var categoryType: CategoryType = CategoryType.getCategoryType(
         savedStateHandle.get<String>(CategoryListConstants.KEY_CATEGORY_TYPE)
     )
 
-    private val _categories = MutableLiveData<State<List<Category>>>()
-    private val _searchedCategories = MutableLiveData<CategorySearch>()
-    private val _addCategory = MutableLiveData<State<Category>>()
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = _viewState
 
-    val categories: LiveData<State<List<Category>>> = _categories
-    val searchedCategories: LiveData<CategorySearch> = _searchedCategories
-    val addCategory: LiveData<State<Category>> = _addCategory
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
+    }
 
     init {
         getCategories(categoryType)
@@ -34,22 +36,47 @@ class CategoryListViewModel @Inject constructor(
 
     private fun getCategories(categoryType: CategoryType) {
         viewModelScope.launch {
-            _categories.value = categoryRepository.getCategories(categoryType)
+            when (val result = categoryRepository.getCategories(categoryType)) {
+                is State.Success -> {
+                    categories = result.data
+                    updateViewState(CategoryListViewState.GetCategories(result.data))
+                }
+                is State.Error -> {
+                    updateViewState(
+                        ViewState.Error(result.message)
+                    )
+                }
+            }
         }
     }
 
     fun searchCategories(keywords: String) {
-        _searchedCategories.value = CategorySearch(
-            keywords = keywords,
-            categories = _categories.value?.data?.filter { it.name.lowercase().contains(keywords) }
+        updateViewState(
+            CategoryListViewState.SearchCategory(
+                CategorySearch(
+                    keywords = keywords,
+                    categories = categories?.filter { it.name.lowercase().contains(keywords) }
+                )
+            )
         )
     }
 
     fun addCategory(categoryName: String) {
         viewModelScope.launch {
-            _addCategory.value = categoryRepository.addCategory(
+            when (val result = categoryRepository.addCategory(
                 Category(categoryName, categoryType)
-            )
+            )) {
+                is State.Success -> {
+                    updateViewState(
+                        CategoryListViewState.AddCategory(result.data)
+                    )
+                }
+                is State.Error -> {
+                    updateViewState(
+                        ViewState.Error(result.message)
+                    )
+                }
+            }
         }
     }
 

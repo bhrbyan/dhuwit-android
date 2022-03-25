@@ -9,7 +9,7 @@ import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
 import id.dhuwit.feature.dashboard.router.DashboardRouter
 import id.dhuwit.feature.onboarding.databinding.OnBoardingActivityBinding
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
@@ -39,26 +39,24 @@ class OnBoardingActivity : BaseActivity() {
 
     override fun observer() {
         with(viewModel) {
-            isFieldEmpty.observe(this@OnBoardingActivity) { isEmpty ->
-                if (isEmpty) {
-                    disableButtonCreate()
-                } else {
-                    enableButtonCreate()
-                }
-            }
 
-            createAccount.observe(this@OnBoardingActivity) {
+            viewState.observe(this@OnBoardingActivity) {
                 when (it) {
-                    is State.Success -> {
-                        hideLoading()
-
+                    is OnBoardingViewState.SuccessCreateAccount -> {
                         viewModel.updateStatusFirstTimeUser()
                         openDashboardPage()
                     }
-                    is State.Error -> {
-                        hideLoading()
+                    is OnBoardingViewState.ValidationRequirement -> {
+                        if (it.isEmpty) {
+                            disableButtonCreate()
+                        } else {
+                            enableButtonCreate()
+                        }
+                    }
+                    is ViewState.Error -> {
                         showError()
                     }
+
                 }
             }
         }
@@ -94,20 +92,6 @@ class OnBoardingActivity : BaseActivity() {
 
     private fun disableButtonCreate() {
         binding.buttonCreate.disabled()
-    }
-
-    private fun showLoading() {
-        disableButtonCreate()
-
-        binding.progressBar.show()
-        binding.buttonCreate.text = null
-    }
-
-    private fun hideLoading() {
-        enableButtonCreate()
-
-        binding.progressBar.hide()
-        binding.buttonCreate.text = getString(R.string.general_create)
     }
 
     private fun showError() {

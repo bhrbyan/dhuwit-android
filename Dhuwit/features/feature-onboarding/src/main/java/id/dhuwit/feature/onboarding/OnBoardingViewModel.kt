@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,11 +22,12 @@ class OnBoardingViewModel @Inject constructor(
     private var name: String = ""
     private var balance: Double = 0.0
 
-    private var _isFieldEmpty = MutableLiveData<Boolean>()
-    val isFieldEmpty: LiveData<Boolean> = _isFieldEmpty
+    private var _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = _viewState
 
-    private var _createAccount = MutableLiveData<State<Boolean>>()
-    val createAccount: LiveData<State<Boolean>> = _createAccount
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
+    }
 
     fun setAccountName(name: String) {
         this.name = name
@@ -36,12 +38,25 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     fun checkInputField() {
-        _isFieldEmpty.value = name.isEmpty() && balance == 0.0
+        updateViewState(
+            OnBoardingViewState.ValidationRequirement(
+                name.isEmpty() && balance == 0.0
+            )
+        )
     }
 
     fun createAccount() {
         viewModelScope.launch {
-            _createAccount.value = accountRepository.createAccount(Account(name, balance, true))
+            when (val result = accountRepository.createAccount(Account(name, balance, true))) {
+                is State.Success -> {
+                    updateViewState(OnBoardingViewState.SuccessCreateAccount)
+                }
+                is State.Error -> {
+                    updateViewState(
+                        ViewState.Error(result.message)
+                    )
+                }
+            }
         }
     }
 

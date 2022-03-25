@@ -6,4 +6,5 @@
     <string name="dashboard_transactions_item_expense">-%1$s</string>
     <string name="dashboard_transactions_item_income">+%1$s</string>
     <string name="dashboard_transactions_content_fab">Add Transaction</string>
+    <string name="dashboard_transactions_not_found">Transaction Not Found!</string>
 </resources>

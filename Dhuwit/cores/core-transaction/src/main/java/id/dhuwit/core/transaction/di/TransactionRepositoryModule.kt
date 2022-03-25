@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import id.dhuwit.core.account.database.AccountDao
 import id.dhuwit.core.di.LocalSource
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.database.TransactionDatabase
@@ -26,8 +27,11 @@ object TransactionRepositoryModule {
 
     @Provides
     @LocalSource
-    fun provideLocalDataSource(dao: TransactionDao): TransactionDataSource {
-        return TransactionLocalDataSource(dao)
+    fun provideLocalDataSource(
+        transactionDao: TransactionDao,
+        accountDao: AccountDao
+    ): TransactionDataSource {
+        return TransactionLocalDataSource(transactionDao, accountDao)
     }
 
     @Provides

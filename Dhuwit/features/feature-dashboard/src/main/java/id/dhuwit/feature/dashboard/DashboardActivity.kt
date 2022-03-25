@@ -18,11 +18,12 @@ import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.list.AccountListAdapter
 import id.dhuwit.feature.account.ui.list.AccountListListener
 import id.dhuwit.feature.account.ui.list.AccountListViewModel
+import id.dhuwit.feature.account.ui.list.AccountListViewState
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
 import id.dhuwit.feature.transaction.router.TransactionRouter
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 import javax.inject.Inject
@@ -93,32 +94,38 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
     }
 
     override fun observer() {
-        with(viewModelDashboard) {
-            details.observe(this@DashboardActivity) { state ->
-                when (state) {
-                    is State.Success -> {
-                        setUpDataTransaction(state.data?.transactions)
-                        hideLoading()
-                    }
-                    is State.Error -> {
-                        hideLoading()
-                    }
+        viewModelDashboard.viewState.observe(this@DashboardActivity) {
+            when (it) {
+                is DashboardViewState.GetDetails -> {
+                    setUpDataTransaction(it.dashboard.transactions)
                 }
-            }
-
-            periodDate.observe(this@DashboardActivity) { period ->
-                binding.textMonth.text = period
+                is DashboardViewState.TransactionNotFound -> {
+                    showError(
+                        getString(R.string.dashboard_transactions_not_found)
+                    )
+                }
+                is DashboardViewState.SetPeriodDate -> {
+                    binding.textMonth.text = it.periodDate
+                }
+                is ViewState.Error -> {
+                    showError(
+                        getString(R.string.general_error_message)
+                    )
+                }
             }
         }
 
-        viewModelAccountList.accounts.observe(this) { state ->
-            when (state) {
-                is State.Success -> {
-                    val sortedAccount = state.data?.sortedByDescending { it.isPrimary }
+        viewModelAccountList.viewState.observe(this) {
+            when (it) {
+                is AccountListViewState.GetAccounts -> {
+                    val sortedAccount =
+                        it.accounts?.sortedByDescending { account -> account.isPrimary }
                     setUpDataAccount(sortedAccount)
                 }
-                is State.Error -> {
-                    showError()
+                is ViewState.Error -> {
+                    showError(
+                        getString(R.string.general_error_message)
+                    )
                 }
             }
         }
@@ -194,14 +201,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         }
     }
 
-    private fun showLoading() {
-        binding.progressBarTransaction.show()
-    }
-
-    private fun hideLoading() {
-        binding.progressBarTransaction.hide()
-    }
-
     private fun showTransaction() {
         with(binding) {
             recyclerViewTransaction.visible()
@@ -224,10 +223,10 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         accountResult.launch(accountRouter.openAccountPage(this, accountId))
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         Snackbar.make(
             binding.root,
-            getString(id.dhuwit.feature.transaction.R.string.general_error_message),
+            message,
             Snackbar.LENGTH_SHORT
         ).show()
     }

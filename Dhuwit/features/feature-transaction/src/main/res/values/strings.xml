@@ -24,6 +24,7 @@
     <string name="transaction_caption_category">Category</string>
     <string name="transaction_caption_account">Account</string>
     <string name="transaction_caption_select_account">Select Account</string>
+    <string name="transaction_caption_account_error">Please select account!</string>
 
     <string name="transaction_toggle_income">Income</string>
     <string name="transaction_toggle_expense">Expense</string>

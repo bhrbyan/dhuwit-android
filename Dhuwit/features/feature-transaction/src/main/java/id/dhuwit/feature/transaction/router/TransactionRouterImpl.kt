@@ -2,7 +2,7 @@ package id.dhuwit.feature.transaction.router
 
 import android.content.Context
 import android.content.Intent
-import id.dhuwit.feature.transaction.TransactionActivity
+import id.dhuwit.feature.transaction.ui.TransactionActivity
 
 internal object TransactionRouterImpl : TransactionRouter {
 

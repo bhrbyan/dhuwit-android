@@ -3,7 +3,7 @@
     package="id.dhuwit.feature.transaction">
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
-        <activity android:name=".TransactionActivity" />
+        <activity android:name=".ui.TransactionActivity" />
     </application>
 
 </manifest>

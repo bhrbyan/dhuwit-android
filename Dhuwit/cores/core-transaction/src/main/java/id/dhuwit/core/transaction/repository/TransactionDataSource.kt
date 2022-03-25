@@ -7,6 +7,10 @@ interface TransactionDataSource {
     suspend fun getTransactions(): State<List<Transaction>>
     suspend fun getTransaction(id: Long): State<Transaction>
     suspend fun saveTransaction(transaction: Transaction): State<Boolean>
-    suspend fun updateTransaction(transaction: Transaction): State<Boolean>
-    suspend fun deleteTransaction(id: Long): State<Boolean>
+    suspend fun updateTransaction(
+        transaction: Transaction,
+        existingTransaction: Transaction?
+    ): State<Boolean>
+
+    suspend fun deleteTransaction(transactionId: Long): State<Boolean>
 }

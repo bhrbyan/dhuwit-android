@@ -16,7 +16,7 @@ import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
-import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 
 @AndroidEntryPoint
 class CategoryListActivity : BaseActivity(), CategoryListListener {
@@ -40,7 +40,7 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                 viewModel.searchCategories(keywords)
             }
 
-            layoutAddCategory?.setOnClickListener {
+            layoutAddCategory.setOnClickListener {
                 val categoryName: String = inputTextSearch.text
                     .toString()
                     .replaceFirstChar { char -> char.uppercase() }
@@ -52,48 +52,32 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
 
     override fun observer() {
         with(viewModel) {
-            categories.observe(this@CategoryListActivity) {
+
+            viewState.observe(this@CategoryListActivity) {
                 when (it) {
-                    is State.Success -> {
+                    is CategoryListViewState.GetCategories -> {
                         hideLoading()
-                        if (it.data.isNullOrEmpty()) {
+                        if (it.categories?.isNullOrEmpty() == true) {
                             showMessageEmptyCategories(getString(R.string.category_list_message_empty))
                         } else {
-                            it.data?.let { categories ->
-                                adapterCategoryList.updateList(categories)
-                                hideMessageEmptyCategories()
-                            }
+                            adapterCategoryList.updateList(it.categories)
+                            hideMessageEmptyCategories()
                         }
                     }
-                    is State.Error -> {
-                        hideLoading()
-                        showError()
+                    is CategoryListViewState.AddCategory -> {
+                        onSelectCategory(it.category)
                     }
-                }
-            }
-
-            searchedCategories.observe(this@CategoryListActivity) { search ->
-                if (search.categories.isNullOrEmpty()) {
-                    showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
-                    showMessageAddCategory(search.keywords)
-                } else {
-                    search.categories?.let { categories ->
-                        adapterCategoryList.updateList(categories)
-                        hideMessageEmptyCategories()
-                        hideMessageAddCategory()
-                    }
-                }
-            }
-
-            addCategory.observe(this@CategoryListActivity) {
-                when (it) {
-                    is State.Success -> {
-                        it.data?.let { category ->
-                            onSelectCategory(category)
+                    is CategoryListViewState.SearchCategory -> {
+                        if (it.searchCategory.categories.isNullOrEmpty()) {
+                            showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
+                            showMessageAddCategory(it.searchCategory.keywords)
+                        } else {
+                            adapterCategoryList.updateList(it.searchCategory.categories)
+                            hideMessageEmptyCategories()
+                            hideMessageAddCategory()
                         }
                     }
-                    is State.Error -> {
-                        hideLoading()
+                    is ViewState.Error -> {
                         showError()
                     }
                 }
@@ -129,10 +113,10 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
         }
     }
 
-    override fun onSelectCategory(category: Category) {
+    override fun onSelectCategory(category: Category?) {
         val data = Intent().apply {
-            putExtra(KEY_SELECT_CATEGORY_ID, category.id)
-            putExtra(KEY_SELECT_CATEGORY_TYPE, category.type.toString())
+            putExtra(KEY_SELECT_CATEGORY_ID, category?.id)
+            putExtra(KEY_SELECT_CATEGORY_TYPE, category?.type.toString())
         }
         setResult(RESULT_OK, data)
         finish()
