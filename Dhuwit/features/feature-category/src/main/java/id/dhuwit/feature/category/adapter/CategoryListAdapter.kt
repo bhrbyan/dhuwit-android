@@ -11,9 +11,11 @@ class CategoryListAdapter : RecyclerView.Adapter<CategoryListViewHolder>() {
     var listener: CategoryListListener? = null
     var categories: ArrayList<Category> = ArrayList()
 
-    fun updateList(categories: List<Category>) {
-        this.categories.clear()
-        this.categories.addAll(categories)
+    fun updateList(categories: List<Category>?) {
+        categories?.let {
+            this.categories.clear()
+            this.categories.addAll(it)
+        }
 
         notifyDataSetChanged()
     }
