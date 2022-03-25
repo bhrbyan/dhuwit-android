@@ -12,6 +12,7 @@ import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.dashboard.model.Dashboard
 import id.dhuwit.state.State
+import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,45 +21,54 @@ class DashboardViewModel @Inject constructor(
     private val transactionRepository: TransactionDataSource
 ) : ViewModel() {
 
-    private val _details = MutableLiveData<State<Dashboard>>()
-    val details: LiveData<State<Dashboard>> = _details
-
-    private val _periodDate = MutableLiveData<String>()
-    val periodDate: LiveData<String>
-        get() = _periodDate
-
     private var periodMonth: Int = CURRENT_MONTH
+    private var periodDate: String? = ""
+
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = _viewState
+
+    private fun updateViewState(viewState: ViewState) {
+        _viewState.value = viewState
+    }
 
     fun getDetails() {
         viewModelScope.launch {
-            val transactions = getTransactions()
-
-            setUpDetails(transactions)
+            when (val result = getTransactions()) {
+                is State.Success -> {
+                    setUpDetails(result.data)
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
+            }
         }
     }
 
     private fun updateTransactions() {
         viewModelScope.launch {
-            val transactions = getTransactions()
-
-            setUpDetails(transactions)
+            when (val result = getTransactions()) {
+                is State.Success -> {
+                    setUpDetails(result.data)
+                }
+                is State.Error -> {
+                    updateViewState(ViewState.Error(result.message))
+                }
+            }
         }
     }
 
     private suspend fun getTransactions(): State<List<Transaction>> =
         transactionRepository.getTransactions()
 
-    private fun setUpDetails(transactions: State<List<Transaction>>) {
-        if (transactions.data != null) {
-            val sortedTransaction = transactions.data
-                ?.filter { transaction -> isTransactionWithinPeriodDate(transaction) }
-                ?.sortedByDescending { transaction -> transaction.date }
+    private fun setUpDetails(transactions: List<Transaction>?) {
+        if (transactions != null) {
+            val sortedTransaction = transactions
+                .filter { transaction -> isTransactionWithinPeriodDate(transaction) }
+                .sortedByDescending { transaction -> transaction.date }
 
-            _details.value = State.Success(
-                Dashboard(transactions = sortedTransaction)
-            )
+            updateViewState(DashboardViewState.GetDetails(Dashboard(sortedTransaction)))
         } else {
-            _details.value = State.Error("${transactions.message}")
+            updateViewState(DashboardViewState.TransactionNotFound)
         }
     }
 
@@ -68,7 +78,7 @@ class DashboardViewModel @Inject constructor(
                 DateHelper.PATTERN_DATE_DATABASE,
                 PATTERN_DATE_PERIOD
             ),
-            periodDate = _periodDate.value ?: ""
+            periodDate = periodDate ?: ""
         )
     }
 
@@ -87,7 +97,10 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun setPeriodDate(periodMonth: Int) {
-        _periodDate.value = DateHelper.getPeriodDate(periodMonth, PATTERN_DATE_PERIOD)
+        periodDate = DateHelper.getPeriodDate(periodMonth, PATTERN_DATE_PERIOD)
+        updateViewState(
+            DashboardViewState.SetPeriodDate(periodDate)
+        )
     }
 
     companion object {

@@ -23,7 +23,6 @@ import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
 import id.dhuwit.feature.transaction.router.TransactionRouter
-import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
@@ -95,20 +94,24 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
     }
 
     override fun observer() {
-        with(viewModelDashboard) {
-            details.observe(this@DashboardActivity) { state ->
-                when (state) {
-                    is State.Success -> {
-                        setUpDataTransaction(state.data?.transactions)
-                    }
-                    is State.Error -> {
-                        showError()
-                    }
+        viewModelDashboard.viewState.observe(this@DashboardActivity) {
+            when (it) {
+                is DashboardViewState.GetDetails -> {
+                    setUpDataTransaction(it.dashboard.transactions)
                 }
-            }
-
-            periodDate.observe(this@DashboardActivity) { period ->
-                binding.textMonth.text = period
+                is DashboardViewState.TransactionNotFound -> {
+                    showError(
+                        getString(R.string.dashboard_transactions_not_found)
+                    )
+                }
+                is DashboardViewState.SetPeriodDate -> {
+                    binding.textMonth.text = it.periodDate
+                }
+                is ViewState.Error -> {
+                    showError(
+                        getString(R.string.general_error_message)
+                    )
+                }
             }
         }
 
@@ -120,7 +123,9 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
                     setUpDataAccount(sortedAccount)
                 }
                 is ViewState.Error -> {
-                    showError()
+                    showError(
+                        getString(R.string.general_error_message)
+                    )
                 }
             }
         }
@@ -218,10 +223,10 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         accountResult.launch(accountRouter.openAccountPage(this, accountId))
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         Snackbar.make(
             binding.root,
-            getString(id.dhuwit.feature.transaction.R.string.general_error_message),
+            message,
             Snackbar.LENGTH_SHORT
         ).show()
     }
