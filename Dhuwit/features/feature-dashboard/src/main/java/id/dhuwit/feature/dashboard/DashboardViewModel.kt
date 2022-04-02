@@ -9,6 +9,7 @@ import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_PERIOD
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.dashboard.model.Dashboard
 import id.dhuwit.state.State
@@ -66,7 +67,23 @@ class DashboardViewModel @Inject constructor(
                 .filter { transaction -> isTransactionWithinPeriodDate(transaction) }
                 .sortedByDescending { transaction -> transaction.date }
 
-            updateViewState(DashboardViewState.GetDetails(Dashboard(sortedTransaction)))
+            val overviewIncome = sortedTransaction
+                .filter { transaction -> transaction.type is TransactionType.Income }
+                .sumOf { transaction -> transaction.amount }
+
+            val overviewExpense = sortedTransaction
+                .filter { transaction -> transaction.type is TransactionType.Expense }
+                .sumOf { transaction -> transaction.amount }
+
+            updateViewState(
+                DashboardViewState.GetDetails(
+                    Dashboard(
+                        transactions = sortedTransaction,
+                        overviewIncome = overviewIncome,
+                        overviewExpense = overviewExpense
+                    )
+                )
+            )
         } else {
             updateViewState(DashboardViewState.TransactionNotFound)
         }

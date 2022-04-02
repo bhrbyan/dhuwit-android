@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
@@ -68,7 +69,6 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
         binding = DashboardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         setUpToolbar()
         setUpAdapterAccount()
         setUpAdapterTransaction()
@@ -98,6 +98,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
             when (it) {
                 is DashboardViewState.GetDetails -> {
                     setUpDataTransaction(it.dashboard.transactions)
+                    setUpDataOverview(it.dashboard.overviewIncome, it.dashboard.overviewExpense)
                 }
                 is DashboardViewState.TransactionNotFound -> {
                     showError(
@@ -193,6 +194,16 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
             showTransaction()
             adapterTransaction.updateList(transactions, storage.getSymbolCurrency())
         }
+    }
+
+    private fun setUpDataOverview(overviewIncome: Double, overviewExpense: Double) {
+        binding.textOverviewIncomeAmount?.text = overviewIncome.convertPriceWithCurrencyFormat(
+            storage.getSymbolCurrency()
+        )
+
+        binding.textOverviewExpenseAmount?.text = overviewExpense.convertPriceWithCurrencyFormat(
+            storage.getSymbolCurrency()
+        )
     }
 
     private fun setUpDataAccount(accounts: List<Account>?) {
