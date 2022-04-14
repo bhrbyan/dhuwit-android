@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_title_account"
         app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintTop_toTopOf="@+id/text_title_account"
-        app:srcCompat="@drawable/ic_wallet" />
+        app:srcCompat="@drawable/ic_account" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_account"
@@ -76,9 +76,9 @@
         android:id="@+id/text_title_overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-        android:text="@string/dashboard_overview_title"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:text="@string/dashboard_menu_overview"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline_mid"

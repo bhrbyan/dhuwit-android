@@ -192,10 +192,10 @@
 
     <style name="Uikit.Style.CardView.Corner">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">8dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeBottomRight">8dp</item>
-        <item name="cornerSizeBottomLeft">8dp</item>
+        <item name="cornerSizeTopRight">@dimen/uikit_corner_radius_xxlarge</item>
+        <item name="cornerSizeTopLeft">@dimen/uikit_corner_radius_xxlarge</item>
+        <item name="cornerSizeBottomRight">@dimen/uikit_corner_radius_xxlarge</item>
+        <item name="cornerSizeBottomLeft">@dimen/uikit_corner_radius_xxlarge</item>
     </style>
 
     <style name="Uikit.Style.CardView.Corner.Top">

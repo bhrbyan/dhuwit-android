@@ -24,5 +24,6 @@
     <dimen name="uikit_corner_radius_medium">8dp</dimen>
     <dimen name="uikit_corner_radius_large">16dp</dimen>
     <dimen name="uikit_corner_radius_xlarge">20dp</dimen>
+    <dimen name="uikit_corner_radius_xxlarge">32dp</dimen>
 
 </resources>
