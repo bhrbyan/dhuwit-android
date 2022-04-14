@@ -130,6 +130,10 @@ class DashboardAccountFragment : BaseFragment(), AccountListListener {
         }
     }
 
+    fun updateDataAccount() {
+        viewModelAccountList.getAccounts()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

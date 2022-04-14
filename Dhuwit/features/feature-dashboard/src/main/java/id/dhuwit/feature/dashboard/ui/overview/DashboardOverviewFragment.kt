@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,11 +14,11 @@ import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.feature.dashboard.DashboardActivity
 import id.dhuwit.feature.dashboard.R
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardOverviewFragmentBinding
-import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
@@ -35,18 +33,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     private val viewModelOverview: DashboardOverviewViewModel by viewModels()
 
     @Inject
-    lateinit var transactionRouter: TransactionRouter
-
-    @Inject
     lateinit var storage: Storage
-
-    private val transactionResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            viewModelOverview.getOverview()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,16 +108,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     }
 
     override fun onClickTransaction(transaction: Transaction?) {
-        openTransactionPage(transaction?.id)
-    }
-
-    fun openTransactionPage(transactionId: Long?) {
-        transactionResult.launch(
-            transactionRouter.openTransactionPage(
-                requireContext(),
-                transactionId
-            )
-        )
+        (activity as DashboardActivity).openTransactionPage(transaction?.id)
     }
 
     private fun setUpDataTransaction(transactions: List<Transaction>?) {
@@ -174,6 +152,10 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
                 Snackbar.LENGTH_SHORT
             ).show()
         }
+    }
+
+    fun updateDataOverview() {
+        viewModelOverview.getOverview()
     }
 
     override fun onDestroyView() {

@@ -51,11 +51,13 @@
         app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_overview" />
+            app:srcCompat="@drawable/ic_overview_white" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dashboard_menu_overview"
@@ -82,11 +84,13 @@
         app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_account" />
+            app:srcCompat="@drawable/ic_account_white" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dashboard_menu_account"

@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_title_account"
         app:layout_constraintEnd_toEndOf="@+id/guideline_mid"
         app:layout_constraintTop_toTopOf="@+id/text_title_account"
-        app:srcCompat="@drawable/ic_account" />
+        app:srcCompat="@drawable/ic_account_white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_account"
