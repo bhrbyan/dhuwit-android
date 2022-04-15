@@ -4,7 +4,7 @@
     <string name="dashboard_title">Dashboard</string>
 
     <!-- Menu -->
-    <string name="dashboard_menu_overview">Overview</string>
+    <string name="dashboard_menu_transaction">Overview</string>
     <string name="dashboard_menu_account">Account</string>
     <string name="dashboard_overview_income_title">Income</string>
     <string name="dashboard_overview_expense_title">Expense</string>

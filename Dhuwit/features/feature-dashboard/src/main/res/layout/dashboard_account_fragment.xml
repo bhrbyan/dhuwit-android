@@ -16,42 +16,15 @@
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_large" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_large" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_title_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:text="@string/account_list_title"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_account"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
                 android:clipToPadding="false"
-                android:paddingStart="@dimen/uikit_margin_padding_size_medium"
-                android:paddingEnd="@dimen/uikit_margin_padding_size_medium"
+                android:paddingVertical="@dimen/uikit_margin_padding_size_xsmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_title_account" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

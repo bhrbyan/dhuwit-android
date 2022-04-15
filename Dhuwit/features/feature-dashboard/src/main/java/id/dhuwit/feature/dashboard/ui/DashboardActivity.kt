@@ -1,4 +1,4 @@
-package id.dhuwit.feature.dashboard
+package id.dhuwit.feature.dashboard.ui
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.feature.dashboard.R
 import id.dhuwit.feature.dashboard.databinding.DashboardActivityBinding
 import id.dhuwit.feature.dashboard.ui.account.DashboardAccountFragment
 import id.dhuwit.feature.dashboard.ui.overview.DashboardOverviewFragment

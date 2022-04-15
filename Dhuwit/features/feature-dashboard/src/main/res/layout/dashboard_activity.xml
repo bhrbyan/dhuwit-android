@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:text="@string/dashboard_title"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
         android:textColor="@color/colorOnMinor"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
             android:id="@+id/text_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_menu_overview"
+            android:text="@string/dashboard_menu_transaction"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorOnMinor" />
 
@@ -103,7 +103,7 @@
         style="@style/Uikit.Style.CardView.Top"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,20 +13,19 @@ import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.feature.dashboard.DashboardActivity
 import id.dhuwit.feature.dashboard.R
-import id.dhuwit.feature.dashboard.adapter.DashboardTransactionAdapter
+import id.dhuwit.feature.dashboard.adapter.DashboardTransactionHeaderAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardOverviewFragmentBinding
+import id.dhuwit.feature.dashboard.ui.DashboardActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
-import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListener {
 
-    private lateinit var adapterTransaction: DashboardTransactionAdapter
+    private lateinit var adapterTransactionHeader: DashboardTransactionHeaderAdapter
 
     private var binding: DashboardOverviewFragmentBinding? = null
     private val viewModelOverview: DashboardOverviewViewModel by viewModels()
@@ -90,20 +88,13 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     }
 
     private fun setUpAdapterTransaction() {
-        adapterTransaction = DashboardTransactionAdapter(requireContext(), emptyList()).apply {
+        adapterTransactionHeader = DashboardTransactionHeaderAdapter().apply {
             listener = this@DashboardOverviewFragment
         }
 
         binding?.recyclerViewTransaction?.apply {
-            adapter = adapterTransaction
+            adapter = adapterTransactionHeader
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                DividerMarginItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL,
-                    resources.getDimensionPixelSize(R.dimen.uikit_margin_padding_size_medium)
-                )
-            )
         }
     }
 
@@ -116,7 +107,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
             showMessageEmptyTransaction()
         } else {
             showTransaction()
-            adapterTransaction.updateList(transactions, storage.getSymbolCurrency())
+            adapterTransactionHeader.updateList(transactions, storage.getSymbolCurrency())
         }
     }
 

@@ -3,34 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorMajorDark"
-    android:paddingStart="@dimen/uikit_margin_padding_size_large"
-    android:paddingTop="@dimen/uikit_margin_padding_size_medium"
-    android:paddingEnd="@dimen/uikit_margin_padding_size_large"
-    android:paddingBottom="@dimen/uikit_margin_padding_size_medium">
+    android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_date"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_content"
+        style="@style/Uikit.Style.CardView.All"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_amount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Sunday, 5 September 2020" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-        android:textStyle="bold"
+        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Rp999.999.999" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/text_amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Sunday, 5 September 2020" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Rp999.999.999" />
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:background="@color/colorDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+                android:paddingHorizontal="@dimen/uikit_margin_padding_size_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

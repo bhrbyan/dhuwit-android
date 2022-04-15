@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-        android:text="@string/dashboard_menu_overview"
+        android:text="@string/dashboard_menu_transaction"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline_mid"

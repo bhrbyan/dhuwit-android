@@ -89,7 +89,7 @@ class DashboardAccountFragment : BaseFragment(), AccountListListener {
 
         val orientation: Int = resources.configuration.orientation
         val layoutManagerOrientation = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayoutManager.HORIZONTAL
+            LinearLayoutManager.VERTICAL
         } else {
             LinearLayoutManager.VERTICAL
         }

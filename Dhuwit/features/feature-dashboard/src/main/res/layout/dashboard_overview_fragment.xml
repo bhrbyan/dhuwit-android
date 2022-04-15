@@ -22,37 +22,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_large" />
+                app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_large" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_title_overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
-                android:text="@string/dashboard_menu_overview"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_medium" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_overview_income"
                 style="@style/Uikit.Style.CardView.All"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
                 app:cardElevation="@dimen/cardview_default_elevation"
                 app:layout_constraintEnd_toStartOf="@+id/card_overview_expense"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/text_title_overview">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_overview_income"
@@ -72,7 +61,6 @@
                         android:maxLines="1"
                         android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
                         android:textSize="@dimen/uikit_text_size_large"
-                        android:textStyle="bold"
                         app:autoSizeMaxTextSize="@dimen/uikit_text_size_large"
                         app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
                         app:autoSizeStepGranularity="2sp"
@@ -92,7 +80,7 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="@string/dashboard_overview_income_title"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -109,11 +97,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 app:cardElevation="@dimen/cardview_default_elevation"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toEndOf="@+id/card_overview_income"
-                app:layout_constraintTop_toBottomOf="@+id/text_title_overview">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_overview_expense"
@@ -133,7 +121,6 @@
                         android:maxLines="1"
                         android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
                         android:textSize="@dimen/uikit_text_size_large"
-                        android:textStyle="bold"
                         app:autoSizeMaxTextSize="@dimen/uikit_text_size_large"
                         app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
                         app:autoSizeStepGranularity="2sp"
@@ -152,7 +139,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/dashboard_overview_expense_title"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -216,7 +203,6 @@
                 android:id="@+id/recycler_view_transaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
                 android:paddingBottom="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
