@@ -28,7 +28,7 @@
         android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
         android:textColor="@color/colorOnMinor"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginTop="@dimen/uikit_margin_padding_size_medium" />
@@ -79,7 +79,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/layout_overview"
         app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
 
@@ -132,7 +132,7 @@
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
         android:contentDescription="@string/dashboard_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

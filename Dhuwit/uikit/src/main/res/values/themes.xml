@@ -190,6 +190,10 @@
         <item name="shapeAppearanceOverlay">@style/Uikit.Style.CardView.Corner.Top</item>
     </style>
 
+    <style name="Uikit.Style.CardView.Left" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/Uikit.Style.CardView.Corner.Left</item>
+    </style>
+
     <style name="Uikit.Style.CardView.Corner">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">@dimen/uikit_corner_radius_xlarge</item>
@@ -201,6 +205,11 @@
     <style name="Uikit.Style.CardView.Corner.Top">
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="Uikit.Style.CardView.Corner.Left">
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
     </style>
 
     <!-- Date Picker -->
