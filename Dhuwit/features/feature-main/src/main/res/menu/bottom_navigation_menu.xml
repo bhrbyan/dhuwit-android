@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_dashboard"
+        android:enabled="true"
+        android:icon="@drawable/ic_dashboard"
+        android:title="@string/menu_dashboard" />
+    <item
+        android:id="@+id/menu_budget"
+        android:enabled="true"
+        android:icon="@drawable/ic_budget"
+        android:title="@string/menu_budget" />
+</menu>

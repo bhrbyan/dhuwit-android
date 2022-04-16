@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/main_activity.xml" value="0.2389193752638244" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2389193752638244" />
         <entry key="features/feature-account/src/main/res/layout-land/account_activity.xml" value="0.2515625" />
         <entry key="features/feature-account/src/main/res/layout-land/account_selection_activity.xml" value="0.2018018018018018" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_list_item.xml" value="0.47291666666666665" />
@@ -28,10 +30,15 @@
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp/dashboard_activity.xml" value="0.11101074218750001" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_account_fragment.xml" value="0.22445489525438223" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.2826171875" />
+        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_fragment.xml" value="0.22445489525438223" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_menu_item.xml" value="0.2069260367678495" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_overview_fragment.xml" value="0.3946380615234375" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_header.xml" value="0.27314814814814814" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_item.xml" value="0.3701657458563536" />
+        <entry key="features/feature-dashboard/src/main/res/menu/bottom_navigation_menu.xml" value="0.2389193752638244" />
+        <entry key="features/feature-main/src/main/res/drawable/selector_selected_bottom_navigation.xml" value="0.162" />
+        <entry key="features/feature-main/src/main/res/layout/main_activity.xml" value="0.2389193752638244" />
+        <entry key="features/feature-main/src/main/res/menu/bottom_navigation_menu.xml" value="0.2389193752638244" />
         <entry key="features/feature-note/src/main/res/layout-land/note_activity.xml" value="0.2018018018018018" />
         <entry key="features/feature-note/src/main/res/layout-sw600dp/note_activity.xml" value="0.37333333333333335" />
         <entry key="features/feature-note/src/main/res/layout/note_activity.xml" value="0.33155555555555555" />

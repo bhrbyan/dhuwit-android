@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/features/feature-account" />
             <option value="$PROJECT_DIR$/features/feature-category" />
             <option value="$PROJECT_DIR$/features/feature-dashboard" />
+            <option value="$PROJECT_DIR$/features/feature-main" />
             <option value="$PROJECT_DIR$/features/feature-note" />
             <option value="$PROJECT_DIR$/features/feature-onboarding" />
             <option value="$PROJECT_DIR$/features/feature-transaction" />

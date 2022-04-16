@@ -42,11 +42,7 @@ dependencies {
 
     /* Module */
     implementation project(":core")
-    implementation project(":cores:core-account")
     implementation project(":features:feature-dashboard")
-    implementation project(":features:feature-main")
-    implementation project(":state")
-    implementation project(":storage")
     implementation project(":uikit")
 
     implementation deps.kotlin
@@ -63,14 +59,4 @@ dependencies {
     implementation deps.google.hilt.android
     kapt deps.google.hilt.compiler
     kapt deps.androidX.hiltCompiler
-
-    /* Decimal Input Text */
-    implementation deps.thirdParties.inputText.currency
-
-    /* View Model */
-    implementation deps.androidX.viewModelExt
-}
-
-kapt {
-    correctErrorTypes true
 }

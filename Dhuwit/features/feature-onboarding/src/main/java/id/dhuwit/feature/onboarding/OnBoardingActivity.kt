@@ -7,7 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
-import id.dhuwit.feature.dashboard.router.DashboardRouter
+import id.dhuwit.feature.main.router.MainRouter
 import id.dhuwit.feature.onboarding.databinding.OnBoardingActivityBinding
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
@@ -20,7 +20,7 @@ class OnBoardingActivity : BaseActivity() {
     private val viewModel: OnBoardingViewModel by viewModels()
 
     @Inject
-    lateinit var dashboardRouter: DashboardRouter
+    lateinit var mainRouter: MainRouter
 
     @Inject
     lateinit var storage: Storage
@@ -44,7 +44,7 @@ class OnBoardingActivity : BaseActivity() {
                 when (it) {
                     is OnBoardingViewState.SuccessCreateAccount -> {
                         viewModel.updateStatusFirstTimeUser()
-                        openDashboardPage()
+                        openMainPage()
                     }
                     is OnBoardingViewState.ValidationRequirement -> {
                         if (it.isEmpty) {
@@ -102,8 +102,8 @@ class OnBoardingActivity : BaseActivity() {
         ).show()
     }
 
-    private fun openDashboardPage() {
-        startActivity(dashboardRouter.openDashboardPage(this))
+    private fun openMainPage() {
+        startActivity(mainRouter.openMainPage(this))
         finish()
     }
 

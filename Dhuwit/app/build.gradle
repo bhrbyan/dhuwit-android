@@ -69,6 +69,7 @@ dependencies {
     implementation project(":cores:core-category")
     implementation project(":features:feature-onboarding")
     implementation project(":features:feature-dashboard")
+    implementation project(":features:feature-main")
     implementation project(":state")
     implementation project(":storage")
 

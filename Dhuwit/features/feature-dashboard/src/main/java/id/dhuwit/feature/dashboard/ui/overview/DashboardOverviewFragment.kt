@@ -17,7 +17,6 @@ import id.dhuwit.feature.dashboard.R
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionHeaderAdapter
 import id.dhuwit.feature.dashboard.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.dashboard.databinding.DashboardOverviewFragmentBinding
-import id.dhuwit.feature.dashboard.ui.DashboardActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -99,7 +98,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     }
 
     override fun onClickTransaction(transaction: Transaction?) {
-        (activity as DashboardActivity).openTransactionPage(transaction?.id)
+//        (activity as DashboardActivity).openTransactionPage(transaction?.id)
     }
 
     private fun setUpDataTransaction(transactions: List<Transaction>?) {

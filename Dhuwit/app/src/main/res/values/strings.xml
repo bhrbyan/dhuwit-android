@@ -1,3 +1,7 @@
 <resources>
-  <string name="app_name">Dhuwit</string>
+    <string name="app_name">Dhuwit</string>
+
+    <!-- Bottom Navigation Menu-->
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_budget">Budget</string>
 </resources>
