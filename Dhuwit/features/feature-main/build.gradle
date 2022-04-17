@@ -43,6 +43,7 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":features:feature-dashboard")
+    implementation project(":features:feature-budget")
     implementation project(":uikit")
 
     implementation deps.kotlin
