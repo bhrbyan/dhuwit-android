@@ -14,10 +14,10 @@ import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.overview.R
-import id.dhuwit.feature.overview.adapter.OverviewTransactionHeaderAdapter
-import id.dhuwit.feature.overview.adapter.OverviewTransactionItemListener
 import id.dhuwit.feature.overview.databinding.OverviewTransactionFragmentBinding
 import id.dhuwit.feature.overview.ui.overview.OverviewFragment
+import id.dhuwit.feature.overview.ui.transaction.adapter.OverviewTransactionHeaderAdapter
+import id.dhuwit.feature.overview.ui.transaction.adapter.OverviewTransactionItemListener
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject

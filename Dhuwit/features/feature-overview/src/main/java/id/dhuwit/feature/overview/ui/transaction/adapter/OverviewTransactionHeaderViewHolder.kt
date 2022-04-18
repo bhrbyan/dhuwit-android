@@ -1,4 +1,4 @@
-package id.dhuwit.feature.overview.adapter
+package id.dhuwit.feature.overview.ui.transaction.adapter
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager

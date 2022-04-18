@@ -1,4 +1,4 @@
-package id.dhuwit.feature.overview.adapter
+package id.dhuwit.feature.overview.ui.transaction.adapter
 
 import id.dhuwit.core.transaction.model.Transaction
 
