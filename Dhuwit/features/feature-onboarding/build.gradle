@@ -43,7 +43,7 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":cores:core-account")
-    implementation project(":features:feature-dashboard")
+    implementation project(':features:feature-overview')
     implementation project(":features:feature-main")
     implementation project(":state")
     implementation project(":storage")

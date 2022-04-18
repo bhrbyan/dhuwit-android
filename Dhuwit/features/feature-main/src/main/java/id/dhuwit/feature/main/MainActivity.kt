@@ -5,8 +5,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.budget.router.BudgetRouter
-import id.dhuwit.feature.dashboard.router.DashboardRouter
 import id.dhuwit.feature.main.databinding.MainActivityBinding
+import id.dhuwit.feature.overview.router.DashboardRouter
 import javax.inject.Inject
 
 @AndroidEntryPoint
