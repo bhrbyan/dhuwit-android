@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.feature.overview.databinding.DashboardTransactionItemBinding
+import id.dhuwit.feature.overview.databinding.OverviewTransactionItemBinding
 
 class OverviewTransactionItemAdapter(
     val transactions: MutableList<Transaction>,
@@ -17,7 +17,7 @@ class OverviewTransactionItemAdapter(
         viewType: Int
     ): OverviewTransactionItemViewHolder {
         return OverviewTransactionItemViewHolder(
-            DashboardTransactionItemBinding.inflate(
+            OverviewTransactionItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

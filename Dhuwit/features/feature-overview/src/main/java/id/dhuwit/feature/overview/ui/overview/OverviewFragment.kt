@@ -12,6 +12,8 @@ import id.dhuwit.core.base.BaseFragment
 import id.dhuwit.feature.account.ui.list.AccountListFragment
 import id.dhuwit.feature.overview.R
 import id.dhuwit.feature.overview.databinding.OverviewFragmentBinding
+import id.dhuwit.feature.overview.ui.account.OverviewAccountFragment
+import id.dhuwit.feature.overview.ui.category.OverviewCategoryFragment
 import id.dhuwit.feature.overview.ui.transaction.OverviewTransactionFragment
 import id.dhuwit.feature.transaction.router.TransactionRouter
 import javax.inject.Inject
@@ -89,13 +91,13 @@ class OverviewFragment : BaseFragment() {
 
     private fun showMenuCategory() {
         setSelectedMenu(TAG_CATEGORY)
-//        childFragmentManager.beginTransaction()
-//            .replace(
-//                binding?.frameLayout?.id ?: 0,
-//                OverviewTransactionFragment(),
-//                TAG_CATEGORY
-//            )
-//            .commit()
+        childFragmentManager.beginTransaction()
+            .replace(
+                binding?.frameLayout?.id ?: 0,
+                OverviewCategoryFragment(),
+                TAG_CATEGORY
+            )
+            .commit()
     }
 
     private fun showMenuAccount() {
@@ -103,7 +105,7 @@ class OverviewFragment : BaseFragment() {
         childFragmentManager.beginTransaction()
             .replace(
                 binding?.frameLayout?.id ?: 0,
-                AccountListFragment(),
+                OverviewAccountFragment(),
                 TAG_ACCOUNT
             )
             .commit()

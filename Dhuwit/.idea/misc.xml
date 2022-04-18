@@ -58,6 +58,8 @@
         <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_fragment.xml" value="0.14125" />
         <entry key="features/feature-overview/src/main/res/layout/dashboard_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/dashboard_overview_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_account_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_category_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />

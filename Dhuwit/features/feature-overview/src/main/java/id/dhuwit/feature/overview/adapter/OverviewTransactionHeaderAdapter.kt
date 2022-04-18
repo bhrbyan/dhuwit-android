@@ -7,7 +7,7 @@ import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.feature.overview.databinding.DashboardTransactionHeaderBinding
+import id.dhuwit.feature.overview.databinding.OverviewTransactionHeaderBinding
 import id.dhuwit.feature.overview.model.OverviewTransactionItem
 
 class OverviewTransactionHeaderAdapter() :
@@ -92,7 +92,7 @@ class OverviewTransactionHeaderAdapter() :
         viewType: Int
     ): OverviewTransactionHeaderViewHolder {
         return OverviewTransactionHeaderViewHolder(
-            DashboardTransactionHeaderBinding.inflate(
+            OverviewTransactionHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
