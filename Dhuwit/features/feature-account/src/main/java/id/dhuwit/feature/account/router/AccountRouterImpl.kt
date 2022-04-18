@@ -2,7 +2,9 @@ package id.dhuwit.feature.account.router
 
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import id.dhuwit.feature.account.ui.form.AccountActivity
+import id.dhuwit.feature.account.ui.list.AccountListFragment
 import id.dhuwit.feature.account.ui.selection.AccountSelectionActivity
 
 internal object AccountRouterImpl : AccountRouter {
@@ -17,5 +19,9 @@ internal object AccountRouterImpl : AccountRouter {
 
     override fun openAccountSelectionPage(context: Context): Intent {
         return Intent(context, AccountSelectionActivity::class.java)
+    }
+
+    override fun openAccountListPage(): Fragment {
+        return AccountListFragment()
     }
 }

@@ -44,6 +44,7 @@ dependencies {
     implementation project(":core")
     implementation project(":features:feature-dashboard")
     implementation project(":features:feature-budget")
+    implementation project(":features:feature-account")
     implementation project(":uikit")
 
     implementation deps.kotlin

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dashboard -->
-    <string name="dashboard_title">Dashboard</string>
+    <!-- Overview -->
+    <string name="overview_title">Overview</string>
 
     <!-- Menu -->
-    <string name="dashboard_menu_transaction">Overview</string>
+    <string name="dashboard_menu_transaction">Transaction</string>
     <string name="dashboard_menu_account">Account</string>
     <string name="dashboard_overview_income_title">Income</string>
     <string name="dashboard_overview_expense_title">Expense</string>

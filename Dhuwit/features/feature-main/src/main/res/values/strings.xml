@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom Navigation Menu-->
+    <string name="menu_overview">Overview</string>
+    <string name="menu_budget">Budget</string>
+    <string name="menu_account">Account</string>
+</resources>

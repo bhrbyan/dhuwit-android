@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_dashboard"
+        android:id="@+id/menu_overview"
         android:enabled="true"
         android:icon="@drawable/ic_dashboard"
-        android:title="@string/menu_dashboard" />
+        android:title="@string/menu_overview" />
+    <item
+        android:id="@+id/menu_account"
+        android:enabled="true"
+        android:icon="@drawable/ic_account"
+        android:title="@string/menu_account" />
     <item
         android:id="@+id/menu_budget"
         android:enabled="true"

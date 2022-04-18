@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseFragment
+import id.dhuwit.feature.account.ui.list.AccountListFragment
 import id.dhuwit.feature.dashboard.R
 import id.dhuwit.feature.dashboard.databinding.DashboardFragmentBinding
-import id.dhuwit.feature.dashboard.ui.account.DashboardAccountFragment
 import id.dhuwit.feature.dashboard.ui.overview.DashboardOverviewFragment
 import id.dhuwit.feature.transaction.router.TransactionRouter
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class DashboardFragment : BaseFragment() {
 
             when (currentFragment) {
                 is DashboardOverviewFragment -> (currentFragment as DashboardOverviewFragment).updateDataOverview()
-                is DashboardAccountFragment -> (currentFragment as DashboardAccountFragment).updateDataAccount()
+                is AccountListFragment -> (currentFragment as AccountListFragment).updateDataAccount()
             }
         }
     }
@@ -103,7 +103,7 @@ class DashboardFragment : BaseFragment() {
         childFragmentManager.beginTransaction()
             .replace(
                 binding?.frameLayout?.id ?: 0,
-                DashboardAccountFragment(),
+                AccountListFragment(),
                 TAG_ACCOUNT
             )
             .commit()

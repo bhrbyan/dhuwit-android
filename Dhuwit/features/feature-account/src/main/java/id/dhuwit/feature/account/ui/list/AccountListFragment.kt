@@ -1,4 +1,4 @@
-package id.dhuwit.feature.dashboard.ui.account
+package id.dhuwit.feature.account.ui.list
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -15,23 +15,19 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseFragment
+import id.dhuwit.feature.account.R
+import id.dhuwit.feature.account.databinding.AccountListFragmentBinding
 import id.dhuwit.feature.account.router.AccountRouter
-import id.dhuwit.feature.account.ui.list.AccountListAdapter
-import id.dhuwit.feature.account.ui.list.AccountListListener
-import id.dhuwit.feature.account.ui.list.AccountListViewModel
-import id.dhuwit.feature.account.ui.list.AccountListViewState
-import id.dhuwit.feature.dashboard.R
-import id.dhuwit.feature.dashboard.databinding.DashboardAccountFragmentBinding
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardAccountFragment : BaseFragment(), AccountListListener {
+class AccountListFragment : BaseFragment(), AccountListListener {
 
     private lateinit var adapterAccount: AccountListAdapter
 
-    private var binding: DashboardAccountFragmentBinding? = null
+    private var binding: AccountListFragmentBinding? = null
     private val viewModelAccountList: AccountListViewModel by viewModels()
 
     @Inject
@@ -53,7 +49,7 @@ class DashboardAccountFragment : BaseFragment(), AccountListListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DashboardAccountFragmentBinding.inflate(inflater, container, false)
+        binding = AccountListFragmentBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -84,7 +80,7 @@ class DashboardAccountFragment : BaseFragment(), AccountListListener {
 
     private fun setUpAdapterAccount() {
         adapterAccount = AccountListAdapter(storage).apply {
-            listener = this@DashboardAccountFragment
+            listener = this@AccountListFragment
         }
 
         val orientation: Int = resources.configuration.orientation

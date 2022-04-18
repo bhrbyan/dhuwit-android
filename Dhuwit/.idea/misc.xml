@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_budget.xml" value="0.162" />
+        <entry key="app/src/main/res/drawable/ic_dashboard.xml" value="0.162" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.2389193752638244" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2389193752638244" />
         <entry key="features/feature-account/src/main/res/layout-land/account_activity.xml" value="0.2515625" />
@@ -18,6 +20,7 @@
         <entry key="features/feature-account/src/main/res/layout/account_list_section.xml" value="0.27314814814814814" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_activity.xml" value="0.33603603603603605" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_item.xml" value="0.33603603603603605" />
+        <entry key="features/feature-account/src/main/res/layout/dashboard_account_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-budget/src/main/res/layout/budget_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
@@ -26,9 +29,12 @@
         <entry key="features/feature-category/src/main/res/layout/category_list_activity.xml" value="0.28574940425988266" />
         <entry key="features/feature-category/src/main/res/layout/category_list_item.xml" value="0.20833333333333334" />
         <entry key="features/feature-dashboard/src/main/res/layout-land/dashboard_activity.xml" value="0.24072265625" />
+        <entry key="features/feature-dashboard/src/main/res/layout-land/dashboard_fragment.xml" value="0.14493373236425822" />
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp-land/dashboard_account_fragment.xml" value="0.1" />
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp-land/dashboard_activity.xml" value="0.13518066406249996" />
+        <entry key="features/feature-dashboard/src/main/res/layout-sw600dp-land/dashboard_fragment.xml" value="0.1" />
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp/dashboard_activity.xml" value="0.11101074218750001" />
+        <entry key="features/feature-dashboard/src/main/res/layout-sw600dp/dashboard_fragment.xml" value="0.14125" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_account_fragment.xml" value="0.22445489525438223" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.2826171875" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_fragment.xml" value="0.22445489525438223" />
@@ -57,9 +63,13 @@
         <entry key="uikit/src/main/res/drawable/background_divider.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/background_gradient_blue.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/background_gradient_horizontal_blue.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_horizontal_green.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_vertical_blue.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/background_launcher_screen.xml" value="0.3453333333333333" />
         <entry key="uikit/src/main/res/drawable/ic_account.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/ic_account_blue.xml" value="0.1675" />
+        <entry key="uikit/src/main/res/drawable/ic_account_white.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/ic_dashboard.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-        android:text="@string/dashboard_title"
+        android:text="@string/overview_title"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
         android:textColor="@color/colorOnMinor"
         android:textStyle="bold"
