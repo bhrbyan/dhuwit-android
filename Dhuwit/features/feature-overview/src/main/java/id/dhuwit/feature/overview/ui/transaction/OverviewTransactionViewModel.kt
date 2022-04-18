@@ -1,4 +1,4 @@
-package id.dhuwit.feature.overview.ui.overview
+package id.dhuwit.feature.overview.ui.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardOverviewViewModel @Inject constructor(
+class OverviewTransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionDataSource
 ) : ViewModel() {
 
@@ -76,7 +76,7 @@ class DashboardOverviewViewModel @Inject constructor(
                 .sumOf { transaction -> transaction.amount }
 
             updateViewState(
-                DashboardOverviewViewState.GetOverview(
+                OverviewTransactionViewState.GetOverview(
                     Dashboard(
                         transactions = sortedTransaction,
                         overviewIncome = overviewIncome,
@@ -85,7 +85,7 @@ class DashboardOverviewViewModel @Inject constructor(
                 )
             )
         } else {
-            updateViewState(DashboardOverviewViewState.TransactionNotFound)
+            updateViewState(OverviewTransactionViewState.TransactionNotFound)
         }
     }
 
@@ -116,7 +116,7 @@ class DashboardOverviewViewModel @Inject constructor(
     private fun setPeriodDate(periodMonth: Int) {
         periodDate = DateHelper.getPeriodDate(periodMonth, PATTERN_DATE_PERIOD)
         updateViewState(
-            DashboardOverviewViewState.SetPeriodDate(periodDate)
+            OverviewTransactionViewState.SetPeriodDate(periodDate)
         )
     }
 

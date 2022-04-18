@@ -53,6 +53,11 @@
         <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.1531677825296113" />
+        <entry key="features/feature-overview/src/main/res/layout-land/overview_fragment.xml" value="0.4087887128330082" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp-land/overview_fragment.xml" value="0.1" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_fragment.xml" value="0.14125" />
+        <entry key="features/feature-overview/src/main/res/layout/dashboard_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
@@ -70,6 +75,7 @@
         <entry key="uikit/src/main/res/drawable/ic_account.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/ic_account_blue.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/ic_account_white.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/ic_category.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_category_white.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_dashboard.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
@@ -78,7 +84,11 @@
         <entry key="uikit/src/main/res/drawable/ic_list.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/ic_overview.xml" value="0.1675" />
         <entry key="uikit/src/main/res/drawable/ic_overview_blue.xml" value="0.1675" />
+        <entry key="uikit/src/main/res/drawable/ic_overview_green.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_star.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/ic_transaction.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/ic_transaction_green.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/ic_transaction_white.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_wallet.xml" value="0.1675" />
       </map>
     </option>

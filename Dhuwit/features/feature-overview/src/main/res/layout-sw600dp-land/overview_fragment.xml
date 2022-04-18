@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient_horizontal_green">
+    android:background="@drawable/background_gradient_vertical_green">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_large" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_large" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_title_dashboard"
@@ -28,13 +28,13 @@
         android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
         android:textColor="@color/colorOnMinor"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginTop="@dimen/uikit_margin_padding_size_medium" />
 
     <LinearLayout
-        android:id="@+id/layout_overview"
+        android:id="@+id/layout_menu_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
@@ -44,30 +44,30 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintEnd_toStartOf="@+id/layout_category"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
+        app:layout_constraintBottom_toTopOf="@+id/layout_menu_category"
+        app:layout_constraintEnd_toEndOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_overview"
+            android:id="@+id/image_menu_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_overview_white" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_overview"
+            android:id="@+id/text_menu_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dashboard_menu_transaction"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorOnMinor" />
-
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_category"
+        android:id="@+id/layout_menu_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
@@ -77,18 +77,21 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintEnd_toStartOf="@+id/layout_account"
-        app:layout_constraintStart_toEndOf="@id/layout_overview"
-        app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
+        app:layout_constraintBottom_toTopOf="@+id/layout_menu_account"
+        app:layout_constraintEnd_toEndOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_menu_transaction"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_category"
+            android:id="@+id/image_menu_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_category_white" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_category"
+            android:id="@+id/text_menu_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dashboard_menu_category"
@@ -97,7 +100,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_account"
+        android:id="@+id/layout_menu_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
@@ -107,18 +110,19 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toEndOf="@id/layout_category"
-        app:layout_constraintTop_toBottomOf="@+id/text_title_dashboard">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_menu_category">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_account"
+            android:id="@+id/image_menu_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_account_white" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_account"
+            android:id="@+id/text_menu_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dashboard_menu_account"
@@ -128,15 +132,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_content"
-        style="@style/Uikit.Style.CardView.Top"
+        style="@style/Uikit.Style.CardView.Left"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_account">
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_content"
@@ -160,7 +163,7 @@
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
         android:contentDescription="@string/dashboard_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

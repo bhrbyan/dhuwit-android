@@ -1,4 +1,4 @@
-package id.dhuwit.feature.overview.ui.overview
+package id.dhuwit.feature.overview.ui.transaction
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,17 +17,18 @@ import id.dhuwit.feature.overview.R
 import id.dhuwit.feature.overview.adapter.DashboardTransactionHeaderAdapter
 import id.dhuwit.feature.overview.adapter.DashboardTransactionItemListener
 import id.dhuwit.feature.overview.databinding.DashboardOverviewFragmentBinding
+import id.dhuwit.feature.overview.ui.overview.OverviewFragment
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListener {
+class OverviewTransactionFragment : BaseFragment(), DashboardTransactionItemListener {
 
     private lateinit var adapterTransactionHeader: DashboardTransactionHeaderAdapter
 
     private var binding: DashboardOverviewFragmentBinding? = null
-    private val viewModelOverview: DashboardOverviewViewModel by viewModels()
+    private val viewModelOverview: OverviewTransactionViewModel by viewModels()
 
     @Inject
     lateinit var storage: Storage
@@ -65,16 +66,16 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     override fun observer() {
         viewModelOverview.viewState.observe(this) {
             when (it) {
-                is DashboardOverviewViewState.GetOverview -> {
+                is OverviewTransactionViewState.GetOverview -> {
                     setUpDataTransaction(it.dashboard.transactions)
                     setUpDataOverview(it.dashboard.overviewIncome, it.dashboard.overviewExpense)
                 }
-                is DashboardOverviewViewState.TransactionNotFound -> {
+                is OverviewTransactionViewState.TransactionNotFound -> {
                     showError(
                         getString(R.string.dashboard_transactions_not_found)
                     )
                 }
-                is DashboardOverviewViewState.SetPeriodDate -> {
+                is OverviewTransactionViewState.SetPeriodDate -> {
                     binding?.textMonth?.text = it.periodDate
                 }
                 is ViewState.Error -> {
@@ -88,7 +89,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
 
     private fun setUpAdapterTransaction() {
         adapterTransactionHeader = DashboardTransactionHeaderAdapter().apply {
-            listener = this@DashboardOverviewFragment
+            listener = this@OverviewTransactionFragment
         }
 
         binding?.recyclerViewTransaction?.apply {
@@ -98,7 +99,7 @@ class DashboardOverviewFragment : BaseFragment(), DashboardTransactionItemListen
     }
 
     override fun onClickTransaction(transaction: Transaction?) {
-//        (activity as DashboardActivity).openTransactionPage(transaction?.id)
+        (parentFragment as OverviewFragment).openTransactionPage(transaction?.id)
     }
 
     private fun setUpDataTransaction(transactions: List<Transaction>?) {
