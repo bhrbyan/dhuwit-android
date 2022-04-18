@@ -11,7 +11,7 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
-import id.dhuwit.feature.overview.model.Dashboard
+import id.dhuwit.feature.overview.model.OverviewTransaction
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
@@ -77,10 +77,10 @@ class OverviewTransactionViewModel @Inject constructor(
 
             updateViewState(
                 OverviewTransactionViewState.GetOverview(
-                    Dashboard(
+                    OverviewTransaction(
                         transactions = sortedTransaction,
-                        overviewIncome = overviewIncome,
-                        overviewExpense = overviewExpense
+                        totalIncomeTransaction = overviewIncome,
+                        totalExpenseTransaction = overviewExpense
                     )
                 )
             )

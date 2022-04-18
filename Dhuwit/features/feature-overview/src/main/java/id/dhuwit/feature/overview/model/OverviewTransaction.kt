@@ -2,8 +2,8 @@ package id.dhuwit.feature.overview.model
 
 import id.dhuwit.core.transaction.model.Transaction
 
-data class Dashboard(
+data class OverviewTransaction(
     val transactions: List<Transaction>?,
-    val overviewIncome: Double,
-    val overviewExpense: Double
+    val totalIncomeTransaction: Double,
+    val totalExpenseTransaction: Double
 )

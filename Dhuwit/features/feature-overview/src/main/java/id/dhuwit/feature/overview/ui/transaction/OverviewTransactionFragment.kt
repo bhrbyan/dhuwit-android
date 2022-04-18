@@ -14,20 +14,20 @@ import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.overview.R
-import id.dhuwit.feature.overview.adapter.DashboardTransactionHeaderAdapter
-import id.dhuwit.feature.overview.adapter.DashboardTransactionItemListener
-import id.dhuwit.feature.overview.databinding.DashboardOverviewFragmentBinding
+import id.dhuwit.feature.overview.adapter.OverviewTransactionHeaderAdapter
+import id.dhuwit.feature.overview.adapter.OverviewTransactionItemListener
+import id.dhuwit.feature.overview.databinding.OverviewTransactionFragmentBinding
 import id.dhuwit.feature.overview.ui.overview.OverviewFragment
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OverviewTransactionFragment : BaseFragment(), DashboardTransactionItemListener {
+class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListener {
 
-    private lateinit var adapterTransactionHeader: DashboardTransactionHeaderAdapter
+    private lateinit var adapterTransactionHeader: OverviewTransactionHeaderAdapter
 
-    private var binding: DashboardOverviewFragmentBinding? = null
+    private var binding: OverviewTransactionFragmentBinding? = null
     private val viewModelOverview: OverviewTransactionViewModel by viewModels()
 
     @Inject
@@ -38,7 +38,7 @@ class OverviewTransactionFragment : BaseFragment(), DashboardTransactionItemList
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DashboardOverviewFragmentBinding.inflate(
+        binding = OverviewTransactionFragmentBinding.inflate(
             inflater, container, false
         )
         return binding?.root
@@ -67,8 +67,11 @@ class OverviewTransactionFragment : BaseFragment(), DashboardTransactionItemList
         viewModelOverview.viewState.observe(this) {
             when (it) {
                 is OverviewTransactionViewState.GetOverview -> {
-                    setUpDataTransaction(it.dashboard.transactions)
-                    setUpDataOverview(it.dashboard.overviewIncome, it.dashboard.overviewExpense)
+                    setUpDataTransaction(it.overviewTransaction.transactions)
+                    setUpDataOverview(
+                        it.overviewTransaction.totalIncomeTransaction,
+                        it.overviewTransaction.totalExpenseTransaction
+                    )
                 }
                 is OverviewTransactionViewState.TransactionNotFound -> {
                     showError(
@@ -88,7 +91,7 @@ class OverviewTransactionFragment : BaseFragment(), DashboardTransactionItemList
     }
 
     private fun setUpAdapterTransaction() {
-        adapterTransactionHeader = DashboardTransactionHeaderAdapter().apply {
+        adapterTransactionHeader = OverviewTransactionHeaderAdapter().apply {
             listener = this@OverviewTransactionFragment
         }
 

@@ -6,7 +6,7 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.budget.router.BudgetRouter
 import id.dhuwit.feature.main.databinding.MainActivityBinding
-import id.dhuwit.feature.overview.router.DashboardRouter
+import id.dhuwit.feature.overview.router.OverviewRouter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
     lateinit var budgetRouter: BudgetRouter
 
     @Inject
-    lateinit var dashboardRouter: DashboardRouter
+    lateinit var overviewRouter: OverviewRouter
 
     @Inject
     lateinit var accountRouter: AccountRouter
@@ -28,13 +28,13 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         // ToDo: Update this to prevent open dashboard page when rotate screen
-        openMenu(dashboardRouter.openDashboardPage())
+        openMenu(overviewRouter.openDashboardPage())
     }
 
     override fun listener() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_overview -> openMenu(dashboardRouter.openDashboardPage())
+                R.id.menu_overview -> openMenu(overviewRouter.openDashboardPage())
                 R.id.menu_account -> openMenu(accountRouter.openAccountListPage())
                 R.id.menu_budget -> openMenu(budgetRouter.openBudgetPage())
                 else -> throw Exception("Menu Item Not Found!")

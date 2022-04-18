@@ -2,6 +2,6 @@ package id.dhuwit.feature.overview.router
 
 import androidx.fragment.app.Fragment
 
-interface DashboardRouter {
+interface OverviewRouter {
     fun openDashboardPage(): Fragment
 }

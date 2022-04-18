@@ -11,9 +11,9 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.overview.R
-import id.dhuwit.feature.overview.databinding.DashboardTransactionItemBinding
+import id.dhuwit.feature.overview.databinding.OverviewTransactionItemBinding
 
-class DashboardTransactionItemViewHolder(private val binding: DashboardTransactionItemBinding) :
+class OverviewTransactionItemViewHolder(private val binding: OverviewTransactionItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(transaction: Transaction, currencySymbol: String?) {

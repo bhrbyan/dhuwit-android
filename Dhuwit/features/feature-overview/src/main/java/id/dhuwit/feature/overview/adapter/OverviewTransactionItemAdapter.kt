@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.overview.databinding.DashboardTransactionItemBinding
 
-class DashboardTransactionItemAdapter(
+class OverviewTransactionItemAdapter(
     val transactions: MutableList<Transaction>,
     private val currencySymbol: String?,
-    private val listener: DashboardTransactionItemListener?
-) : RecyclerView.Adapter<DashboardTransactionItemViewHolder>() {
+    private val listener: OverviewTransactionItemListener?
+) : RecyclerView.Adapter<OverviewTransactionItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DashboardTransactionItemViewHolder {
-        return DashboardTransactionItemViewHolder(
+    ): OverviewTransactionItemViewHolder {
+        return OverviewTransactionItemViewHolder(
             DashboardTransactionItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -31,7 +31,7 @@ class DashboardTransactionItemAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: DashboardTransactionItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OverviewTransactionItemViewHolder, position: Int) {
         holder.onBind(transactions[position], currencySymbol)
     }
 

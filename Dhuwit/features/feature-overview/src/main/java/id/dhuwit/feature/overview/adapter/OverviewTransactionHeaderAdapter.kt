@@ -8,20 +8,20 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.overview.databinding.DashboardTransactionHeaderBinding
-import id.dhuwit.feature.overview.model.DashboardTransaction
+import id.dhuwit.feature.overview.model.OverviewTransactionItem
 
-class DashboardTransactionHeaderAdapter() :
-    RecyclerView.Adapter<DashboardTransactionHeaderViewHolder>() {
+class OverviewTransactionHeaderAdapter() :
+    RecyclerView.Adapter<OverviewTransactionHeaderViewHolder>() {
 
-    private var dashboardTransaction: MutableList<DashboardTransaction> = ArrayList()
+    private var overviewTransactionItem: MutableList<OverviewTransactionItem> = ArrayList()
     private var currencySymbol: String? = null
 
-    var listener: DashboardTransactionItemListener? = null
+    var listener: OverviewTransactionItemListener? = null
 
     fun updateList(transactions: List<Transaction>?, currencySymbol: String?) {
         this.currencySymbol = currencySymbol
 
-        dashboardTransaction.clear()
+        overviewTransactionItem.clear()
 
         transactions?.forEach { transaction ->
             val formattedDate = transaction.date.convertPattern(
@@ -29,9 +29,9 @@ class DashboardTransactionHeaderAdapter() :
                 DateHelper.PATTERN_DATE_TRANSACTION
             )
 
-            if (dashboardTransaction.size <= 0) {
-                dashboardTransaction.add(
-                    DashboardTransaction().apply {
+            if (overviewTransactionItem.size <= 0) {
+                overviewTransactionItem.add(
+                    OverviewTransactionItem().apply {
                         this.date = formattedDate
                         this.totalAmount = calculateAmountDaily(
                             transaction.type,
@@ -42,20 +42,20 @@ class DashboardTransactionHeaderAdapter() :
                     }
                 )
             } else {
-                val lastIndex = dashboardTransaction.size.minus(1)
+                val lastIndex = overviewTransactionItem.size.minus(1)
 
-                if (formattedDate == dashboardTransaction[lastIndex].date) {
+                if (formattedDate == overviewTransactionItem[lastIndex].date) {
                     // Add new child to existing section
-                    dashboardTransaction[lastIndex].transactions.add(transaction)
-                    dashboardTransaction[lastIndex].totalAmount = calculateAmountDaily(
+                    overviewTransactionItem[lastIndex].transactions.add(transaction)
+                    overviewTransactionItem[lastIndex].totalAmount = calculateAmountDaily(
                         transaction.type,
-                        dashboardTransaction[lastIndex].totalAmount,
+                        overviewTransactionItem[lastIndex].totalAmount,
                         transaction.amount
                     )
                 } else {
                     // Add new section
-                    dashboardTransaction.add(
-                        DashboardTransaction().apply {
+                    overviewTransactionItem.add(
+                        OverviewTransactionItem().apply {
                             this.date = formattedDate
                             this.totalAmount = calculateAmountDaily(
                                 transaction.type,
@@ -90,8 +90,8 @@ class DashboardTransactionHeaderAdapter() :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DashboardTransactionHeaderViewHolder {
-        return DashboardTransactionHeaderViewHolder(
+    ): OverviewTransactionHeaderViewHolder {
+        return OverviewTransactionHeaderViewHolder(
             DashboardTransactionHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -100,11 +100,11 @@ class DashboardTransactionHeaderAdapter() :
         )
     }
 
-    override fun onBindViewHolder(holder: DashboardTransactionHeaderViewHolder, position: Int) {
-        holder.onBind(dashboardTransaction[position], currencySymbol, listener)
+    override fun onBindViewHolder(holder: OverviewTransactionHeaderViewHolder, position: Int) {
+        holder.onBind(overviewTransactionItem[position], currencySymbol, listener)
     }
 
     override fun getItemCount(): Int {
-        return dashboardTransaction.size
+        return overviewTransactionItem.size
     }
 }

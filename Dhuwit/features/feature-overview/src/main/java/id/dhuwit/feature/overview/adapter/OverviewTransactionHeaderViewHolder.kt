@@ -5,26 +5,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.feature.overview.R
-import id.dhuwit.feature.overview.databinding.DashboardTransactionHeaderBinding
-import id.dhuwit.feature.overview.model.DashboardTransaction
+import id.dhuwit.feature.overview.databinding.OverviewTransactionHeaderBinding
+import id.dhuwit.feature.overview.model.OverviewTransactionItem
 import id.dhuwit.uikit.divider.DividerLastItemDecoration
 import kotlin.math.abs
 
 
-class DashboardTransactionHeaderViewHolder(private val binding: DashboardTransactionHeaderBinding) :
+class OverviewTransactionHeaderViewHolder(private val binding: OverviewTransactionHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(
-        dashboardTransaction: DashboardTransaction,
+        overviewTransactionItem: OverviewTransactionItem,
         currencySymbol: String?,
-        listener: DashboardTransactionItemListener?
+        listener: OverviewTransactionItemListener?
     ) {
-        binding.textDate.text = dashboardTransaction.date
-        setTotalAmount(dashboardTransaction.totalAmount, currencySymbol)
+        binding.textDate.text = overviewTransactionItem.date
+        setTotalAmount(overviewTransactionItem.totalAmount, currencySymbol)
 
         val adapterTransactions =
-            DashboardTransactionItemAdapter(
-                dashboardTransaction.transactions,
+            OverviewTransactionItemAdapter(
+                overviewTransactionItem.transactions,
                 currencySymbol,
                 listener
             )
