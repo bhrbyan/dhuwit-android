@@ -16,6 +16,7 @@
         <entry key="features/feature-account/src/main/res/layout/account_activity.xml" value="0.2296875" />
         <entry key="features/feature-account/src/main/res/layout/account_list.xml" value="0.2947916666666667" />
         <entry key="features/feature-account/src/main/res/layout/account_list_add.xml" value="0.2734375" />
+        <entry key="features/feature-account/src/main/res/layout/account_list_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-account/src/main/res/layout/account_list_item.xml" value="0.32647552490234377" />
         <entry key="features/feature-account/src/main/res/layout/account_list_section.xml" value="0.27314814814814814" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_activity.xml" value="0.33603603603603605" />
@@ -39,7 +40,7 @@
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.2826171875" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_fragment.xml" value="0.22445489525438223" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_menu_item.xml" value="0.2069260367678495" />
-        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_overview_fragment.xml" value="0.3946380615234375" />
+        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_overview_fragment.xml" value="0.30009002685546876" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_header.xml" value="0.27314814814814814" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_item.xml" value="0.3701657458563536" />
         <entry key="features/feature-dashboard/src/main/res/menu/bottom_navigation_menu.xml" value="0.2389193752638244" />

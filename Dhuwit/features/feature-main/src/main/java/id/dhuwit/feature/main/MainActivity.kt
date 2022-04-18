@@ -27,6 +27,7 @@ class MainActivity : BaseActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // ToDo: Update this to prevent open dashboard page when rotate screen
         openMenu(dashboardRouter.openDashboardPage())
     }
 
