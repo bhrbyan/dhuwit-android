@@ -45,6 +45,7 @@ dependencies {
     implementation project(':features:feature-overview')
     implementation project(":features:feature-budget")
     implementation project(":features:feature-account")
+    implementation project(":state")
     implementation project(":uikit")
 
     implementation deps.kotlin
@@ -61,4 +62,7 @@ dependencies {
     implementation deps.google.hilt.android
     kapt deps.google.hilt.compiler
     kapt deps.androidX.hiltCompiler
+
+    /* View Model */
+    implementation deps.androidX.viewModelExt
 }

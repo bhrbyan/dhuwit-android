@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import id.dhuwit.feature.overview.ui.overview.OverviewFragment
 
 object OverviewRouterImpl : OverviewRouter {
-    override fun openDashboardPage(): Fragment {
+    override fun openOverviewPage(): Fragment {
         return OverviewFragment()
     }
 }

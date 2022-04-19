@@ -1,5 +1,6 @@
 package id.dhuwit.feature.main
 
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: MainActivityBinding
+    private val viewModel: MainViewModel by viewModels()
 
     @Inject
     lateinit var budgetRouter: BudgetRouter
@@ -26,17 +28,14 @@ class MainActivity : BaseActivity() {
     override fun init() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // ToDo: Update this to prevent open dashboard page when rotate screen
-        openMenu(overviewRouter.openDashboardPage())
     }
 
     override fun listener() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_overview -> openMenu(overviewRouter.openDashboardPage())
-                R.id.menu_account -> openMenu(accountRouter.openAccountListPage())
-                R.id.menu_budget -> openMenu(budgetRouter.openBudgetPage())
+                R.id.menu_overview -> viewModel.openOverviewPage()
+                R.id.menu_account -> viewModel.openAccountPage()
+                R.id.menu_budget -> viewModel.openBudgetPage()
                 else -> throw Exception("Menu Item Not Found!")
             }
 
@@ -45,7 +44,13 @@ class MainActivity : BaseActivity() {
     }
 
     override fun observer() {
-
+        viewModel.viewState.observe(this) {
+            when (it) {
+                is MainViewState.OpenOverviewPage -> openMenu(overviewRouter.openOverviewPage())
+                is MainViewState.OpenAccountPage -> openMenu(accountRouter.openAccountListPage())
+                is MainViewState.OpenBudgetPage -> openMenu(budgetRouter.openBudgetPage())
+            }
+        }
     }
 
     private fun openMenu(fragment: Fragment) {
