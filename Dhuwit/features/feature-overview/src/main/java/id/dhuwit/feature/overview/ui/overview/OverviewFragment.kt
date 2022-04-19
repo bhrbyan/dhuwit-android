@@ -32,6 +32,7 @@ class OverviewFragment : BaseFragment() {
 
             when (currentFragment) {
                 is OverviewTransactionFragment -> (currentFragment as OverviewTransactionFragment).updateDataOverview()
+                is OverviewCategoryFragment -> (currentFragment as OverviewCategoryFragment).updateDataCategories()
                 is AccountListFragment -> (currentFragment as AccountListFragment).updateDataAccount()
             }
         }

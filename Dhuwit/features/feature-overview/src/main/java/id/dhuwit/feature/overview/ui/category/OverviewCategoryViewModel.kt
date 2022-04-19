@@ -35,10 +35,12 @@ class OverviewCategoryViewModel @Inject constructor(
         getTransactions(periodDate, categoryType)
     }
 
-    private fun getTransactions(periodDate: String?, categoryType: CategoryType) {
+    fun getTransactions(periodDate: String?, categoryType: CategoryType?) {
+        val date = periodDate ?: this@OverviewCategoryViewModel.periodDate
+        val type = categoryType ?: this@OverviewCategoryViewModel.categoryType
+
         viewModelScope.launch {
-            when (val result =
-                transactionRepository.getCategoryTransaction(periodDate, categoryType)) {
+            when (val result = transactionRepository.getCategoryTransaction(date, type)) {
                 is State.Success -> {
                     setUpListCategories(result.data)
                 }

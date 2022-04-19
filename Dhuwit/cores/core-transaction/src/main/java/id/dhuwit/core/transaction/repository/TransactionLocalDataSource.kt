@@ -305,7 +305,9 @@ class TransactionLocalDataSource @Inject constructor(
                     )
                 }
 
-                State.Success(categories.sortedByDescending { it.categoryName })
+                val sortedCategories = categories.sortedBy { it.categoryName }
+
+                State.Success(sortedCategories)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage)
             }

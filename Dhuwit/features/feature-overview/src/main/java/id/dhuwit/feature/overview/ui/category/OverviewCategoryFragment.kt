@@ -165,4 +165,8 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
         super.onDestroyView()
         binding = null
     }
+
+    fun updateDataCategories() {
+        viewModel.getTransactions(null, null)
+    }
 }
