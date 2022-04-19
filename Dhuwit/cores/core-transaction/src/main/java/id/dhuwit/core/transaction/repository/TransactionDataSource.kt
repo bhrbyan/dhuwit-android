@@ -1,6 +1,8 @@
 package id.dhuwit.core.transaction.repository
 
+import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionCategory
 import id.dhuwit.state.State
 
 interface TransactionDataSource {
@@ -13,4 +15,8 @@ interface TransactionDataSource {
     ): State<Boolean>
 
     suspend fun deleteTransaction(transactionId: Long): State<Boolean>
+    suspend fun getCategoryTransaction(
+        periodDate: String?,
+        categoryType: CategoryType
+    ): State<List<TransactionCategory>>
 }

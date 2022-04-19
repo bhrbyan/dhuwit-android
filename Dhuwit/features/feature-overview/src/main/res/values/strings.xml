@@ -4,20 +4,26 @@
     <string name="overview_title">Overview</string>
 
     <!-- Menu -->
-    <string name="dashboard_menu_transaction">Transaction</string>
-    <string name="dashboard_menu_category">Category</string>
-    <string name="dashboard_menu_account">Account</string>
-
-    <string name="dashboard_overview_income_title">Income</string>
-    <string name="dashboard_overview_expense_title">Expense</string>
+    <string name="overview_menu_transaction">Transaction</string>
+    <string name="overview_menu_category">Category</string>
+    <string name="overview_menu_account">Account</string>
 
     <!-- Transactions -->
-    <string name="dashboard_transactions_title">Transactions</string>
-    <string name="dashboard_transactions_empty">You don\'t have transaction</string>
-    <string name="dashboard_transactions_header_negative">-%1$s</string>
-    <string name="dashboard_transactions_item_expense">-%1$s</string>
-    <string name="dashboard_transactions_item_income">+%1$s</string>
-    <string name="dashboard_transactions_content_fab">Add Transaction</string>
-    <string name="dashboard_transactions_not_found">Transaction Not Found!</string>
+    <string name="overview_transactions_title">Transactions</string>
+    <string name="overview_transactions_empty">You don\'t have transaction</string>
+    <string name="overview_transactions_header_negative">-%1$s</string>
+    <string name="overview_transactions_item_expense">-%1$s</string>
+    <string name="overview_transactions_item_income">+%1$s</string>
+    <string name="overview_transactions_content_fab">Add Transaction</string>
+    <string name="overview_transactions_not_found">Transaction Not Found!</string>
+    <string name="overview_transactions_income_title">Income</string>
+    <string name="overview_transactions_expense_title">Expense</string>
+
+    <!-- Category -->
+    <string name="overview_category_expense_type">Expense</string>
+    <string name="overview_category_income_type">Income</string>
+    <string name="overview_categories_not_found">Categories Not Found!</string>
+    <string name="overview_category_total_transaction_less_than_one">%1$d transaction</string>
+    <string name="overview_category_total_transaction_more_than_one">%1$d transactions</string>
 
 </resources>

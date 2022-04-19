@@ -1,8 +1,13 @@
 package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.account.database.AccountDao
+import id.dhuwit.core.category.model.CategoryType
+import id.dhuwit.core.helper.DateHelper
+import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.database.TransactionDao
+import id.dhuwit.core.transaction.database.TransactionEntity
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionCategory
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
@@ -262,5 +267,61 @@ class TransactionLocalDataSource @Inject constructor(
                 State.Error(e.localizedMessage)
             }
         }
+    }
+
+    override suspend fun getCategoryTransaction(
+        periodDate: String?,
+        categoryType: CategoryType
+    ): State<List<TransactionCategory>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val transactions = transactionDao.getTransactions()
+                val filteredTransaction = transactions
+                    .filter { transaction ->
+                        isTransactionWithinPeriodDate(
+                            transaction,
+                            periodDate
+                        ) && CategoryType.getCategoryType(transaction.categoryType) == categoryType
+                    }
+                val distinctTransactions = filteredTransaction.distinctBy { it.categoryId }
+
+                val categories: ArrayList<TransactionCategory> = ArrayList()
+                distinctTransactions.forEach { distinctTransaction ->
+                    val totalTransaction = filteredTransaction.filter {
+                        it.categoryId == distinctTransaction.categoryId
+                    }.size
+
+                    val totalAmountTransaction = filteredTransaction.filter {
+                        it.categoryId == distinctTransaction.categoryId
+                    }.sumOf { it.amount }
+
+                    categories.add(
+                        TransactionCategory(
+                            categoryId = distinctTransaction.categoryId,
+                            categoryName = distinctTransaction.categoryName,
+                            totalAmountTransaction = totalAmountTransaction,
+                            totalTransaction = totalTransaction
+                        )
+                    )
+                }
+
+                State.Success(categories.sortedByDescending { it.categoryName })
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage)
+            }
+        }
+    }
+
+    private fun isTransactionWithinPeriodDate(
+        transaction: TransactionEntity,
+        periodDate: String?
+    ): Boolean {
+        return DateHelper.isTransactionDateWithinRangePeriodDate(
+            transactionDate = transaction.date.convertPattern(
+                DateHelper.PATTERN_DATE_DATABASE,
+                DateHelper.PATTERN_DATE_PERIOD
+            ),
+            periodDate = periodDate ?: ""
+        )
     }
 }

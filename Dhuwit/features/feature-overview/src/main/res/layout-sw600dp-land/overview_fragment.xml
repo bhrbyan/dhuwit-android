@@ -61,7 +61,7 @@
             android:id="@+id/text_menu_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_menu_transaction"
+            android:text="@string/overview_menu_transaction"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorOnMinor" />
     </LinearLayout>
@@ -94,7 +94,7 @@
             android:id="@+id/text_menu_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_menu_category"
+            android:text="@string/overview_menu_category"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorOnMinor" />
     </LinearLayout>
@@ -125,7 +125,7 @@
             android:id="@+id/text_menu_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_menu_account"
+            android:text="@string/overview_menu_account"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorOnMinor" />
     </LinearLayout>
@@ -161,7 +161,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
-        android:contentDescription="@string/dashboard_transactions_content_fab"
+        android:contentDescription="@string/overview_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />

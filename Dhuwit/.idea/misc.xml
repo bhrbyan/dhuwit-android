@@ -60,7 +60,12 @@
         <entry key="features/feature-overview/src/main/res/layout/dashboard_overview_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_account_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_category_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_category_item.xml" value="0.22445489525438223" />
         <entry key="features/feature-overview/src/main/res/layout/overview_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_transaction_fragment.xml" value="0.22161249472351202" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_transaction_header.xml" value="0.22445489525438223" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_transaction_item.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/menu/overview_menu_category_type.xml" value="0.5436893203883495" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />

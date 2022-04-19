@@ -51,7 +51,7 @@ class OverviewTransactionHeaderViewHolder(private val binding: OverviewTransacti
                 convertedAmount
             } else {
                 root.context.getString(
-                    R.string.dashboard_transactions_header_negative,
+                    R.string.overview_transactions_header_negative,
                     convertedAmount
                 )
             }

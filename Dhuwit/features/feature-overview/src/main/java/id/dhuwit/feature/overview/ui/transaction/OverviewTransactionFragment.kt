@@ -28,7 +28,7 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
     private lateinit var adapterTransactionHeader: OverviewTransactionHeaderAdapter
 
     private var binding: OverviewTransactionFragmentBinding? = null
-    private val viewModelOverview: OverviewTransactionViewModel by viewModels()
+    private val viewModel: OverviewTransactionViewModel by viewModels()
 
     @Inject
     lateinit var storage: Storage
@@ -47,24 +47,24 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
     override fun init() {
         setUpAdapterTransaction()
 
-        viewModelOverview.setDefaultPeriodDate()
-        viewModelOverview.getOverview()
+        viewModel.setDefaultPeriodDate()
+        viewModel.getOverview()
     }
 
     override fun listener() {
         binding?.let {
             it.imageNext.setOnClickListener {
-                viewModelOverview.onNextPeriodDate()
+                viewModel.onNextPeriodDate()
             }
 
             it.imagePrevious.setOnClickListener {
-                viewModelOverview.onPreviousPeriodDate()
+                viewModel.onPreviousPeriodDate()
             }
         }
     }
 
     override fun observer() {
-        viewModelOverview.viewState.observe(this) {
+        viewModel.viewState.observe(this) {
             when (it) {
                 is OverviewTransactionViewState.GetOverview -> {
                     setUpDataTransaction(it.overviewTransaction.transactions)
@@ -75,7 +75,7 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
                 }
                 is OverviewTransactionViewState.TransactionNotFound -> {
                     showError(
-                        getString(R.string.dashboard_transactions_not_found)
+                        getString(R.string.overview_transactions_not_found)
                     )
                 }
                 is OverviewTransactionViewState.SetPeriodDate -> {
@@ -149,7 +149,7 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
     }
 
     fun updateDataOverview() {
-        viewModelOverview.getOverview()
+        viewModel.getOverview()
     }
 
     override fun onDestroyView() {

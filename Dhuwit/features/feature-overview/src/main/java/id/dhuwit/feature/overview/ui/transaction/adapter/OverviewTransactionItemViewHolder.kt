@@ -39,7 +39,7 @@ class OverviewTransactionItemViewHolder(private val binding: OverviewTransaction
                     )
 
                     text = binding.root.context.getString(
-                        R.string.dashboard_transactions_item_expense,
+                        R.string.overview_transactions_item_expense,
                         convertedAmount
                     )
                 }
@@ -52,7 +52,7 @@ class OverviewTransactionItemViewHolder(private val binding: OverviewTransaction
                     )
 
                     text = binding.root.context.getString(
-                        R.string.dashboard_transactions_item_income,
+                        R.string.overview_transactions_item_income,
                         convertedAmount
                     )
                 }
