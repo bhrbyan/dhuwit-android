@@ -105,7 +105,9 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     }
 
     private fun setUpAdapter() {
-        adapterCategory = OverviewCategoryAdapter(storage.getSymbolCurrency())
+        adapterCategory = OverviewCategoryAdapter(storage.getSymbolCurrency()).apply {
+            listener = this@OverviewCategoryFragment
+        }
         binding?.recyclerView?.apply {
             adapter = adapterCategory
             layoutManager = LinearLayoutManager(requireContext())

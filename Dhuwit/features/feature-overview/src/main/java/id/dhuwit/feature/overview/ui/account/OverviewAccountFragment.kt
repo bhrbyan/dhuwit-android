@@ -105,7 +105,9 @@ class OverviewAccountFragment : BaseFragment(), OverviewAccountListener {
     }
 
     private fun setUpAdapter() {
-        adapterAccount = OverviewAccountAdapter(storage.getSymbolCurrency())
+        adapterAccount = OverviewAccountAdapter(storage.getSymbolCurrency()).apply {
+            listener = this@OverviewAccountFragment
+        }
         binding?.recyclerView?.apply {
             adapter = adapterAccount
             layoutManager = LinearLayoutManager(requireContext())
