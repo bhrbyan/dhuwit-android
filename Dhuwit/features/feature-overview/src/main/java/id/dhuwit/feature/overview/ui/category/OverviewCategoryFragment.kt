@@ -54,7 +54,6 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
             it.imageNext.setOnClickListener {
                 viewModel.onNextPeriodDate()
             }
-
             it.imagePrevious.setOnClickListener {
                 viewModel.onPreviousPeriodDate()
             }
@@ -114,7 +113,7 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     }
 
     override fun onClickCategory(item: TransactionCategory) {
-        Toast.makeText(requireContext(), "onClickCategory", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), item.categoryName, Toast.LENGTH_SHORT).show()
     }
 
     private fun showMessageEmptyCategory() {

@@ -59,6 +59,7 @@
         <entry key="features/feature-overview/src/main/res/layout/dashboard_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/dashboard_overview_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_account_fragment.xml" value="0.2389193752638244" />
+        <entry key="features/feature-overview/src/main/res/layout/overview_account_item.xml" value="0.1" />
         <entry key="features/feature-overview/src/main/res/layout/overview_category_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_category_item.xml" value="0.22445489525438223" />
         <entry key="features/feature-overview/src/main/res/layout/overview_fragment.xml" value="0.2389193752638244" />

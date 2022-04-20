@@ -2,6 +2,7 @@ package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionAccount
 import id.dhuwit.core.transaction.model.TransactionCategory
 import id.dhuwit.state.State
 
@@ -19,4 +20,6 @@ interface TransactionDataSource {
         periodDate: String?,
         categoryType: CategoryType
     ): State<List<TransactionCategory>>
+
+    suspend fun getAccountTransaction(periodDate: String?): State<List<TransactionAccount>>
 }

@@ -51,7 +51,6 @@ class OverviewFragment : BaseFragment() {
     }
 
     override fun init() {
-        // ToDo: Update implementation so when device rotate not back to transaction
         showMenuTransaction()
     }
 

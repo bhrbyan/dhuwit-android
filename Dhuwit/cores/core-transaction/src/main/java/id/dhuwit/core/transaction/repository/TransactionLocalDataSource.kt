@@ -7,6 +7,7 @@ import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.database.TransactionEntity
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionAccount
 import id.dhuwit.core.transaction.model.TransactionCategory
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.state.State
@@ -325,5 +326,49 @@ class TransactionLocalDataSource @Inject constructor(
             ),
             periodDate = periodDate ?: ""
         )
+    }
+
+    override suspend fun getAccountTransaction(periodDate: String?): State<List<TransactionAccount>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val transactions = transactionDao.getTransactions()
+                val filteredTransaction = transactions
+                    .filter { transaction ->
+                        isTransactionWithinPeriodDate(
+                            transaction,
+                            periodDate
+                        )
+                    }
+                val distinctTransactions = filteredTransaction.distinctBy { it.accountId }
+
+                val accounts: ArrayList<TransactionAccount> = ArrayList()
+                distinctTransactions.forEach { distinctTransaction ->
+                    val totalTransaction = filteredTransaction.filter {
+                        it.accountId == distinctTransaction.accountId
+                    }.size
+
+                    val totalAmountTransaction = filteredTransaction.filter {
+                        it.accountId == distinctTransaction.accountId
+                    }.sumOf { it.amount }
+
+                    val accountName = accountDao.getAccount(distinctTransaction.accountId)?.name
+
+                    accounts.add(
+                        TransactionAccount(
+                            accountId = distinctTransaction.accountId,
+                            accountName = accountName,
+                            totalAmountTransaction = totalAmountTransaction,
+                            totalTransaction = totalTransaction
+                        )
+                    )
+                }
+
+                val sortedCategories = accounts.sortedBy { it.accountName }
+
+                State.Success(sortedCategories)
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage)
+            }
+        }
     }
 }

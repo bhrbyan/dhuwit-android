@@ -2,6 +2,7 @@ package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionAccount
 import id.dhuwit.core.transaction.model.TransactionCategory
 import id.dhuwit.state.State
 import javax.inject.Inject
@@ -38,5 +39,9 @@ class TransactionRepository @Inject constructor(
         categoryType: CategoryType
     ): State<List<TransactionCategory>> {
         return local.getCategoryTransaction(periodDate, categoryType)
+    }
+
+    override suspend fun getAccountTransaction(periodDate: String?): State<List<TransactionAccount>> {
+        return local.getAccountTransaction(periodDate)
     }
 }
