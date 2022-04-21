@@ -6,10 +6,7 @@ import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.database.TransactionEntity
-import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.core.transaction.model.TransactionAccount
-import id.dhuwit.core.transaction.model.TransactionCategory
-import id.dhuwit.core.transaction.model.TransactionType
+import id.dhuwit.core.transaction.model.*
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,10 +30,50 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getTransaction(id: Long): State<Transaction> {
+    override suspend fun getTransactions(
+        transactionGetType: TransactionGetType,
+        periodDate: String?
+    ): State<List<Transaction>> {
         return withContext(Dispatchers.IO) {
             try {
-                val transactions = transactionDao.getTransaction(id).toModel()
+                val transactions = when (transactionGetType) {
+                    is TransactionGetType.GetById -> transactionDao.getTransactions(
+                        transactionGetType.id
+                    )
+                    is TransactionGetType.GetByTransactionType -> transactionDao.getTransactions(
+                        transactionGetType.transactionType.toString()
+                    )
+                }
+
+                val filteredTransaction = if (periodDate != null) {
+                    transactions.filter { transaction ->
+                        isTransactionWithinPeriodDate(
+                            transaction,
+                            periodDate
+                        )
+                    }
+                } else {
+                    transactions
+                }
+
+                State.Success(filteredTransaction.map { it.toModel() })
+            } catch (e: Exception) {
+                State.Error(e.localizedMessage)
+            }
+        }
+    }
+
+    override suspend fun getTransaction(transactionGetType: TransactionGetType): State<Transaction> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val transactions = when (transactionGetType) {
+                    is TransactionGetType.GetById -> transactionDao.getTransaction(
+                        transactionGetType.id
+                    ).toModel()
+                    is TransactionGetType.GetByTransactionType -> transactionDao.getTransaction(
+                        transactionGetType.transactionType.toString()
+                    ).toModel()
+                }
 
                 State.Success(transactions)
             } catch (e: Exception) {

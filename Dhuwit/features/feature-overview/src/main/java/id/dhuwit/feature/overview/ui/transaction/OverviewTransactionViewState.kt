@@ -1,5 +1,6 @@
 package id.dhuwit.feature.overview.ui.transaction
 
+import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.overview.model.OverviewTransaction
 import id.dhuwit.state.ViewState
 
@@ -11,4 +12,9 @@ sealed class OverviewTransactionViewState : ViewState.Feature() {
 
     data class GetOverview(val overviewTransaction: OverviewTransaction) :
         OverviewTransactionViewState()
+
+    data class OpenTransactionListPage(
+        val periodDate: String?,
+        val transactionType: TransactionType
+    ) : OverviewTransactionViewState()
 }

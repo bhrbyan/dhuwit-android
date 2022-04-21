@@ -9,8 +9,8 @@ sealed class TransactionType {
         private const val INCOME: String = "Income"
         private const val EXPENSE: String = "Expense"
 
-        fun getTransactionType(type: String): TransactionType {
-            return when (type) {
+        fun getTransactionType(transactionType: String?): TransactionType {
+            return when (transactionType) {
                 INCOME -> Income
                 EXPENSE -> Expense
                 else -> throw IllegalArgumentException("Unknown transaction type!!!")

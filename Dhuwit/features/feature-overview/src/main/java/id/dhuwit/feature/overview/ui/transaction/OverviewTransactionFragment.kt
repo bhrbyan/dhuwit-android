@@ -13,11 +13,14 @@ import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionListType
+import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.overview.R
 import id.dhuwit.feature.overview.databinding.OverviewTransactionFragmentBinding
 import id.dhuwit.feature.overview.ui.overview.OverviewFragment
 import id.dhuwit.feature.overview.ui.transaction.adapter.OverviewTransactionHeaderAdapter
 import id.dhuwit.feature.overview.ui.transaction.adapter.OverviewTransactionItemListener
+import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -32,6 +35,9 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
 
     @Inject
     lateinit var storage: Storage
+
+    @Inject
+    lateinit var transactionRouter: TransactionRouter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +66,14 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
             it.imagePrevious.setOnClickListener {
                 viewModel.onPreviousPeriodDate()
             }
+
+            it.cardOverviewIncome.setOnClickListener {
+                viewModel.openTransactionListPage(TransactionType.Income)
+            }
+
+            it.cardOverviewExpense.setOnClickListener {
+                viewModel.openTransactionListPage(TransactionType.Expense)
+            }
         }
     }
 
@@ -80,6 +94,20 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
                 }
                 is OverviewTransactionViewState.SetPeriodDate -> {
                     binding?.textMonth?.text = it.periodDate
+                }
+                is OverviewTransactionViewState.OpenTransactionListPage -> {
+                    val transactionListType = when (it.transactionType) {
+                        is TransactionType.Income -> TransactionListType.Income
+                        is TransactionType.Expense -> TransactionListType.Expense
+                    }
+                    startActivity(
+                        transactionRouter.openTransactionListPage(
+                            requireContext(),
+                            it.periodDate,
+                            transactionListType,
+                            it.transactionType
+                        )
+                    )
                 }
                 is ViewState.Error -> {
                     showError(

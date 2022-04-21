@@ -4,6 +4,7 @@ import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionAccount
 import id.dhuwit.core.transaction.model.TransactionCategory
+import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.state.State
 import javax.inject.Inject
 
@@ -15,8 +16,15 @@ class TransactionRepository @Inject constructor(
         return local.getTransactions()
     }
 
-    override suspend fun getTransaction(id: Long): State<Transaction> {
-        return local.getTransaction(id)
+    override suspend fun getTransactions(
+        transactionGetType: TransactionGetType,
+        periodDate: String?
+    ): State<List<Transaction>> {
+        return local.getTransactions(transactionGetType, periodDate)
+    }
+
+    override suspend fun getTransaction(transactionGetType: TransactionGetType): State<Transaction> {
+        return local.getTransaction(transactionGetType)
     }
 
     override suspend fun saveTransaction(transaction: Transaction): State<Boolean> {

@@ -43,4 +43,9 @@
     <string name="transaction_delete_button_positive">Delete</string>
     <string name="transaction_delete_button_negative">Cancel</string>
 
+    <!-- Transaction List -->
+    <string name="transactions_list_header_negative">-%1$s</string>
+    <string name="transactions_list_item_expense">-%1$s</string>
+    <string name="transactions_list_item_income">+%1$s</string>
+
 </resources>

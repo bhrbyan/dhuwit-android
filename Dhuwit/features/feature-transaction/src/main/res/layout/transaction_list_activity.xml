@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:gravity="center"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view_budget"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_head"
+                style="@style/Uikit.Style.CardView.Bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_total_amount_transaction"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline4"
+                        android:textColor="@color/colorOnMajor"
+                        android:textSize="@dimen/uikit_text_size_xxlarge"
+                        android:textStyle="bold"
+                        app:autoSizeMaxTextSize="@dimen/uikit_text_size_xlarge"
+                        app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
+                        app:autoSizeStepGranularity="2sp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/text_period_date"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0"
+                        tools:text="Rp5.000.000" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_period_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/text_total_amount_transaction"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="March 2022" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_total_transaction"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/text_total_amount_transaction"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_period_date"
+                        app:layout_constraintVertical_bias="0"
+                        tools:text="5 Transactions" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_head" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,7 +70,9 @@
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
+        <entry key="features/feature-transaction/src/main/res/layout/overview_transaction_header.xml" value="0.2069260367678495" />
         <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.27158853655400395" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_list_activity.xml" value="0.2649429321289063" />
         <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.1" />
         <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />
         <entry key="uikit/src/main/res/drawable/background_border_primary_account.xml" value="0.4046875" />

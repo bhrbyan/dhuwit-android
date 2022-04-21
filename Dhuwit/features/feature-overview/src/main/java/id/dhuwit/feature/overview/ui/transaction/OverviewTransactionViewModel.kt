@@ -120,6 +120,15 @@ class OverviewTransactionViewModel @Inject constructor(
         )
     }
 
+    fun openTransactionListPage(transactionType: TransactionType) {
+        updateViewState(
+            OverviewTransactionViewState.OpenTransactionListPage(
+                periodDate,
+                transactionType
+            )
+        )
+    }
+
     companion object {
         private const val CURRENT_MONTH: Int = 0
     }

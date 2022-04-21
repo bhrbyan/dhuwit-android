@@ -1,4 +1,4 @@
-package id.dhuwit.feature.overview.ui.transaction.adapter
+package id.dhuwit.feature.transaction.ui.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionListItem
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.feature.overview.databinding.OverviewTransactionHeaderBinding
-import id.dhuwit.feature.overview.model.OverviewTransactionItem
+import id.dhuwit.feature.transaction.databinding.TransactionListHeaderBinding
 
-class OverviewTransactionHeaderAdapter :
-    RecyclerView.Adapter<OverviewTransactionHeaderViewHolder>() {
+class TransactionListHeaderAdapter :
+    RecyclerView.Adapter<TransactionListHeaderViewHolder>() {
 
-    private var overviewTransactionItem: MutableList<OverviewTransactionItem> = ArrayList()
+    private var overviewTransactionItem: MutableList<TransactionListItem> = ArrayList()
     private var currencySymbol: String? = null
 
-    var listener: OverviewTransactionItemListener? = null
+    var listener: TransactionListItemListener? = null
 
     fun updateList(transactions: List<Transaction>?, currencySymbol: String?) {
         this.currencySymbol = currencySymbol
@@ -31,7 +31,7 @@ class OverviewTransactionHeaderAdapter :
 
             if (overviewTransactionItem.size <= 0) {
                 overviewTransactionItem.add(
-                    OverviewTransactionItem().apply {
+                    TransactionListItem().apply {
                         this.date = formattedDate
                         this.totalAmount = calculateAmountDaily(
                             transaction.type,
@@ -55,7 +55,7 @@ class OverviewTransactionHeaderAdapter :
                 } else {
                     // Add new section
                     overviewTransactionItem.add(
-                        OverviewTransactionItem().apply {
+                        TransactionListItem().apply {
                             this.date = formattedDate
                             this.totalAmount = calculateAmountDaily(
                                 transaction.type,
@@ -90,9 +90,9 @@ class OverviewTransactionHeaderAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): OverviewTransactionHeaderViewHolder {
-        return OverviewTransactionHeaderViewHolder(
-            OverviewTransactionHeaderBinding.inflate(
+    ): TransactionListHeaderViewHolder {
+        return TransactionListHeaderViewHolder(
+            TransactionListHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -100,7 +100,7 @@ class OverviewTransactionHeaderAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: OverviewTransactionHeaderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionListHeaderViewHolder, position: Int) {
         holder.onBind(overviewTransactionItem[position], currencySymbol, listener)
     }
 
