@@ -12,10 +12,6 @@ class TransactionRepository @Inject constructor(
     private val local: TransactionDataSource
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(): State<List<Transaction>> {
-        return local.getTransactions()
-    }
-
     override suspend fun getTransactions(
         transactionGetType: TransactionGetType,
         periodDate: String?
@@ -23,8 +19,8 @@ class TransactionRepository @Inject constructor(
         return local.getTransactions(transactionGetType, periodDate)
     }
 
-    override suspend fun getTransaction(transactionGetType: TransactionGetType): State<Transaction> {
-        return local.getTransaction(transactionGetType)
+    override suspend fun getTransaction(transactionId: Long): State<Transaction> {
+        return local.getTransaction(transactionId)
     }
 
     override suspend fun saveTransaction(transaction: Transaction): State<Boolean> {

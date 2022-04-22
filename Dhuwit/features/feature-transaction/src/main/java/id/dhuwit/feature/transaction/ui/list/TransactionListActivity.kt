@@ -44,14 +44,21 @@ class TransactionListActivity : BaseActivity(), TransactionListItemListener {
             TransactionListType.convertToTransactionListType(
                 intent.getStringExtra(TransactionRouterImpl.KEY_TRANSACTION_LIST_TYPE)
             )
-        val transactionType: TransactionType = TransactionType.getTransactionType(
+        val transactionTypeString: String? =
             intent.getStringExtra(TransactionRouterImpl.KEY_TRANSACTION_TYPE)
-        )
+        val transactionType = if (transactionTypeString.isNullOrEmpty()) {
+            null
+        } else {
+            TransactionType.getTransactionType(transactionTypeString)
+        }
+
+        val categoryId: Long =
+            intent.getLongExtra(TransactionRouterImpl.KEY_TRANSACTION_CATEGORY_ID, 0)
 
         setTextPeriodDate(periodDate)
         setTextTitle(transactionListType)
 
-        viewModel.getTransactions(transactionType, periodDate)
+        viewModel.getTransactions(periodDate, transactionType, categoryId)
     }
 
     private fun setTextTitle(transactionListType: TransactionListType) {

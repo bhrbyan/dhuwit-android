@@ -9,6 +9,7 @@ import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_PERIOD
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.overview.model.OverviewTransaction
@@ -59,7 +60,7 @@ class OverviewTransactionViewModel @Inject constructor(
     }
 
     private suspend fun getTransactions(): State<List<Transaction>> =
-        transactionRepository.getTransactions()
+        transactionRepository.getTransactions(TransactionGetType.GetAll, periodDate)
 
     private fun setUpDetails(transactions: List<Transaction>?) {
         if (transactions != null) {

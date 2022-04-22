@@ -11,6 +11,7 @@ interface TransactionRouter {
         context: Context,
         periodDate: String?,
         transactionListType: TransactionListType,
-        transactionType: TransactionType
+        transactionType: TransactionType? = null,
+        categoryId: Long? = null
     ): Intent
 }

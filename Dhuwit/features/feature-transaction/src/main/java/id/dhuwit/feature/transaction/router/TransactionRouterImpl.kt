@@ -13,6 +13,7 @@ internal object TransactionRouterImpl : TransactionRouter {
     const val KEY_TRANSACTION_PERIOD_DATE: String = "transaction_period_date"
     const val KEY_TRANSACTION_LIST_TYPE: String = "transaction_list_type"
     const val KEY_TRANSACTION_TYPE: String = "transaction_type"
+    const val KEY_TRANSACTION_CATEGORY_ID: String = "transaction_category_id"
 
     override fun openTransactionPage(context: Context, transactionId: Long?): Intent {
         return Intent(context, TransactionActivity::class.java).apply {
@@ -24,12 +25,18 @@ internal object TransactionRouterImpl : TransactionRouter {
         context: Context,
         periodDate: String?,
         transactionListType: TransactionListType,
-        transactionType: TransactionType
+        transactionType: TransactionType?,
+        categoryId: Long?
     ): Intent {
         return Intent(context, TransactionListActivity::class.java).apply {
             putExtra(KEY_TRANSACTION_PERIOD_DATE, periodDate)
             putExtra(KEY_TRANSACTION_LIST_TYPE, transactionListType.toString())
-            putExtra(KEY_TRANSACTION_TYPE, transactionType.toString())
+            transactionType?.let {
+                putExtra(KEY_TRANSACTION_TYPE, it.toString())
+            }
+            categoryId?.let {
+                putExtra(KEY_TRANSACTION_CATEGORY_ID, it)
+            }
         }
     }
 }

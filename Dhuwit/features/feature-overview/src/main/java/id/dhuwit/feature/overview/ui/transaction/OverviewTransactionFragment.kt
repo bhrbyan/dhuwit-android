@@ -102,10 +102,10 @@ class OverviewTransactionFragment : BaseFragment(), OverviewTransactionItemListe
                     }
                     startActivity(
                         transactionRouter.openTransactionListPage(
-                            requireContext(),
-                            it.periodDate,
-                            transactionListType,
-                            it.transactionType
+                            context = requireContext(),
+                            periodDate = it.periodDate,
+                            transactionListType = transactionListType,
+                            transactionType = it.transactionType
                         )
                     )
                 }

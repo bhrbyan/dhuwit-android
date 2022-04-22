@@ -25,12 +25,19 @@ class TransactionListViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
-    fun getTransactions(transactionType: TransactionType, periodDate: String?) {
+    fun getTransactions(
+        periodDate: String?,
+        transactionType: TransactionType?,
+        categoryId: Long?
+    ) {
         viewModelScope.launch {
-            when (val result = transactionRepository.getTransactions(
-                TransactionGetType.GetByTransactionType(transactionType),
-                periodDate
-            )) {
+            val getType = when {
+                transactionType != null -> TransactionGetType.GetByTransactionType(transactionType)
+                categoryId != null -> TransactionGetType.GetByCategoryId(categoryId)
+                else -> throw Exception("Unknown Request Type")
+            }
+
+            when (val result = transactionRepository.getTransactions(getType, periodDate)) {
                 is State.Success -> {
                     val totalAmountTransaction = result.data?.sumOf { it.amount } ?: 0.0
                     val totalTransaction = result.data?.size ?: 0

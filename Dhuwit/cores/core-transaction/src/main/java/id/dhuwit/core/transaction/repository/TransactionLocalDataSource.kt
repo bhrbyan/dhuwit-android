@@ -18,18 +18,6 @@ class TransactionLocalDataSource @Inject constructor(
     private val accountDao: AccountDao,
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(): State<List<Transaction>> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val transactions = transactionDao.getTransactions().map { it.toModel() }
-
-                State.Success(transactions)
-            } catch (e: Exception) {
-                State.Error(e.localizedMessage)
-            }
-        }
-    }
-
     override suspend fun getTransactions(
         transactionGetType: TransactionGetType,
         periodDate: String?
@@ -37,11 +25,12 @@ class TransactionLocalDataSource @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 val transactions = when (transactionGetType) {
-                    is TransactionGetType.GetById -> transactionDao.getTransactions(
-                        transactionGetType.id
-                    )
-                    is TransactionGetType.GetByTransactionType -> transactionDao.getTransactions(
+                    is TransactionGetType.GetAll -> transactionDao.getTransactions()
+                    is TransactionGetType.GetByTransactionType -> transactionDao.getTransactionsByTransactionType(
                         transactionGetType.transactionType.toString()
+                    )
+                    is TransactionGetType.GetByCategoryId -> transactionDao.getTransactionsByCategoryId(
+                        transactionGetType.categoryId
                     )
                 }
 
@@ -54,7 +43,7 @@ class TransactionLocalDataSource @Inject constructor(
                     }
                 } else {
                     transactions
-                }
+                }.sortedByDescending { transaction -> transaction.date }
 
                 State.Success(filteredTransaction.map { it.toModel() })
             } catch (e: Exception) {
@@ -63,17 +52,10 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getTransaction(transactionGetType: TransactionGetType): State<Transaction> {
+    override suspend fun getTransaction(transactionId: Long): State<Transaction> {
         return withContext(Dispatchers.IO) {
             try {
-                val transactions = when (transactionGetType) {
-                    is TransactionGetType.GetById -> transactionDao.getTransaction(
-                        transactionGetType.id
-                    ).toModel()
-                    is TransactionGetType.GetByTransactionType -> transactionDao.getTransaction(
-                        transactionGetType.transactionType.toString()
-                    ).toModel()
-                }
+                val transactions = transactionDao.getTransaction(transactionId).toModel()
 
                 State.Success(transactions)
             } catch (e: Exception) {

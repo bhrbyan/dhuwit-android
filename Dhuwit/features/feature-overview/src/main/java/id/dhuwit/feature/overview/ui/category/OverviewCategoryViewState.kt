@@ -18,5 +18,10 @@ sealed class OverviewCategoryViewState : ViewState.Feature() {
 
     data class SetCategoryType(val categoryType: CategoryType) : OverviewCategoryViewState()
 
+    data class OpenTransactionListPage(
+        val periodDate: String?,
+        val categoryId: Long
+    ) : OverviewCategoryViewState()
+
 
 }

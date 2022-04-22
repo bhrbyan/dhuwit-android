@@ -12,7 +12,6 @@ import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.transaction.router.TransactionRouterImpl
@@ -99,8 +98,7 @@ class TransactionViewModel @Inject constructor(
             } else {
                 updateViewState(TransactionViewState.SetUpViewUpdateTransaction)
 
-                transaction =
-                    transactionRepository.getTransaction(TransactionGetType.GetById(transactionId)).data
+                transaction = transactionRepository.getTransaction(transactionId).data
 
                 setCounter(transaction?.amount?.convertDoubleToString(), false)
                 setDate(transaction?.date)

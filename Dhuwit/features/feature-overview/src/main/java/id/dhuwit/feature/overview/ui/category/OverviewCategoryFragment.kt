@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.annotation.MenuRes
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,10 +15,12 @@ import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.TransactionCategory
+import id.dhuwit.core.transaction.model.TransactionListType
 import id.dhuwit.feature.overview.R
 import id.dhuwit.feature.overview.databinding.OverviewCategoryFragmentBinding
 import id.dhuwit.feature.overview.ui.category.adapter.OverviewCategoryAdapter
 import id.dhuwit.feature.overview.ui.category.adapter.OverviewCategoryListener
+import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -31,6 +32,9 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     private val viewModel: OverviewCategoryViewModel by viewModels()
 
     private lateinit var adapterCategory: OverviewCategoryAdapter
+
+    @Inject
+    lateinit var transactionRouter: TransactionRouter
 
     @Inject
     lateinit var storage: Storage
@@ -87,6 +91,16 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
                 is OverviewCategoryViewState.SetCategoryType -> {
                     setUpCategoryType(it.categoryType)
                 }
+                is OverviewCategoryViewState.OpenTransactionListPage -> {
+                    startActivity(
+                        transactionRouter.openTransactionListPage(
+                            context = requireContext(),
+                            periodDate = it.periodDate,
+                            transactionListType = TransactionListType.Category,
+                            categoryId = it.categoryId
+                        )
+                    )
+                }
                 is ViewState.Error -> showError(
                     getString(R.string.general_error_message)
                 )
@@ -115,7 +129,7 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     }
 
     override fun onClickCategory(item: TransactionCategory) {
-        Toast.makeText(requireContext(), item.categoryName, Toast.LENGTH_SHORT).show()
+        viewModel.openTransactionListPage(item)
     }
 
     private fun showMessageEmptyCategory() {

@@ -80,6 +80,15 @@ class OverviewCategoryViewModel @Inject constructor(
         getTransactions(periodDate, categoryType)
     }
 
+    fun openTransactionListPage(item: TransactionCategory) {
+        updateViewState(
+            OverviewCategoryViewState.OpenTransactionListPage(
+                periodDate,
+                item.categoryId
+            )
+        )
+    }
+
     companion object {
         private const val CURRENT_MONTH: Int = 0
     }

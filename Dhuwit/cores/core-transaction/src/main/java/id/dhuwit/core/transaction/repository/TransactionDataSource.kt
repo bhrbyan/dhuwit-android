@@ -8,13 +8,12 @@ import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.state.State
 
 interface TransactionDataSource {
-    suspend fun getTransactions(): State<List<Transaction>>
     suspend fun getTransactions(
         transactionGetType: TransactionGetType,
         periodDate: String? = null
     ): State<List<Transaction>>
 
-    suspend fun getTransaction(transactionGetType: TransactionGetType): State<Transaction>
+    suspend fun getTransaction(transactionId: Long): State<Transaction>
     suspend fun saveTransaction(transaction: Transaction): State<Boolean>
     suspend fun updateTransaction(
         transaction: Transaction,
