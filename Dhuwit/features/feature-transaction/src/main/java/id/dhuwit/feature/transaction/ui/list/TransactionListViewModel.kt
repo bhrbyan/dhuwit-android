@@ -32,7 +32,15 @@ class TransactionListViewModel @Inject constructor(
                 periodDate
             )) {
                 is State.Success -> {
-                    updateViewState(TransactionListViewState.GetTransactions(result.data))
+                    val totalAmountTransaction = result.data?.sumOf { it.amount } ?: 0.0
+                    val totalTransaction = result.data?.size ?: 0
+                    updateViewState(
+                        TransactionListViewState.GetTransactions(
+                            result.data,
+                            totalAmountTransaction,
+                            totalTransaction
+                        )
+                    )
                 }
                 is State.Error -> {
                     updateViewState(ViewState.Error(result.message))

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

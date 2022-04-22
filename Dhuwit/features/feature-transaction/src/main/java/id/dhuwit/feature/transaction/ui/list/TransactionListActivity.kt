@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionListType
 import id.dhuwit.core.transaction.model.TransactionType
@@ -72,6 +73,19 @@ class TransactionListActivity : BaseActivity(), TransactionListItemListener {
             when (it) {
                 is TransactionListViewState.GetTransactions -> {
                     adapterTransactionList.updateList(it.transactions, storage.getSymbolCurrency())
+                    binding.textTotalAmountTransaction.text =
+                        it.totalAmountTransaction.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+                    binding.textTotalTransaction.text = if (it.totalTransaction > 1) {
+                        getString(
+                            R.string.transactions_list_total_transaction_greater_than_one,
+                            it.totalTransaction
+                        )
+                    } else {
+                        getString(
+                            R.string.transactions_list_total_transaction_lower_than_one,
+                            it.totalTransaction
+                        )
+                    }
                 }
                 is ViewState.Error -> showError()
             }

@@ -5,6 +5,10 @@ import id.dhuwit.state.ViewState
 
 sealed class TransactionListViewState : ViewState.Feature() {
 
-    data class GetTransactions(val transactions: List<Transaction>?) : TransactionListViewState()
+    data class GetTransactions(
+        val transactions: List<Transaction>?,
+        val totalAmountTransaction: Double,
+        val totalTransaction: Int
+    ) : TransactionListViewState()
 
 }

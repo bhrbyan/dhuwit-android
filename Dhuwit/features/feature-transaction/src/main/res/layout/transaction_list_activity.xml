@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/silver">
+    android:background="@drawable/background_gradient_vertical_green">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -58,15 +58,27 @@
                     android:layout_height="match_parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_period_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="March 2022" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_total_amount_transaction"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                         android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                        android:gravity="end"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline4"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
                         android:textColor="@color/colorOnMajor"
                         android:textSize="@dimen/uikit_text_size_xxlarge"
                         android:textStyle="bold"
@@ -75,23 +87,10 @@
                         app:autoSizeStepGranularity="2sp"
                         app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/text_period_date"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_period_date"
                         app:layout_constraintVertical_bias="0"
                         tools:text="Rp5.000.000" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_period_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-                        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/text_total_amount_transaction"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="March 2022" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_total_transaction"
@@ -103,9 +102,8 @@
                         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/text_total_amount_transaction"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_period_date"
+                        app:layout_constraintTop_toBottomOf="@+id/text_total_amount_transaction"
                         app:layout_constraintVertical_bias="0"
                         tools:text="5 Transactions" />
 
@@ -117,6 +115,8 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
