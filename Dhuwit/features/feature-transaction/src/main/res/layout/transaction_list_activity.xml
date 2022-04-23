@@ -122,6 +122,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_head" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxxlarge"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxxlarge"
+                android:text="@string/transactions_list_empty"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textColor="@color/colorOnMinor"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_head"
+                tools:visibility="visible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

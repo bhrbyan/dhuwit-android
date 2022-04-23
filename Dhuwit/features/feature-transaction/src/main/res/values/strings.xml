@@ -49,5 +49,6 @@
     <string name="transactions_list_item_income">+%1$s</string>
     <string name="transactions_list_total_transaction_greater_than_one">%1$d transactions</string>
     <string name="transactions_list_total_transaction_lower_than_one">%1$d transaction</string>
+    <string name="transactions_list_empty">No transactions</string>
 
 </resources>

@@ -31,9 +31,9 @@ class OverviewFragment : BaseFragment() {
                 childFragmentManager.findFragmentById(binding?.frameLayout?.id ?: 0)
 
             when (currentFragment) {
-                is OverviewTransactionFragment -> (currentFragment as OverviewTransactionFragment).updateDataOverview()
-                is OverviewCategoryFragment -> (currentFragment as OverviewCategoryFragment).updateDataCategories()
-                is AccountListFragment -> (currentFragment as AccountListFragment).updateDataAccount()
+                is OverviewTransactionFragment -> currentFragment.updateDataOverview()
+                is OverviewCategoryFragment -> currentFragment.updateDataCategories()
+                is AccountListFragment -> currentFragment.updateDataAccount()
             }
         }
     }
