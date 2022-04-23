@@ -53,12 +53,15 @@ class TransactionListActivity : BaseActivity(), TransactionListItemListener {
         }
 
         val categoryId: Long =
-            intent.getLongExtra(TransactionRouterImpl.KEY_TRANSACTION_CATEGORY_ID, 0)
+            intent.getLongExtra(TransactionRouterImpl.KEY_TRANSACTION_CATEGORY_ID, DEFAULT_VALUE_ID)
+
+        val accountId: Long =
+            intent.getLongExtra(TransactionRouterImpl.KEY_TRANSACTION_ACCOUNT_ID, DEFAULT_VALUE_ID)
 
         setTextPeriodDate(periodDate)
         setTextTitle(transactionListType)
 
-        viewModel.getTransactions(periodDate, transactionType, categoryId)
+        viewModel.getTransactions(periodDate, transactionType, categoryId, accountId)
     }
 
     private fun setTextTitle(transactionListType: TransactionListType) {
@@ -127,5 +130,9 @@ class TransactionListActivity : BaseActivity(), TransactionListItemListener {
             getString(R.string.general_error_message),
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    companion object {
+        private const val DEFAULT_VALUE_ID: Long = -1
     }
 }

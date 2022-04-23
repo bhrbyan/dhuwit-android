@@ -32,6 +32,9 @@ class TransactionLocalDataSource @Inject constructor(
                     is TransactionGetType.GetByCategoryId -> transactionDao.getTransactionsByCategoryId(
                         transactionGetType.categoryId
                     )
+                    is TransactionGetType.GetByAccountId -> transactionDao.getTransactionsByAccountId(
+                        transactionGetType.accountId
+                    )
                 }
 
                 val filteredTransaction = if (periodDate != null) {

@@ -20,6 +20,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transaction_table WHERE category_id = :categoryId")
     suspend fun getTransactionsByCategoryId(categoryId: Long): List<TransactionEntity>
 
+    @Query("SELECT * FROM transaction_table WHERE account_id = :accountId")
+    suspend fun getTransactionsByAccountId(accountId: Long): List<TransactionEntity>
+
     @Query("SELECT * FROM transaction_table WHERE id = :id")
     suspend fun getTransaction(id: Long): TransactionEntity
 

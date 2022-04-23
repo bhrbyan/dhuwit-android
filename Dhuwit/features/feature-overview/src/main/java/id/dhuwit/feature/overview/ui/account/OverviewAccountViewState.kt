@@ -14,4 +14,7 @@ sealed class OverviewAccountViewState : ViewState.Feature() {
 
     data class SetPeriodDate(val periodDate: String?) : OverviewAccountViewState()
 
+    data class OpenTransactionListPage(val periodDate: String?, val accountId: Long) :
+        OverviewAccountViewState()
+
 }

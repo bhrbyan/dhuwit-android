@@ -70,6 +70,12 @@ class OverviewAccountViewModel @Inject constructor(
         this.periodDate = DateHelper.getPeriodDate(periodDate, DateHelper.PATTERN_DATE_PERIOD)
     }
 
+    fun openTransactionListPage(accountId: Long) {
+        updateViewState(
+            OverviewAccountViewState.OpenTransactionListPage(periodDate, accountId)
+        )
+    }
+
     companion object {
         private const val CURRENT_MONTH: Int = 0
     }

@@ -28,12 +28,18 @@ class TransactionListViewModel @Inject constructor(
     fun getTransactions(
         periodDate: String?,
         transactionType: TransactionType?,
-        categoryId: Long?
+        categoryId: Long?,
+        accountId: Long?
     ) {
         viewModelScope.launch {
             val getType = when {
                 transactionType != null -> TransactionGetType.GetByTransactionType(transactionType)
-                categoryId != null -> TransactionGetType.GetByCategoryId(categoryId)
+                categoryId != null && categoryId != DEFAULT_VALUE_ID -> TransactionGetType.GetByCategoryId(
+                    categoryId
+                )
+                accountId != null && accountId != DEFAULT_VALUE_ID -> TransactionGetType.GetByAccountId(
+                    accountId
+                )
                 else -> throw Exception("Unknown Request Type")
             }
 
@@ -54,6 +60,10 @@ class TransactionListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val DEFAULT_VALUE_ID: Long = -1
     }
 
 }

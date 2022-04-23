@@ -12,6 +12,7 @@ interface TransactionRouter {
         periodDate: String?,
         transactionListType: TransactionListType,
         transactionType: TransactionType? = null,
-        categoryId: Long? = null
+        categoryId: Long? = null,
+        accountId: Long? = null
     ): Intent
 }

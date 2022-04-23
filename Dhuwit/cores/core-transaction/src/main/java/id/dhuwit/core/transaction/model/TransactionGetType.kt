@@ -4,4 +4,5 @@ sealed class TransactionGetType {
     object GetAll : TransactionGetType()
     data class GetByTransactionType(val transactionType: TransactionType) : TransactionGetType()
     data class GetByCategoryId(val categoryId: Long) : TransactionGetType()
+    data class GetByAccountId(val accountId: Long) : TransactionGetType()
 }

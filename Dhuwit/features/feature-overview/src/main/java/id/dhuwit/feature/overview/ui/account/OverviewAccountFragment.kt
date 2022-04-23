@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -13,10 +12,12 @@ import id.dhuwit.core.base.BaseFragment
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.core.transaction.model.TransactionAccount
+import id.dhuwit.core.transaction.model.TransactionListType
 import id.dhuwit.feature.overview.R
 import id.dhuwit.feature.overview.databinding.OverviewAccountFragmentBinding
 import id.dhuwit.feature.overview.ui.account.adapter.OverviewAccountAdapter
 import id.dhuwit.feature.overview.ui.account.adapter.OverviewAccountListener
+import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -31,6 +32,9 @@ class OverviewAccountFragment : BaseFragment(), OverviewAccountListener {
 
     @Inject
     lateinit var storage: Storage
+
+    @Inject
+    lateinit var transactionRouter: TransactionRouter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +81,16 @@ class OverviewAccountFragment : BaseFragment(), OverviewAccountListener {
                 is OverviewAccountViewState.SetPeriodDate -> {
                     binding?.textMonth?.text = it.periodDate
                 }
+                is OverviewAccountViewState.OpenTransactionListPage -> {
+                    startActivity(
+                        transactionRouter.openTransactionListPage(
+                            context = requireContext(),
+                            periodDate = it.periodDate,
+                            transactionListType = TransactionListType.Account,
+                            accountId = it.accountId
+                        )
+                    )
+                }
                 is ViewState.Error -> showError(
                     getString(R.string.general_error_message)
                 )
@@ -115,7 +129,7 @@ class OverviewAccountFragment : BaseFragment(), OverviewAccountListener {
     }
 
     override fun onClickAccount(item: TransactionAccount) {
-        Toast.makeText(requireContext(), item.accountName, Toast.LENGTH_SHORT).show()
+        viewModel.openTransactionListPage(item.accountId)
     }
 
     private fun showError(message: String) {
