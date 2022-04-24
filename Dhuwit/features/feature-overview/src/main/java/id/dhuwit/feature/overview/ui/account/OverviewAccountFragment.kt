@@ -45,6 +45,13 @@ class OverviewAccountFragment : BaseFragment(), OverviewAccountListener {
         return binding?.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.setPeriodDate(null)
+        viewModel.getTransactions(null)
+    }
+
     override fun init() {
         setUpAdapter()
     }

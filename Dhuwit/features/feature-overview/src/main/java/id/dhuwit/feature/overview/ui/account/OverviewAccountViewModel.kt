@@ -28,14 +28,10 @@ class OverviewAccountViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
-    init {
-        setPeriodDate(periodMonth)
-        getTransactions(periodDate)
-    }
-
-    private fun getTransactions(periodDate: String?) {
+    fun getTransactions(periodDate: String?) {
+        val date = periodDate ?: this.periodDate
         viewModelScope.launch {
-            when (val result = transactionRepository.getAccountTransaction(periodDate)) {
+            when (val result = transactionRepository.getAccountTransaction(date)) {
                 is State.Success -> {
                     setUpListAccounts(result.data)
                 }
@@ -66,8 +62,9 @@ class OverviewAccountViewModel @Inject constructor(
         getTransactions(periodDate)
     }
 
-    private fun setPeriodDate(periodDate: Int) {
-        this.periodDate = DateHelper.getPeriodDate(periodDate, DateHelper.PATTERN_DATE_PERIOD)
+    fun setPeriodDate(periodDate: Int?) {
+        val date = periodDate ?: this.periodMonth
+        this.periodDate = DateHelper.getPeriodDate(date, DateHelper.PATTERN_DATE_PERIOD)
     }
 
     fun openTransactionListPage(accountId: Long) {
