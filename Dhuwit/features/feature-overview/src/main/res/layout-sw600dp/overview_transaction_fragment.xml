@@ -22,20 +22,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_medium" />
+                app:layout_constraintGuide_percent="0.2" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_medium" />
+                app:layout_constraintGuide_percent="0.8" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_overview_income"
                 style="@style/Uikit.Style.CardView.All"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
                 app:cardElevation="@dimen/cardview_default_elevation"
@@ -98,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                 app:cardElevation="@dimen/cardview_default_elevation"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toEndOf="@+id/card_overview_income"
@@ -154,6 +156,7 @@
                 android:id="@+id/text_title_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
                 android:text="@string/overview_transactions_title"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
@@ -190,6 +193,7 @@
                 android:id="@+id/image_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
@@ -204,8 +208,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/image_next" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -218,11 +222,11 @@
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
                 android:textStyle="bold"
                 android:visibility="gone"
-                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/image_next" />
+                app:layout_constraintTop_toBottomOf="@+id/image_next"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

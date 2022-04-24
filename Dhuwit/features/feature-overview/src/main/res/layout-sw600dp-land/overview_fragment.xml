@@ -163,7 +163,7 @@
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
         android:contentDescription="@string/overview_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

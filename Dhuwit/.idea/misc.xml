@@ -55,7 +55,11 @@
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.1531677825296113" />
         <entry key="features/feature-overview/src/main/res/layout-land/overview_fragment.xml" value="0.4087887128330082" />
         <entry key="features/feature-overview/src/main/res/layout-sw600dp-land/overview_fragment.xml" value="0.1" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp-land/overview_transaction_fragment.xml" value="0.1" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_account_fragment.xml" value="0.1" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_category_fragment.xml" value="0.1" />
         <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_fragment.xml" value="0.14125" />
+        <entry key="features/feature-overview/src/main/res/layout-sw600dp/overview_transaction_fragment.xml" value="0.21284755512943432" />
         <entry key="features/feature-overview/src/main/res/layout/dashboard_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/dashboard_overview_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-overview/src/main/res/layout/overview_account_fragment.xml" value="0.2389193752638244" />

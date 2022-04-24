@@ -63,6 +63,8 @@
         android:text="@string/overview_transactions_empty"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
         android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
