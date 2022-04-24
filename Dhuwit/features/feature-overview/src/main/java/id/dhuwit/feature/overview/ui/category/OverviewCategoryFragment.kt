@@ -39,6 +39,13 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     @Inject
     lateinit var storage: Storage
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.setPeriodDate(null)
+        viewModel.getTransactions(null, null)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

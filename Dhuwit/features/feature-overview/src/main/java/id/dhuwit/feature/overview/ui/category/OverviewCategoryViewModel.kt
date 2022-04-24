@@ -30,11 +30,6 @@ class OverviewCategoryViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
-    init {
-        setPeriodDate(periodMonth)
-        getTransactions(periodDate, categoryType)
-    }
-
     fun getTransactions(periodDate: String?, categoryType: CategoryType?) {
         val date = periodDate ?: this@OverviewCategoryViewModel.periodDate
         val type = categoryType ?: this@OverviewCategoryViewModel.categoryType
@@ -71,8 +66,9 @@ class OverviewCategoryViewModel @Inject constructor(
         getTransactions(periodDate, categoryType)
     }
 
-    private fun setPeriodDate(periodDate: Int) {
-        this.periodDate = DateHelper.getPeriodDate(periodDate, DateHelper.PATTERN_DATE_PERIOD)
+    fun setPeriodDate(periodDate: Int?) {
+        val date = periodDate ?: this.periodMonth
+        this.periodDate = DateHelper.getPeriodDate(date, DateHelper.PATTERN_DATE_PERIOD)
     }
 
     fun setCategoryType(categoryType: CategoryType) {
