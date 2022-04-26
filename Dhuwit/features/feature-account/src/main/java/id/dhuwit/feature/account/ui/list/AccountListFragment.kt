@@ -1,6 +1,5 @@
 package id.dhuwit.feature.account.ui.list
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +8,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.SnapHelper
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
@@ -83,18 +80,9 @@ class AccountListFragment : BaseFragment(), AccountListListener {
             listener = this@AccountListFragment
         }
 
-        val orientation: Int = resources.configuration.orientation
-        val layoutManagerOrientation = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayoutManager.VERTICAL
-        } else {
-            LinearLayoutManager.VERTICAL
-        }
-
-        val snapHelper: SnapHelper = LinearSnapHelper()
         binding?.recyclerViewAccount?.apply {
             adapter = adapterAccount
-            layoutManager = LinearLayoutManager(context, layoutManagerOrientation, false)
-            snapHelper.attachToRecyclerView(this)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
