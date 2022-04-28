@@ -156,7 +156,6 @@
         android:id="@+id/button_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
         android:contentDescription="@string/overview_transactions_content_fab"
         app:layout_constraintBottom_toBottomOf="parent"
