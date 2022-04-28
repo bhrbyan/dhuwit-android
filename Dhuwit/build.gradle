@@ -98,7 +98,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${ver.android.gradle}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20'
         classpath "com.google.dagger:hilt-android-gradle-plugin:${ver.google.hilt}"
         classpath "com.google.gms:google-services:${ver.google.services}"
         classpath "com.google.firebase:firebase-crashlytics-gradle:${ver.google.firebase.crashlyticsGradle}"

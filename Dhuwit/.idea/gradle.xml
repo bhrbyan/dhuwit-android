@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/cores" />
             <option value="$PROJECT_DIR$/cores/core-account" />
+            <option value="$PROJECT_DIR$/cores/core-budget" />
             <option value="$PROJECT_DIR$/cores/core-category" />
             <option value="$PROJECT_DIR$/cores/core-currency" />
             <option value="$PROJECT_DIR$/cores/core-transaction" />
