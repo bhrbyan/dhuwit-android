@@ -49,9 +49,9 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save"
-        style="@style/Uikit.Style.Button.Fill"
+        style="@style/Uikit.Style.Button.Contained"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"

@@ -118,9 +118,9 @@
         app:layout_constraintStart_toStartOf="@+id/button_create"
         app:layout_constraintTop_toTopOf="@+id/button_create" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_create"
-        style="@style/Uikit.Style.Button.Fill"
+        style="@style/Uikit.Style.Button.Contained"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"

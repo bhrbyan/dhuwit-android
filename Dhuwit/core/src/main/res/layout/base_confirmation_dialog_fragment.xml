@@ -32,9 +32,9 @@
         app:layout_constraintTop_toBottomOf="@+id/text_title"
         tools:text="Are you sure want to something this?" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_positive"
-        style="@style/Uikit.Style.Button.Fill"
+        style="@style/Uikit.Style.Button.Contained"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_message"
         tools:text="Positive" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_negative"
         style="@style/Uikit.Style.Button.Borderless"
         android:layout_width="wrap_content"

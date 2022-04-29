@@ -114,9 +114,9 @@
 
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save"
-        style="@style/Uikit.Style.Button.Fill"
+        style="@style/Uikit.Style.Button.Contained"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
@@ -127,9 +127,9 @@
         tools:text="@string/general_save"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_update"
-        style="@style/Uikit.Style.Button.Fill"
+        style="@style/Uikit.Style.Button.Contained"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
@@ -142,10 +142,10 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button_delete"
-        style="@style/Uikit.Style.Button.Fill"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
+        android:background="@drawable/background_selector_button_contained"
         android:padding="@dimen/uikit_margin_padding_size_medium"
         android:src="@drawable/ic_delete_white"
         android:visibility="gone"

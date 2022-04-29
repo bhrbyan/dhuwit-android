@@ -58,20 +58,21 @@
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_xxxlarge"
                 android:gravity="center"
                 android:text="@string/budget_empty"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/button_create_budget"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_create_budget"
-                style="@style/Uikit.Style.Button.Fill"
+                style="@style/Uikit.Style.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:text="@string/general_create"
+                android:text="@string/budget_button_create"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

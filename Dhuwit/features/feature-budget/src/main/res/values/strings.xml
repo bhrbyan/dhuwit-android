@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="budget_title">Budget</string>
-    <string name="budget_empty">you don\'t have a budget plan yet! \nLet\'s create one!</string>
+    <string name="budget_empty">you don\'t have a budget plan yet!</string>
+    <string name="budget_button_create">Let\'s create one!</string>
 </resources>
