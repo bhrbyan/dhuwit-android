@@ -52,7 +52,6 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
 
     override fun observer() {
         with(viewModel) {
-
             viewState.observe(this@CategoryListActivity) {
                 when (it) {
                     is CategoryListViewState.GetCategories -> {

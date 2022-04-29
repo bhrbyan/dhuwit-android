@@ -42,6 +42,7 @@ dependencies {
 
     /* Module */
     implementation project(":core")
+    implementation project(":cores:core-budget")
     implementation project(":state")
     implementation project(":uikit")
 
