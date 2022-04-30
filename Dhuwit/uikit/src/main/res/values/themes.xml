@@ -142,6 +142,17 @@
         <item name="prefixTextAppearance">@style/Uikit.Style.TextAppearance.Body2</item>
     </style>
 
+    <style name="Uikit.Style.Input.Layout.Outline.DropDown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/colorMinor</item>
+        <item name="hintTextColor">@color/colorMinor</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="errorTextColor">@color/colorError</item>
+        <item name="boxStrokeErrorColor">@color/colorError</item>
+        <item name="errorIconTint">@color/colorError</item>
+        <item name="errorIconDrawable">@drawable/ic_error_input</item>
+        <item name="prefixTextAppearance">@style/Uikit.Style.TextAppearance.Body2</item>
+    </style>
+
     <style name="Uikit.Style.Input.Text">
         <item name="android:textCursorDrawable">@drawable/background_cursor_input_text</item>
         <item name="android:maxLines">1</item>

@@ -51,39 +51,67 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_empty_budget"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_large" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_budget_title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_xxxlarge"
                 android:gravity="center"
-                android:text="@string/budget_empty"
+                android:text="@string/budget_empty_title"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/text_empty_budget_description"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_end_content"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_budget_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/budget_empty_description"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/button_create_budget"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_end_content"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start_content"
+                app:layout_constraintTop_toBottomOf="@+id/text_empty_budget_title"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_create_budget"
-                style="@style/Uikit.Style.Button.Outlined"
+                style="@style/Uikit.Style.Button.Contained"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxxlarge"
                 android:text="@string/budget_button_create"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_empty_budget" />
+                app:layout_constraintEnd_toEndOf="@+id/guideline_end_content"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start_content"
+                app:layout_constraintTop_toBottomOf="@+id/text_empty_budget_description" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_empty_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="text_empty_budget, button_create_budget"
+                app:constraint_referenced_ids="text_empty_budget_title, text_empty_budget_description, button_create_budget, "
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
