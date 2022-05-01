@@ -9,4 +9,6 @@ interface BudgetDataSource {
 
     suspend fun getBudgets(): State<List<Budget>>
 
+    suspend fun getBudget(budgetId: Long): State<Budget>
+
 }

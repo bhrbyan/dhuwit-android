@@ -13,4 +13,8 @@ class BudgetRepository @Inject constructor(private val local: BudgetDataSource) 
     override suspend fun getBudgets(): State<List<Budget>> {
         return local.getBudgets()
     }
+
+    override suspend fun getBudget(budgetId: Long): State<Budget> {
+        return local.getBudget(budgetId)
+    }
 }

@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:hint="@string/budget_form_hint_period_date"
+                android:hint="@string/budget_form_hint_type"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_setting">
@@ -188,7 +188,7 @@
                     app:layout_constraintStart_toEndOf="@+id/text_plan_income_title"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="3 Category" />
+                    tools:text="No Income" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_plan_income_amount"
@@ -203,7 +203,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/image_arrow_income"
                     app:layout_constraintStart_toEndOf="@+id/text_plan_income_description"
                     app:layout_constraintTop_toBottomOf="@+id/text_plan_income_total"
-                    tools:text="Rp25.000.000"
+                    tools:text="Rp0"
                     tools:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatImageView

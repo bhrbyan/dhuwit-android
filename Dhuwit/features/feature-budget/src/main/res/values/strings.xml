@@ -16,14 +16,16 @@
     <string name="budget_form_hint_plan_income_title">Income</string>
     <string name="budget_form_hint_plan_income_description">Enter the source of income for the budget plan</string>
     <string name="budget_form_hint_plan_income_empty">No income</string>
-    <string name="budget_form_hint_plan_income_total">%1$s source of income</string>
+    <string name="budget_form_hint_plan_income_total">%1$d source of income</string>
     <string name="budget_form_hint_plan_expense_title">Expense</string>
     <string name="budget_form_hint_plan_expense_description">Categorize spending plans as needed in the budget plan</string>
     <string name="budget_form_hint_plan_expense_empty">No expense</string>
-    <string name="budget_form_hint_plan_expense_total">%1$s source of expense</string>
+    <string name="budget_form_hint_plan_expense_total">%1$d source of expense</string>
     <string name="budget_form_type_title">Budget Type</string>
     <string name="budget_form_type_weekly">Weekly</string>
     <string name="budget_form_type_monthly">Monthly</string>
     <string name="budget_form_type_yearly">Yearly</string>
+    <string name="budget_form_period_date_first">First day of the month</string>
+    <string name="budget_form_period_date_last">Last day of the month</string>
 
 </resources>

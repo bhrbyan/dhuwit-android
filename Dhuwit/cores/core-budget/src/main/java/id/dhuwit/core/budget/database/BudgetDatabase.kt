@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [BudgetEntity::class],
+    entities = [BudgetEntity::class, BudgetSettingEntity::class, BudgetCategoryEntity::class],
     version = 1,
     exportSchema = false
 )
