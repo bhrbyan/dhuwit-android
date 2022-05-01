@@ -7,5 +7,7 @@ sealed class BudgetViewState : ViewState.Feature() {
 
     data class GetBudget(val budget: Budget?) : BudgetViewState()
 
+    data class OpenFormBudget(val budgetId: Long?) : BudgetViewState()
+
     object ShowEmptyState : BudgetViewState()
 }

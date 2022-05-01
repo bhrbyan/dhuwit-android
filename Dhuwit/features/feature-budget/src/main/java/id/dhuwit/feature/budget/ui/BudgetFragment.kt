@@ -47,7 +47,7 @@ class BudgetFragment : BaseFragment() {
 
     override fun listener() {
         binding?.buttonCreateBudget?.setOnClickListener {
-            openFormBudget()
+            viewModel.openFormBudget()
         }
     }
 
@@ -60,6 +60,10 @@ class BudgetFragment : BaseFragment() {
                 is BudgetViewState.ShowEmptyState -> {
                     binding?.groupEmptyState?.visible()
                 }
+                is BudgetViewState.OpenFormBudget -> {
+                    openFormBudget(it.budgetId)
+                    viewModel.resetViewState()
+                }
                 is ViewState.Error -> {
                     showError()
                 }
@@ -67,9 +71,13 @@ class BudgetFragment : BaseFragment() {
         }
     }
 
-    private fun openFormBudget() {
+    private fun openFormBudget(budgetId: Long?) {
         budgetFormResult.launch(
-            Intent(context, BudgetFormActivity::class.java)
+            Intent(context, BudgetFormActivity::class.java).apply {
+                budgetId?.let {
+                    putExtra(BudgetConstants.KEY_BUDGET_ID, it)
+                }
+            }
         )
     }
 

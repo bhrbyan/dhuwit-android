@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.budget.repository.BudgetDataSource
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
@@ -16,11 +17,17 @@ class BudgetViewModel @Inject constructor(
     private val budgetRepository: BudgetDataSource
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState>()
-    val viewState: LiveData<ViewState> = _viewState
+    private var budget: Budget? = null
+
+    private val _viewState = MutableLiveData<ViewState?>()
+    val viewState: LiveData<ViewState?> = _viewState
 
     private fun updateViewState(viewState: ViewState) {
         _viewState.value = viewState
+    }
+
+    fun resetViewState() {
+        _viewState.value = null
     }
 
     init {
@@ -34,7 +41,9 @@ class BudgetViewModel @Inject constructor(
                     val state = if (result.data?.isNullOrEmpty() == true) {
                         BudgetViewState.ShowEmptyState
                     } else {
-                        BudgetViewState.GetBudget(result.data?.first())
+                        budget = result.data?.first()
+
+                        BudgetViewState.GetBudget(budget)
                     }
 
                     updateViewState(state)
@@ -46,6 +55,14 @@ class BudgetViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun openFormBudget() {
+        updateViewState(
+            BudgetViewState.OpenFormBudget(
+                budget?.id
+            )
+        )
     }
 
 }

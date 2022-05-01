@@ -28,7 +28,7 @@
         android:padding="@dimen/uikit_margin_padding_size_xsmall"
         app:layout_constraintStart_toEndOf="@+id/text_category_type"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_bottom" />
+        app:srcCompat="@drawable/ic_arrow_down" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_month"

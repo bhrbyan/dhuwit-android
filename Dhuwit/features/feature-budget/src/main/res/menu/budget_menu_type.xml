@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_weekly"
+        android:title="@string/budget_form_type_weekly" />
+    <item
+        android:id="@+id/menu_monthly"
+        android:title="@string/budget_form_type_monthly" />
+
+    <item
+        android:id="@+id/menu_yearly"
+        android:title="@string/budget_form_type_yearly" />
+</menu>
