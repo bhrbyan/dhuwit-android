@@ -56,7 +56,6 @@ class OnBoardingActivity : BaseActivity() {
                     is ViewState.Error -> {
                         showError()
                     }
-
                 }
             }
         }

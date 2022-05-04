@@ -10,12 +10,14 @@ import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetPlanActivityBinding
 import id.dhuwit.feature.budget.ui.plan.adapter.BudgetPlanAdapter
 import id.dhuwit.feature.budget.ui.plan.adapter.BudgetPlanListener
+import id.dhuwit.feature.budget.ui.plan.dialog.BudgetPlanAmountDialogFragment
+import id.dhuwit.feature.budget.ui.plan.dialog.BudgetPlanAmountListener
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BudgetPlanActivity : BaseActivity(), BudgetPlanListener {
+class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountListener {
 
     private lateinit var binding: BudgetPlanActivityBinding
     private lateinit var adapterPlan: BudgetPlanAdapter
@@ -42,10 +44,11 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener {
         viewModel.viewState.observe(this) {
             when (it) {
                 is BudgetPlanViewState.GetCategories -> {
-                    if (it.categories.isNullOrEmpty()) {
-                        // show empty state
+                    if (it.plans.isNullOrEmpty()) {
+                        // show empty state, for now category can't be empty
+                        // because no feature for delete category
                     } else {
-                        adapterPlan.updateList(it.categories)
+                        adapterPlan.updateList(it.plans)
                     }
                 }
                 is ViewState.Error -> {
@@ -72,8 +75,17 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener {
         }
     }
 
-    override fun onClickItem() {
-        // Do Something
+    override fun onClickItem(categoryId: Long, amount: Double) {
+        openDialogInputAmount(categoryId, amount)
+    }
+
+    private fun openDialogInputAmount(categoryId: Long, amount: Double) {
+        BudgetPlanAmountDialogFragment.newInstance(categoryId, amount)
+            .show(supportFragmentManager, null)
+    }
+
+    override fun onClickAdd(categoryId: Long?, amount: Double?) {
+        // DO something
     }
 
     private fun showError() {

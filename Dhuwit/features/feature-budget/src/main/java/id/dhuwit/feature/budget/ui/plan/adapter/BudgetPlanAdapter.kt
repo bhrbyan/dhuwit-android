@@ -3,18 +3,18 @@ package id.dhuwit.feature.budget.ui.plan.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import id.dhuwit.core.category.model.Category
+import id.dhuwit.core.budget.model.BudgetPlanItem
 import id.dhuwit.feature.budget.databinding.BudgetPlanItemBinding
 import id.dhuwit.storage.Storage
 
 class BudgetPlanAdapter(private val storage: Storage) :
     RecyclerView.Adapter<BudgetPlanViewHolder>() {
 
-    private var categories: List<Category> = emptyList()
+    private var budgetPlans: List<BudgetPlanItem> = emptyList()
     var listener: BudgetPlanListener? = null
 
-    fun updateList(categories: List<Category>) {
-        this.categories = categories
+    fun updateList(categories: List<BudgetPlanItem>) {
+        this.budgetPlans = categories
         notifyDataSetChanged()
     }
 
@@ -28,17 +28,22 @@ class BudgetPlanAdapter(private val storage: Storage) :
         ).apply {
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    listener?.onClickItem()
+                    val budgetPlan = budgetPlans[adapterPosition]
+
+                    listener?.onClickItem(
+                        budgetPlan.categoryId,
+                        budgetPlan.amount
+                    )
                 }
             }
         }
     }
 
     override fun onBindViewHolder(holder: BudgetPlanViewHolder, position: Int) {
-        holder.onBind(categories[position], storage)
+        holder.onBind(budgetPlans[position], storage)
     }
 
     override fun getItemCount(): Int {
-        return categories?.size
+        return budgetPlans.size
     }
 }

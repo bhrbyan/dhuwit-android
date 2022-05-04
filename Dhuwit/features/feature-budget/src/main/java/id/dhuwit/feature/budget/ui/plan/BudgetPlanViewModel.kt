@@ -2,6 +2,8 @@ package id.dhuwit.feature.budget.ui.plan
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.budget.model.BudgetPlanItem
+import id.dhuwit.core.budget.repository.BudgetDataSource
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_TYPE
@@ -12,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BudgetPlanViewModel @Inject constructor(
+    private val budgetRepository: BudgetDataSource,
     private val categoryRepository: CategoryDataSource,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -33,10 +36,35 @@ class BudgetPlanViewModel @Inject constructor(
 
     private fun getCategories(categoryType: CategoryType) {
         viewModelScope.launch {
+            val budgetPlans = if (categoryType is CategoryType.Income) {
+                budgetRepository.budgetPlanIncomesTemp
+            } else {
+                budgetRepository.budgetPlanExpensesTemp
+            }
+
             when (val result = categoryRepository.getCategories(categoryType)) {
                 is State.Success -> {
+                    val items: MutableList<BudgetPlanItem> = mutableListOf()
+
+                    // Move list to hashmap to prevent duplicate looping
+                    val mapOfBudgetPlan: HashMap<Long, Double> = hashMapOf()
+                    budgetPlans.forEach {
+                        mapOfBudgetPlan[it.category.id] = it.amount
+                    }
+
+                    val categories = result.data
+                    categories?.forEach { category ->
+                        items.add(
+                            BudgetPlanItem(
+                                categoryId = category.id,
+                                categoryName = category.name,
+                                amount = mapOfBudgetPlan[category.id] ?: 0.0
+                            )
+                        )
+                    }
+
                     updateViewState(
-                        BudgetPlanViewState.GetCategories(result.data)
+                        BudgetPlanViewState.GetCategories(items)
                     )
                 }
                 is State.Error -> {

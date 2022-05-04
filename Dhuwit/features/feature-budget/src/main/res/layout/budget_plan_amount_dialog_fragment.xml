@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_amount"
+        style="@style/Uikit.Style.Input.Layout.Outline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+        android:hint="@string/budget_plan_hint_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <me.abhinay.input.CurrencyEditText
+            android:id="@+id/input_text_amount"
+            style="@style/Uikit.Style.Input.Decimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add"
+        style="@style/Uikit.Style.Button.Contained"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:text="@string/general_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_amount" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_cancel"
+        style="@style/Uikit.Style.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:text="@string/general_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_add"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_amount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

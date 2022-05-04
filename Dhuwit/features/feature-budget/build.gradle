@@ -65,4 +65,7 @@ dependencies {
 
     /* View Model */
     implementation deps.androidX.viewModelExt
+
+    /* Decimal Input Text */
+    implementation deps.thirdParties.inputText.currency
 }
