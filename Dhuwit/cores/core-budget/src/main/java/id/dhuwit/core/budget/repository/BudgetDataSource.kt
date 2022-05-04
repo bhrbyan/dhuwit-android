@@ -12,8 +12,8 @@ interface BudgetDataSource {
 
     suspend fun getBudget(budgetId: Long): State<Budget>
 
-    var budgetPlanIncomesTemp: List<BudgetPlan>
+    var budgetPlanIncomesTemp: List<BudgetPlan>?
 
-    var budgetPlanExpensesTemp: List<BudgetPlan>
+    var budgetPlanExpensesTemp: List<BudgetPlan>?
 
 }

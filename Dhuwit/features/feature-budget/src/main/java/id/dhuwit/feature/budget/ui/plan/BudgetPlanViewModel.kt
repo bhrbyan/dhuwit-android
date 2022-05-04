@@ -2,8 +2,11 @@ package id.dhuwit.feature.budget.ui.plan
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.core.budget.model.BudgetPlanItem
+import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.core.budget.repository.BudgetDataSource
+import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_TYPE
@@ -20,7 +23,8 @@ class BudgetPlanViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val budgetPlanItems: MutableList<BudgetPlanItem> = mutableListOf()
-    private val categoryType: String? = savedStateHandle.get(KEY_CATEGORY_TYPE)
+    private val categoryType: CategoryType =
+        CategoryType.getCategoryType(savedStateHandle.get(KEY_CATEGORY_TYPE))
 
     private val _viewState = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _viewState
@@ -30,9 +34,7 @@ class BudgetPlanViewModel @Inject constructor(
     }
 
     init {
-        getCategories(
-            CategoryType.getCategoryType(categoryType)
-        )
+        getCategories(categoryType)
     }
 
     private fun getCategories(categoryType: CategoryType) {
@@ -46,8 +48,8 @@ class BudgetPlanViewModel @Inject constructor(
             when (val result = categoryRepository.getCategories(categoryType)) {
                 is State.Success -> {
                     // Move list to hashmap to prevent duplicate looping
-                    val mapOfBudgetPlan: HashMap<Long, Double> = hashMapOf()
-                    budgetPlans.forEach {
+                    val mapOfBudgetPlan: HashMap<Long, Double?> = hashMapOf()
+                    budgetPlans?.forEach {
                         mapOfBudgetPlan[it.category.id] = it.amount
                     }
 
@@ -80,6 +82,30 @@ class BudgetPlanViewModel @Inject constructor(
         updateViewState(
             BudgetPlanViewState.UpdateAmount(categoryId, budgetPlanItems)
         )
+    }
+
+    fun addBudgetPlan() {
+        if (categoryType is CategoryType.Income) {
+            budgetRepository.budgetPlanIncomesTemp = budgetPlanItems.toList().map {
+                BudgetPlan(
+                    null,
+                    BudgetPlanType.Income,
+                    Category(it.categoryName, categoryType, it.categoryId),
+                    it.amount
+                )
+            }
+        } else {
+            budgetRepository.budgetPlanExpensesTemp = budgetPlanItems.toList().map {
+                BudgetPlan(
+                    null,
+                    BudgetPlanType.Expense,
+                    Category(it.categoryName, categoryType, it.categoryId),
+                    it.amount
+                )
+            }
+        }
+
+        updateViewState(BudgetPlanViewState.SaveBudgetPlan)
     }
 
 }

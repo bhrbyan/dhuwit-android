@@ -7,4 +7,6 @@ sealed class BudgetPlanViewState : ViewState.Feature() {
     data class GetBudgetPlans(val plans: List<BudgetPlanItem>?) : BudgetPlanViewState()
     data class UpdateAmount(val categoryId: Long?, val plans: List<BudgetPlanItem>) :
         BudgetPlanViewState()
+
+    object SaveBudgetPlan : BudgetPlanViewState()
 }

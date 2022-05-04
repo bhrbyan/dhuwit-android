@@ -75,15 +75,15 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
         }
     }
 
-    override var budgetPlanIncomesTemp: List<BudgetPlan>
+    override var budgetPlanIncomesTemp: List<BudgetPlan>?
         get() = BudgetPlanTemp.budgetPlanIncomesTemp
         set(value) {
             BudgetPlanTemp.budgetPlanIncomesTemp = value
         }
 
-    override var budgetPlanExpensesTemp: List<BudgetPlan>
+    override var budgetPlanExpensesTemp: List<BudgetPlan>?
         get() = BudgetPlanTemp.budgetPlanExpensesTemp
         set(value) {
-            BudgetPlanTemp.budgetPlanExpensesTemp
+            BudgetPlanTemp.budgetPlanExpensesTemp = value
         }
 }

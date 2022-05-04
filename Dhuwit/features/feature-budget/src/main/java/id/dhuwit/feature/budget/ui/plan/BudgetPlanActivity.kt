@@ -39,6 +39,10 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
             setResult(RESULT_CANCELED)
             finish()
         }
+
+        binding.buttonAdd.setOnClickListener {
+            viewModel.addBudgetPlan()
+        }
     }
 
     override fun observer() {
@@ -59,6 +63,10 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
                     adapterPlan.updateItem(it.categoryId, it.plans)
                     val totalAmount = it.plans.sumOf { plan -> plan.amount ?: 0.0 }
                     setTotalAmount(totalAmount)
+                }
+                is BudgetPlanViewState.SaveBudgetPlan -> {
+                    setResult(RESULT_OK)
+                    finish()
                 }
                 is ViewState.Error -> {
                     showError()

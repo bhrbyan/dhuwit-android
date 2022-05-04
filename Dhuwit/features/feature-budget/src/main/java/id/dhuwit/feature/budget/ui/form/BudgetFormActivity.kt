@@ -115,7 +115,7 @@ class BudgetFormActivity : BaseActivity() {
                 getString(R.string.budget_form_hint_plan_income_total, budget?.incomes?.size)
 
             binding.textPlanIncomeAmount.visible()
-            binding.textPlanIncomeAmount.text = budget?.incomes?.sumOf { it.amount }
+            binding.textPlanIncomeAmount.text = budget?.incomes?.sumOf { it.amount ?: 0.0 }
                 ?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
         }
 
@@ -128,7 +128,7 @@ class BudgetFormActivity : BaseActivity() {
                 getString(R.string.budget_form_hint_plan_expense_total, budget?.expenses?.size)
 
             binding.textPlanExpenseAmount.visible()
-            binding.textPlanExpenseAmount.text = budget?.expenses?.sumOf { it.amount }
+            binding.textPlanExpenseAmount.text = budget?.expenses?.sumOf { it.amount ?: 0.0 }
                 ?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
         }
     }

@@ -19,15 +19,15 @@ class BudgetRepository @Inject constructor(private val local: BudgetDataSource) 
         return local.getBudget(budgetId)
     }
 
-    override var budgetPlanIncomesTemp: List<BudgetPlan> = emptyList()
+    override var budgetPlanIncomesTemp: List<BudgetPlan>?
         get() = local.budgetPlanIncomesTemp
         set(value) {
-            field = local.budgetPlanIncomesTemp
+            local.budgetPlanIncomesTemp = value
         }
 
-    override var budgetPlanExpensesTemp: List<BudgetPlan> = emptyList()
+    override var budgetPlanExpensesTemp: List<BudgetPlan>?
         get() = local.budgetPlanExpensesTemp
         set(value) {
-            field = local.budgetPlanExpensesTemp
+            local.budgetPlanExpensesTemp = value
         }
 }
