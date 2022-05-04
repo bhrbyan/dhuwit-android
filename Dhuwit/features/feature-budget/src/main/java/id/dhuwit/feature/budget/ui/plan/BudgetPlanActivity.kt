@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetPlanActivityBinding
 import id.dhuwit.feature.budget.ui.plan.adapter.BudgetPlanAdapter
@@ -47,12 +48,17 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
                     if (it.plans.isNullOrEmpty()) {
                         // show empty state, for now category can't be empty
                         // because no feature for delete category
+                        setTotalAmount(0.0)
                     } else {
                         adapterPlan.updateList(it.plans)
+                        val totalAmount = it.plans.sumOf { plan -> plan.amount ?: 0.0 }
+                        setTotalAmount(totalAmount)
                     }
                 }
                 is BudgetPlanViewState.UpdateAmount -> {
                     adapterPlan.updateItem(it.categoryId, it.plans)
+                    val totalAmount = it.plans.sumOf { plan -> plan.amount ?: 0.0 }
+                    setTotalAmount(totalAmount)
                 }
                 is ViewState.Error -> {
                     showError()
@@ -89,6 +95,11 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
 
     override fun onClickAdd(categoryId: Long?, amount: Double?) {
         viewModel.updateAmount(categoryId, amount)
+    }
+
+    private fun setTotalAmount(amount: Double) {
+        binding.textTotalAmountPlan.text =
+            amount.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
     }
 
     private fun showError() {

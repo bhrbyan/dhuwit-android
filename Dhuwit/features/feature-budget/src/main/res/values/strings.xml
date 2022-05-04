@@ -31,5 +31,6 @@
     <!-- Budget Plan-->
     <string name="budget_plan_title">Budget Plan</string>
     <string name="budget_plan_hint_amount">Amount</string>
+    <string name="budget_plan_total_amount">Total Plan</string>
 
 </resources>
