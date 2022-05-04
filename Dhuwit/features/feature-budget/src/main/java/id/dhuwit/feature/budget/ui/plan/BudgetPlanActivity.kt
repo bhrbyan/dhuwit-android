@@ -1,5 +1,7 @@
 package id.dhuwit.feature.budget.ui.plan
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +11,7 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetPlanActivityBinding
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_PLAN_TYPE
 import id.dhuwit.feature.budget.ui.plan.adapter.BudgetPlanAdapter
 import id.dhuwit.feature.budget.ui.plan.adapter.BudgetPlanListener
 import id.dhuwit.feature.budget.ui.plan.dialog.BudgetPlanAmountDialogFragment
@@ -65,7 +68,11 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
                     setTotalAmount(totalAmount)
                 }
                 is BudgetPlanViewState.SaveBudgetPlan -> {
-                    setResult(RESULT_OK)
+                    setResult(RESULT_OK, Intent().apply {
+                        Bundle().apply {
+                            putExtra(KEY_BUDGET_PLAN_TYPE, it.budgetPlanType.toString())
+                        }
+                    })
                     finish()
                 }
                 is ViewState.Error -> {

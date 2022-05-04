@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.budget.model.BudgetPeriodType
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.disabled
@@ -21,6 +22,7 @@ import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormActivityBinding
 import id.dhuwit.feature.budget.ui.BudgetConstants.DEFAULT_BUDGET_ID
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_ID
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_PLAN_TYPE
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_TYPE
 import id.dhuwit.feature.budget.ui.plan.BudgetPlanActivity
 import id.dhuwit.state.ViewState
@@ -39,7 +41,13 @@ class BudgetFormActivity : BaseActivity() {
 
     private val budgetPlanResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.data != null) {
+                val budgetPlanType: BudgetPlanType = BudgetPlanType.getBudgetPlanType(
+                    result.data?.getStringExtra(KEY_BUDGET_PLAN_TYPE)
+                )
 
+                viewModel.updatePlan(budgetPlanType)
+            }
         }
 
     @Inject
@@ -84,6 +92,16 @@ class BudgetFormActivity : BaseActivity() {
                 is BudgetFormViewState.GetBudget -> {
                     setUpData(it.budget)
                 }
+                is BudgetFormViewState.UpdatePlan -> {
+                    when (it.budgetPlanType) {
+                        is BudgetPlanType.Income -> {
+                            setTextBudgetPlanIncomes(it.budgetPlans)
+                        }
+                        is BudgetPlanType.Expense -> {
+                            setTextBudgetPlanExpenses(it.budgetPlans)
+                        }
+                    }
+                }
                 is ViewState.Error -> showError()
             }
         }
@@ -105,31 +123,37 @@ class BudgetFormActivity : BaseActivity() {
             }
         }
         binding.inputTextBudgetPeriodDate.setText(periodDate)
+        setTextBudgetPlanIncomes(budget?.incomes)
+        setTextBudgetPlanExpenses(budget?.expenses)
+    }
 
-        if (budget?.incomes?.isNullOrEmpty() == true) {
+    private fun setTextBudgetPlanIncomes(budgetPlans: List<BudgetPlan>?) {
+        if (budgetPlans.isNullOrEmpty()) {
             binding.textPlanIncomeTotal.text =
                 getString(R.string.budget_form_hint_plan_income_empty)
             binding.textPlanIncomeAmount.gone()
         } else {
             binding.textPlanIncomeTotal.text =
-                getString(R.string.budget_form_hint_plan_income_total, budget?.incomes?.size)
+                getString(R.string.budget_form_hint_plan_income_total, budgetPlans.size)
 
             binding.textPlanIncomeAmount.visible()
-            binding.textPlanIncomeAmount.text = budget?.incomes?.sumOf { it.amount ?: 0.0 }
-                ?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+            binding.textPlanIncomeAmount.text = budgetPlans.sumOf { it.amount ?: 0.0 }
+                .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
         }
+    }
 
-        if (budget?.expenses?.isNullOrEmpty() == true) {
+    private fun setTextBudgetPlanExpenses(budgetPlans: List<BudgetPlan>?) {
+        if (budgetPlans.isNullOrEmpty()) {
             binding.textPlanExpenseTotal.text =
                 getString(R.string.budget_form_hint_plan_expense_empty)
             binding.textPlanExpenseAmount.gone()
         } else {
             binding.textPlanExpenseTotal.text =
-                getString(R.string.budget_form_hint_plan_expense_total, budget?.expenses?.size)
+                getString(R.string.budget_form_hint_plan_expense_total, budgetPlans.size)
 
             binding.textPlanExpenseAmount.visible()
-            binding.textPlanExpenseAmount.text = budget?.expenses?.sumOf { it.amount ?: 0.0 }
-                ?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+            binding.textPlanExpenseAmount.text = budgetPlans.sumOf { it.amount ?: 0.0 }
+                .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
         }
     }
 

@@ -6,6 +6,7 @@ object BudgetConstants {
 
     const val KEY_CATEGORY_ID: String = "category_id"
     const val KEY_BUDGET_PLAN_AMOUNT: String = "budget_plan_amount"
+    const val KEY_BUDGET_PLAN_TYPE: String = "budget_plan_type"
 
     const val DEFAULT_BUDGET_ID: Long = -1
 }

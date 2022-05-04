@@ -86,26 +86,30 @@ class BudgetPlanViewModel @Inject constructor(
 
     fun addBudgetPlan() {
         if (categoryType is CategoryType.Income) {
-            budgetRepository.budgetPlanIncomesTemp = budgetPlanItems.toList().map {
-                BudgetPlan(
-                    null,
-                    BudgetPlanType.Income,
-                    Category(it.categoryName, categoryType, it.categoryId),
-                    it.amount
-                )
-            }
+            budgetRepository.budgetPlanIncomesTemp = budgetPlanItems
+                .filter { it.amount != 0.0 }
+                .map {
+                    BudgetPlan(
+                        null,
+                        BudgetPlanType.Income,
+                        Category(it.categoryName, categoryType, it.categoryId),
+                        it.amount
+                    )
+                }
+            updateViewState(BudgetPlanViewState.SaveBudgetPlan(BudgetPlanType.Income))
         } else {
-            budgetRepository.budgetPlanExpensesTemp = budgetPlanItems.toList().map {
-                BudgetPlan(
-                    null,
-                    BudgetPlanType.Expense,
-                    Category(it.categoryName, categoryType, it.categoryId),
-                    it.amount
-                )
-            }
+            budgetRepository.budgetPlanExpensesTemp = budgetPlanItems
+                .filter { it.amount != 0.0 }
+                .map {
+                    BudgetPlan(
+                        null,
+                        BudgetPlanType.Expense,
+                        Category(it.categoryName, categoryType, it.categoryId),
+                        it.amount
+                    )
+                }
+            updateViewState(BudgetPlanViewState.SaveBudgetPlan(BudgetPlanType.Expense))
         }
-
-        updateViewState(BudgetPlanViewState.SaveBudgetPlan)
     }
 
 }
