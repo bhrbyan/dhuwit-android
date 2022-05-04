@@ -1,8 +1,10 @@
 package id.dhuwit.feature.budget.ui.form
 
+import android.content.Intent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.ListPopupWindow
 import com.google.android.material.snackbar.Snackbar
@@ -10,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.budget.model.BudgetPeriodType
+import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.gone
@@ -18,6 +21,8 @@ import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormActivityBinding
 import id.dhuwit.feature.budget.ui.BudgetConstants.DEFAULT_BUDGET_ID
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_ID
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_TYPE
+import id.dhuwit.feature.budget.ui.plan.BudgetPlanActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -32,6 +37,10 @@ class BudgetFormActivity : BaseActivity() {
     private var dropDownBudgetType: ListPopupWindow? = null
     private var dropDownBudgetPeriodDate: ListPopupWindow? = null
 
+    private val budgetPlanResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        }
 
     @Inject
     lateinit var storage: Storage
@@ -58,6 +67,14 @@ class BudgetFormActivity : BaseActivity() {
 
         binding.inputTextBudgetPeriodDate.setOnClickListener {
             dropDownBudgetPeriodDate?.show()
+        }
+
+        binding.layoutIncome.setOnClickListener {
+            openBudgetPlanPage(BudgetPlanType.Income)
+        }
+
+        binding.layoutExpense.setOnClickListener {
+            openBudgetPlanPage(BudgetPlanType.Expense)
         }
     }
 
@@ -175,6 +192,14 @@ class BudgetFormActivity : BaseActivity() {
             // Set default budget type, not support weekly and yearly for now
             binding.inputTextBudgetType.disabled()
         }
+    }
+
+    private fun openBudgetPlanPage(planType: BudgetPlanType) {
+        budgetPlanResult.launch(
+            Intent(this, BudgetPlanActivity::class.java).apply {
+                putExtra(KEY_CATEGORY_TYPE, planType.toString())
+            }
+        )
     }
 
     private fun showError() {

@@ -28,4 +28,6 @@
     <string name="budget_form_period_date_first">First day of the month</string>
     <string name="budget_form_period_date_last">Last day of the month</string>
 
+    <string name="budget_plan_title">Budget Plan</string>
+
 </resources>

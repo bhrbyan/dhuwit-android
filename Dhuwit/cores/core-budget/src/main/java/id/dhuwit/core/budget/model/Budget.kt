@@ -6,8 +6,8 @@ data class Budget(
     val id: Long? = null,
     val name: String = "",
     val setting: BudgetSetting?,
-    val incomes: List<BudgetCategory>,
-    val expenses: List<BudgetCategory>
+    val incomes: List<BudgetPlan>,
+    val expenses: List<BudgetPlan>
 ) {
     fun toEntity(): BudgetEntity {
         return BudgetEntity(id, name)

@@ -2,9 +2,9 @@ package id.dhuwit.core.budget.model
 
 import id.dhuwit.core.category.model.Category
 
-data class BudgetCategory(
+data class BudgetPlan(
     val budgetId: Long,
-    val budgetCategoryType: BudgetCategoryType,
+    val budgetPlanType: BudgetPlanType,
     val category: Category,
     val amount: Double
 )

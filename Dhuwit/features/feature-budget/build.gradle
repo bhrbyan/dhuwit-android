@@ -43,6 +43,7 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":cores:core-budget")
+    implementation project(":cores:core-category")
     implementation project(":state")
     implementation project(":storage")
     implementation project(":uikit")

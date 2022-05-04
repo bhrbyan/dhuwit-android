@@ -2,7 +2,7 @@ package id.dhuwit.core.budget.repository
 
 import id.dhuwit.core.budget.database.BudgetDao
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetCategoryType
+import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,14 +28,14 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
                 val budgets = dao.getBudgets().map {
                     val budgetSetting = dao.getBudgetSetting(it.id).toModel()
                     val budgetIncomes =
-                        dao.getBudgetCategories(it.id, BudgetCategoryType.Income.toString())
-                            .map { budgetCategoryEntity ->
-                                budgetCategoryEntity.toModel()
+                        dao.getBudgetPlans(it.id, BudgetPlanType.Income.toString())
+                            .map { budgetPlanEntity ->
+                                budgetPlanEntity.toModel()
                             }
                     val budgetExpenses =
-                        dao.getBudgetCategories(it.id, BudgetCategoryType.Expense.toString())
-                            .map { budgetCategoryEntity ->
-                                budgetCategoryEntity.toModel()
+                        dao.getBudgetPlans(it.id, BudgetPlanType.Expense.toString())
+                            .map { budgetPlanEntity ->
+                                budgetPlanEntity.toModel()
                             }
 
                     it.toModel(budgetSetting, budgetIncomes, budgetExpenses)
@@ -53,14 +53,14 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
             try {
                 val budgetSetting = dao.getBudgetSetting(budgetId).toModel()
                 val budgetIncomes =
-                    dao.getBudgetCategories(budgetId, BudgetCategoryType.Income.toString())
-                        .map { budgetCategoryEntity ->
-                            budgetCategoryEntity.toModel()
+                    dao.getBudgetPlans(budgetId, BudgetPlanType.Income.toString())
+                        .map { budgetPlanEntity ->
+                            budgetPlanEntity.toModel()
                         }
                 val budgetExpenses =
-                    dao.getBudgetCategories(budgetId, BudgetCategoryType.Expense.toString())
-                        .map { budgetCategoryEntity ->
-                            budgetCategoryEntity.toModel()
+                    dao.getBudgetPlans(budgetId, BudgetPlanType.Expense.toString())
+                        .map { budgetPlanEntity ->
+                            budgetPlanEntity.toModel()
                         }
 
                 val budget =
