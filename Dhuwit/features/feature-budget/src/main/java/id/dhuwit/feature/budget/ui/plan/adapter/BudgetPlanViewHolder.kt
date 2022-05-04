@@ -12,7 +12,7 @@ class BudgetPlanViewHolder(private val binding: BudgetPlanItemBinding) :
     fun onBind(item: BudgetPlanItem, storage: Storage) {
         binding.textCategoryName.text = item.categoryName
         binding.textCategoryAmount.text =
-            item.amount.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+            item.amount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
     }
 
 }

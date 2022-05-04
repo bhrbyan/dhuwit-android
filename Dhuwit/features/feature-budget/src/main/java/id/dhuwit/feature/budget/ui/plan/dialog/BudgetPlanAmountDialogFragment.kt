@@ -71,11 +71,11 @@ class BudgetPlanAmountDialogFragment : BaseDialogFragment() {
     companion object {
         private const val SEPARATOR: String = "."
 
-        fun newInstance(categoryId: Long, amount: Double): BudgetPlanAmountDialogFragment {
+        fun newInstance(categoryId: Long, amount: Double?): BudgetPlanAmountDialogFragment {
             return BudgetPlanAmountDialogFragment().apply {
                 arguments = Bundle().apply {
                     putLong(KEY_CATEGORY_ID, categoryId)
-                    putDouble(KEY_BUDGET_PLAN_AMOUNT, amount)
+                    putDouble(KEY_BUDGET_PLAN_AMOUNT, amount ?: 0.0)
                 }
             }
         }

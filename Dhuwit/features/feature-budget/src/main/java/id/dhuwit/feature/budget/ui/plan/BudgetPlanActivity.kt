@@ -43,13 +43,16 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
     override fun observer() {
         viewModel.viewState.observe(this) {
             when (it) {
-                is BudgetPlanViewState.GetCategories -> {
+                is BudgetPlanViewState.GetBudgetPlans -> {
                     if (it.plans.isNullOrEmpty()) {
                         // show empty state, for now category can't be empty
                         // because no feature for delete category
                     } else {
                         adapterPlan.updateList(it.plans)
                     }
+                }
+                is BudgetPlanViewState.UpdateAmount -> {
+                    adapterPlan.updateItem(it.categoryId, it.plans)
                 }
                 is ViewState.Error -> {
                     showError()
@@ -75,17 +78,17 @@ class BudgetPlanActivity : BaseActivity(), BudgetPlanListener, BudgetPlanAmountL
         }
     }
 
-    override fun onClickItem(categoryId: Long, amount: Double) {
+    override fun onClickItem(categoryId: Long, amount: Double?) {
         openDialogInputAmount(categoryId, amount)
     }
 
-    private fun openDialogInputAmount(categoryId: Long, amount: Double) {
+    private fun openDialogInputAmount(categoryId: Long, amount: Double?) {
         BudgetPlanAmountDialogFragment.newInstance(categoryId, amount)
             .show(supportFragmentManager, null)
     }
 
     override fun onClickAdd(categoryId: Long?, amount: Double?) {
-        // DO something
+        viewModel.updateAmount(categoryId, amount)
     }
 
     private fun showError() {

@@ -19,6 +19,7 @@ class BudgetPlanViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val budgetPlanItems: MutableList<BudgetPlanItem> = mutableListOf()
     private val categoryType: String? = savedStateHandle.get(KEY_CATEGORY_TYPE)
 
     private val _viewState = MutableLiveData<ViewState>()
@@ -44,8 +45,6 @@ class BudgetPlanViewModel @Inject constructor(
 
             when (val result = categoryRepository.getCategories(categoryType)) {
                 is State.Success -> {
-                    val items: MutableList<BudgetPlanItem> = mutableListOf()
-
                     // Move list to hashmap to prevent duplicate looping
                     val mapOfBudgetPlan: HashMap<Long, Double> = hashMapOf()
                     budgetPlans.forEach {
@@ -54,7 +53,7 @@ class BudgetPlanViewModel @Inject constructor(
 
                     val categories = result.data
                     categories?.forEach { category ->
-                        items.add(
+                        budgetPlanItems.add(
                             BudgetPlanItem(
                                 categoryId = category.id,
                                 categoryName = category.name,
@@ -64,7 +63,7 @@ class BudgetPlanViewModel @Inject constructor(
                     }
 
                     updateViewState(
-                        BudgetPlanViewState.GetCategories(items)
+                        BudgetPlanViewState.GetBudgetPlans(budgetPlanItems)
                     )
                 }
                 is State.Error -> {
@@ -74,6 +73,13 @@ class BudgetPlanViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateAmount(categoryId: Long?, amount: Double?) {
+        budgetPlanItems.find { it.categoryId == categoryId }?.amount = amount
+        updateViewState(
+            BudgetPlanViewState.UpdateAmount(categoryId, budgetPlanItems)
+        )
     }
 
 }

@@ -13,9 +13,18 @@ class BudgetPlanAdapter(private val storage: Storage) :
     private var budgetPlans: List<BudgetPlanItem> = emptyList()
     var listener: BudgetPlanListener? = null
 
-    fun updateList(categories: List<BudgetPlanItem>) {
-        this.budgetPlans = categories
+    fun updateList(budgetPlans: List<BudgetPlanItem>) {
+        this.budgetPlans = budgetPlans
         notifyDataSetChanged()
+    }
+
+    fun updateItem(categoryId: Long?, budgetPlans: List<BudgetPlanItem>) {
+        this.budgetPlans = budgetPlans
+        val position = budgetPlans.indexOf(
+            budgetPlans.find { it.categoryId == categoryId }
+        )
+
+        notifyItemChanged(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetPlanViewHolder {

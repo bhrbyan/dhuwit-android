@@ -4,5 +4,7 @@ import id.dhuwit.core.budget.model.BudgetPlanItem
 import id.dhuwit.state.ViewState
 
 sealed class BudgetPlanViewState : ViewState.Feature() {
-    data class GetCategories(val plans: List<BudgetPlanItem>?) : BudgetPlanViewState()
+    data class GetBudgetPlans(val plans: List<BudgetPlanItem>?) : BudgetPlanViewState()
+    data class UpdateAmount(val categoryId: Long?, val plans: List<BudgetPlanItem>) :
+        BudgetPlanViewState()
 }
