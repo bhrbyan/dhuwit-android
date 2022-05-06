@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.budget.repository.BudgetDataSource
+import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
@@ -18,6 +19,8 @@ class BudgetViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var budget: Budget? = null
+    private var periodMonth: Int = CURRENT_MONTH
+    private var periodDate: String? = ""
 
     private val _viewState = MutableLiveData<ViewState?>()
     val viewState: LiveData<ViewState?> = _viewState
@@ -31,10 +34,13 @@ class BudgetViewModel @Inject constructor(
     }
 
     init {
+        setPeriodDate(null)
         getBudgets()
     }
 
     fun getBudgets() {
+        val date = periodDate ?: this.periodDate
+
         viewModelScope.launch {
             when (val result = budgetRepository.getBudgets()) {
                 is State.Success -> {
@@ -63,6 +69,23 @@ class BudgetViewModel @Inject constructor(
                 budget?.id
             )
         )
+    }
+
+    fun onNextPeriodDate() {
+        setPeriodDate(++periodMonth)
+    }
+
+    fun onPreviousPeriodDate() {
+        setPeriodDate(--periodMonth)
+    }
+
+    fun setPeriodDate(periodDate: Int?) {
+        val date = periodDate ?: this.periodMonth
+        this.periodDate = DateHelper.getPeriodDate(date, DateHelper.PATTERN_DATE_PERIOD)
+    }
+
+    companion object {
+        private const val CURRENT_MONTH: Int = 0
     }
 
 }

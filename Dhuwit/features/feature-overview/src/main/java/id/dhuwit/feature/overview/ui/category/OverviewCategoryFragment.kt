@@ -42,7 +42,7 @@ class OverviewCategoryFragment : BaseFragment(), OverviewCategoryListener {
     override fun onResume() {
         super.onResume()
 
-        // Update data in onResume so in each action that trigger this page will update the transaction
+        // Update data in onResume so in each action that open this page will update the transaction
         viewModel.setPeriodDate(null)
         viewModel.getTransactions(null, null)
     }

@@ -47,8 +47,17 @@ class BudgetFragment : BaseFragment() {
     }
 
     override fun listener() {
-        binding?.buttonCreateBudget?.setOnClickListener {
-            viewModel.openFormBudget()
+        binding?.let {
+            it.buttonCreateBudget.setOnClickListener {
+                viewModel.openFormBudget()
+            }
+
+            it.imageNext.setOnClickListener {
+                viewModel.onNextPeriodDate()
+            }
+            it.imagePrevious.setOnClickListener {
+                viewModel.onPreviousPeriodDate()
+            }
         }
     }
 

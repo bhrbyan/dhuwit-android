@@ -4,6 +4,10 @@
     <string name="budget_empty_title">Looks like you don\'t have a budget plan yet!</string>
     <string name="budget_empty_description">By making a budget cost plan will help you manage financial expenses and income</string>
     <string name="budget_button_create">Let\'s create one!</string>
+    <string name="budget_incomes_title">Incomes</string>
+    <string name="budget_incomes_empty">No budget income plan</string>
+    <string name="budget_expenses_title">Expenses</string>
+    <string name="budget_expenses_empty">No budget spending plan</string>
 
     <!-- Budget Form -->
     <string name="budget_form_title_add">Create Budget</string>

@@ -108,14 +108,147 @@
                 android:id="@+id/image_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/uikit_margin_padding_size_xsmall"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_arrow_right" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_incomes"
+                style="@style/Uikit.Style.CardView.All"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end_content"
+                app:layout_constraintStart_toStartOf="@id/guideline_start_content"
+                app:layout_constraintTop_toBottomOf="@+id/image_next">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_incomes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_incomes_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/budget_incomes_title"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_add_incomes"
+                        app:layout_constraintEnd_toStartOf="@+id/image_add_incomes"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/image_add_incomes" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_add_incomes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/uikit_margin_padding_size_xsmall"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_add" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_incomes_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/budget_incomes_empty"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_add_incomes" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_expenses"
+                style="@style/Uikit.Style.CardView.All"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end_content"
+                app:layout_constraintStart_toStartOf="@id/guideline_start_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_incomes">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_expenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_expenses_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/budget_expenses_title"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_add_expenses"
+                        app:layout_constraintEnd_toStartOf="@+id/image_add_expenses"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/image_add_expenses" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_add_expenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/uikit_margin_padding_size_xsmall"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_add" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_expenses_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
+                        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                        android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/budget_expenses_empty"
+                        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_add_expenses" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Empty State -->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_empty_budget_title"
