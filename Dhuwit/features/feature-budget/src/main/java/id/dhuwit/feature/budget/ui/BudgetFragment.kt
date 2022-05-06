@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseFragment
+import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.budget.R
@@ -56,6 +57,7 @@ class BudgetFragment : BaseFragment() {
             when (it) {
                 is BudgetViewState.GetBudget -> {
                     binding?.groupEmptyState?.gone()
+                    setData(it.budget)
                 }
                 is BudgetViewState.ShowEmptyState -> {
                     binding?.groupEmptyState?.visible()
@@ -69,6 +71,10 @@ class BudgetFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun setData(budget: Budget?) {
+        binding?.textBudgetName?.text = budget?.name
     }
 
     private fun openFormBudget(budgetId: Long?) {
