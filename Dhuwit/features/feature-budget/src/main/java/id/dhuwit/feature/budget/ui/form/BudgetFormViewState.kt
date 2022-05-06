@@ -7,6 +7,9 @@ import id.dhuwit.state.ViewState
 
 sealed class BudgetFormViewState : ViewState.Feature() {
 
+    object SaveBudget : BudgetFormViewState()
+    object ShowErrorRequirement : BudgetFormViewState()
+
     data class GetBudget(val budget: Budget?) : BudgetFormViewState()
 
     data class UpdatePlan(val budgetPlanType: BudgetPlanType, val budgetPlans: List<BudgetPlan>?) :

@@ -15,7 +15,7 @@ data class BudgetPlanEntity(
     @ColumnInfo(name = "budget_plan_type") var budgetPlanType: String,
     @ColumnInfo(name = "category_id") var categoryId: Long,
     @ColumnInfo(name = "name") var categoryName: String,
-    @ColumnInfo(name = "type") var categoryType: String,
+    @ColumnInfo(name = "category_type") var categoryType: String,
     @ColumnInfo(name = "amount") var budgetAmount: Double
 ) {
     fun toModel(): BudgetPlan {

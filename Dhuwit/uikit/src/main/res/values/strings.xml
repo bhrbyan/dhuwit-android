@@ -7,4 +7,5 @@
     <string name="general_add">Add</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_error_message">There is a problem, Please try again later!</string>
+    <string name="general_error_message_required">Required!</string>
 </resources>

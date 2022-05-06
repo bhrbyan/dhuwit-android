@@ -6,11 +6,11 @@ import id.dhuwit.state.State
 
 interface BudgetDataSource {
 
-    suspend fun createBudget(budget: Budget): State<Boolean>
+    suspend fun saveBudget(budget: Budget): State<Boolean>
 
     suspend fun getBudgets(): State<List<Budget>>
 
-    suspend fun getBudget(budgetId: Long): State<Budget>
+    suspend fun getBudget(budgetId: Long?): State<Budget>
 
     var budgetPlanIncomesTemp: List<BudgetPlan>?
 

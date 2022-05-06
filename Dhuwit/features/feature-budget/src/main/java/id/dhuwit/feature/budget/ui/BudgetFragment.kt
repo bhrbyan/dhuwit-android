@@ -27,7 +27,7 @@ class BudgetFragment : BaseFragment() {
     private val budgetFormResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-
+                viewModel.getBudgets()
             }
         }
 

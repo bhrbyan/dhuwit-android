@@ -1,30 +1,21 @@
 package id.dhuwit.feature.budget.ui.form
 
-import android.content.Intent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.budget.model.Budget
 import id.dhuwit.core.budget.model.BudgetPeriodType
-import id.dhuwit.core.budget.model.BudgetPlan
-import id.dhuwit.core.budget.model.BudgetPlanType
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.disabled
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormActivityBinding
 import id.dhuwit.feature.budget.ui.BudgetConstants.DEFAULT_BUDGET_ID
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_ID
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_PLAN_TYPE
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_TYPE
-import id.dhuwit.feature.budget.ui.plan.BudgetPlanActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -39,16 +30,8 @@ class BudgetFormActivity : BaseActivity() {
     private var dropDownBudgetType: ListPopupWindow? = null
     private var dropDownBudgetPeriodDate: ListPopupWindow? = null
 
-    private val budgetPlanResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.data != null) {
-                val budgetPlanType: BudgetPlanType = BudgetPlanType.getBudgetPlanType(
-                    result.data?.getStringExtra(KEY_BUDGET_PLAN_TYPE)
-                )
-
-                viewModel.updatePlan(budgetPlanType)
-            }
-        }
+    private val periodDates: MutableList<String> = mutableListOf()
+    private var periodTypes: MutableList<String> = mutableListOf()
 
     @Inject
     lateinit var storage: Storage
@@ -77,12 +60,15 @@ class BudgetFormActivity : BaseActivity() {
             dropDownBudgetPeriodDate?.show()
         }
 
-        binding.layoutIncome.setOnClickListener {
-            openBudgetPlanPage(BudgetPlanType.Income)
+        binding.buttonCreate.setOnClickListener {
+            viewModel.saveBudget(name = binding.inputTextBudgetName.text.toString())
         }
 
-        binding.layoutExpense.setOnClickListener {
-            openBudgetPlanPage(BudgetPlanType.Expense)
+        binding.inputTextBudgetName.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                binding.inputLayoutBudgetName.isErrorEnabled = false
+                binding.inputLayoutBudgetName.error = ""
+            }
         }
     }
 
@@ -92,15 +78,14 @@ class BudgetFormActivity : BaseActivity() {
                 is BudgetFormViewState.GetBudget -> {
                     setUpData(it.budget)
                 }
-                is BudgetFormViewState.UpdatePlan -> {
-                    when (it.budgetPlanType) {
-                        is BudgetPlanType.Income -> {
-                            setTextBudgetPlanIncomes(it.budgetPlans)
-                        }
-                        is BudgetPlanType.Expense -> {
-                            setTextBudgetPlanExpenses(it.budgetPlans)
-                        }
-                    }
+                is BudgetFormViewState.SaveBudget -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                is BudgetFormViewState.ShowErrorRequirement -> {
+                    binding.inputLayoutBudgetName.isErrorEnabled = true
+                    binding.inputLayoutBudgetName.error =
+                        getString(R.string.general_error_message_required)
                 }
                 is ViewState.Error -> showError()
             }
@@ -109,52 +94,20 @@ class BudgetFormActivity : BaseActivity() {
 
     private fun setUpData(budget: Budget?) {
         binding.inputTextBudgetName.setText(budget?.name)
-        binding.inputTextBudgetType.setText(budget?.setting?.periodType?.toString())
+        binding.inputTextBudgetType.setText(budget?.periodType?.toString())
 
-        val periodDate = when (budget?.setting?.periodDate) {
+        val periodDate = when (budget?.periodDate) {
             1 -> getString(R.string.budget_form_period_date_first)
             31 -> getString(R.string.budget_form_period_date_last)
             else -> {
-                when (budget?.setting?.periodDate) {
-                    2 -> "${budget.setting?.periodDate}nd"
-                    3 -> "${budget.setting?.periodDate}rd"
-                    else -> "${budget?.setting?.periodDate}th"
+                when (budget?.periodDate) {
+                    2 -> "${budget.periodDate}nd"
+                    3 -> "${budget.periodDate}rd"
+                    else -> "${budget?.periodDate}th"
                 }
             }
         }
         binding.inputTextBudgetPeriodDate.setText(periodDate)
-        setTextBudgetPlanIncomes(budget?.incomes)
-        setTextBudgetPlanExpenses(budget?.expenses)
-    }
-
-    private fun setTextBudgetPlanIncomes(budgetPlans: List<BudgetPlan>?) {
-        if (budgetPlans.isNullOrEmpty()) {
-            binding.textPlanIncomeTotal.text =
-                getString(R.string.budget_form_hint_plan_income_empty)
-            binding.textPlanIncomeAmount.gone()
-        } else {
-            binding.textPlanIncomeTotal.text =
-                getString(R.string.budget_form_hint_plan_income_total, budgetPlans.size)
-
-            binding.textPlanIncomeAmount.visible()
-            binding.textPlanIncomeAmount.text = budgetPlans.sumOf { it.amount ?: 0.0 }
-                .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
-        }
-    }
-
-    private fun setTextBudgetPlanExpenses(budgetPlans: List<BudgetPlan>?) {
-        if (budgetPlans.isNullOrEmpty()) {
-            binding.textPlanExpenseTotal.text =
-                getString(R.string.budget_form_hint_plan_expense_empty)
-            binding.textPlanExpenseAmount.gone()
-        } else {
-            binding.textPlanExpenseTotal.text =
-                getString(R.string.budget_form_hint_plan_expense_total, budgetPlans.size)
-
-            binding.textPlanExpenseAmount.visible()
-            binding.textPlanExpenseAmount.text = budgetPlans.sumOf { it.amount ?: 0.0 }
-                .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
-        }
     }
 
     private fun setUpToolbarTitle(budgetId: Long) {
@@ -169,25 +122,26 @@ class BudgetFormActivity : BaseActivity() {
         dropDownBudgetPeriodDate = ListPopupWindow(this, null, R.attr.listPopupWindowStyle).apply {
             anchorView = binding.inputTextBudgetPeriodDate
 
-            val dates = ArrayList<String>()
-            dates.apply {
-                add(getString(R.string.budget_form_period_date_first))
-                for (date in 2..30) {
+            periodDates.apply {
+                for (date in 1..31) {
                     val dateString = when (date) {
+                        1 -> getString(R.string.budget_form_period_date_first)
                         2 -> "${date}nd"
                         3 -> "${date}rd"
+                        31 -> getString(R.string.budget_form_period_date_last)
                         else -> "${date}th"
                     }
+
                     add(dateString)
                 }
-                add(getString(R.string.budget_form_period_date_last))
             }
 
-            val adapter = ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, dates)
+            val adapter =
+                ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, periodDates)
             setAdapter(adapter)
 
             setOnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                binding.inputTextBudgetType.setText(dates[position])
+                binding.inputTextBudgetType.setText(periodDates[position])
                 dismiss()
             }
 
@@ -200,30 +154,23 @@ class BudgetFormActivity : BaseActivity() {
         dropDownBudgetType = ListPopupWindow(this, null, R.attr.listPopupWindowStyle).apply {
             anchorView = binding.inputTextBudgetType
 
-            val items = listOf(
+            periodTypes = mutableListOf(
                 BudgetPeriodType.Weekly.toString(),
                 BudgetPeriodType.Monthly.toString(),
                 BudgetPeriodType.Yearly.toString()
             )
-            val adapter = ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, items)
+            val adapter =
+                ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, periodTypes)
             setAdapter(adapter)
 
             setOnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                binding.inputTextBudgetType.setText(items[position])
+                binding.inputTextBudgetType.setText(periodTypes[position])
                 dismiss()
             }
 
             // Set default budget type, not support weekly and yearly for now
             binding.inputTextBudgetType.disabled()
         }
-    }
-
-    private fun openBudgetPlanPage(planType: BudgetPlanType) {
-        budgetPlanResult.launch(
-            Intent(this, BudgetPlanActivity::class.java).apply {
-                putExtra(KEY_CATEGORY_TYPE, planType.toString())
-            }
-        )
     }
 
     private fun showError() {

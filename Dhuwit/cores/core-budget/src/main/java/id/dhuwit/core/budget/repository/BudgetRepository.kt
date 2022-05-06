@@ -7,15 +7,15 @@ import javax.inject.Inject
 
 class BudgetRepository @Inject constructor(private val local: BudgetDataSource) : BudgetDataSource {
 
-    override suspend fun createBudget(budget: Budget): State<Boolean> {
-        return local.createBudget(budget)
+    override suspend fun saveBudget(budget: Budget): State<Boolean> {
+        return local.saveBudget(budget)
     }
 
     override suspend fun getBudgets(): State<List<Budget>> {
         return local.getBudgets()
     }
 
-    override suspend fun getBudget(budgetId: Long): State<Budget> {
+    override suspend fun getBudget(budgetId: Long?): State<Budget> {
         return local.getBudget(budgetId)
     }
 

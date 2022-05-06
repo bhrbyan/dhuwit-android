@@ -3,9 +3,7 @@ package id.dhuwit.feature.budget.ui.form
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetPlan
-import id.dhuwit.core.budget.model.BudgetPlanType
-import id.dhuwit.core.budget.model.BudgetSetting
+import id.dhuwit.core.budget.model.BudgetPeriodType
 import id.dhuwit.core.budget.repository.BudgetDataSource
 import id.dhuwit.feature.budget.ui.BudgetConstants
 import id.dhuwit.state.State
@@ -19,11 +17,9 @@ class BudgetFormViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val budgetId: Long = savedStateHandle.get<Long>(BudgetConstants.KEY_BUDGET_ID)
-        ?: BudgetConstants.DEFAULT_BUDGET_ID
+    private val budgetId: Long? = savedStateHandle.get<Long>(BudgetConstants.KEY_BUDGET_ID)
 
-    private var budgetPlanIncomes: List<BudgetPlan>? = null
-    private var budgetPlanExpenses: List<BudgetPlan>? = null
+    private var budget: Budget? = null
 
     private val _viewState = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _viewState
@@ -36,52 +32,68 @@ class BudgetFormViewModel @Inject constructor(
         getBudget(budgetId)
     }
 
-    private fun getBudget(budgetId: Long) {
+    private fun setBudget(budget: Budget?) {
+        this.budget = budget
+    }
+
+    private fun getBudget(budgetId: Long?) {
         viewModelScope.launch {
-            if (budgetId != BudgetConstants.DEFAULT_BUDGET_ID) {
+            if (isCreateBudget()) {
+                setBudget(
+                    Budget(
+                        id = budgetId,
+                        name = "",
+                        periodType = BudgetPeriodType.Monthly,
+                        periodDate = DEFAULT_PERIOD_DATE
+                    )
+                )
+
+                updateViewState(BudgetFormViewState.GetBudget(budget))
+            } else {
                 when (val result = budgetRepository.getBudget(budgetId)) {
                     is State.Success -> {
-                        updateViewState(
-                            BudgetFormViewState.GetBudget(result.data)
-                        )
+                        setBudget(result.data)
+                        updateViewState(BudgetFormViewState.GetBudget(budget))
                     }
                     is State.Error -> {
                         updateViewState(ViewState.Error(result.message))
                     }
                 }
-            } else {
-                updateViewState(
-                    BudgetFormViewState.GetBudget(
-                        Budget(
-                            setting = BudgetSetting(),
-                            incomes = emptyList(),
-                            expenses = emptyList()
-                        )
-                    )
-                )
             }
         }
     }
 
-    fun updatePlan(budgetPlanType: BudgetPlanType) {
-        when (budgetPlanType) {
-            is BudgetPlanType.Income -> {
-                budgetPlanIncomes = budgetRepository.budgetPlanIncomesTemp
-                updateViewState(
-                    BudgetFormViewState.UpdatePlan(budgetPlanType, budgetPlanIncomes)
-                )
+    private fun isCreateBudget(): Boolean = budgetId == null
+
+    fun saveBudget(name: String) {
+        if (name.isNotEmpty()) {
+            budget?.name = name
+
+            viewModelScope.launch {
+                budget?.let {
+                    when (val result = budgetRepository.saveBudget(it)) {
+                        is State.Success -> {
+                            updateViewState(
+                                BudgetFormViewState.SaveBudget
+                            )
+                        }
+                        is State.Error -> {
+                            updateViewState(
+                                ViewState.Error(result.message)
+                            )
+                        }
+                    }
+                }
             }
-            is BudgetPlanType.Expense -> {
-                budgetPlanExpenses = budgetRepository.budgetPlanExpensesTemp
-                updateViewState(
-                    BudgetFormViewState.UpdatePlan(budgetPlanType, budgetPlanExpenses)
-                )
-            }
+        } else {
+            updateViewState(
+                BudgetFormViewState.ShowErrorRequirement
+            )
         }
     }
 
     companion object {
-        private const val DEFAULT_PERIOD_DATE_POSITION: Int = 0
+        private const val DEFAULT_PERIOD_DATE: Int = 1
     }
 
 }

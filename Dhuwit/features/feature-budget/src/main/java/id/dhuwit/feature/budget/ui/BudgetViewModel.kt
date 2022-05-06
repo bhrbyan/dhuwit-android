@@ -34,7 +34,7 @@ class BudgetViewModel @Inject constructor(
         getBudgets()
     }
 
-    private fun getBudgets() {
+    fun getBudgets() {
         viewModelScope.launch {
             when (val result = budgetRepository.getBudgets()) {
                 is State.Success -> {

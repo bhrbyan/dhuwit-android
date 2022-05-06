@@ -50,7 +50,7 @@
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_save"
+        app:layout_constraintBottom_toTopOf="@+id/button_create"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                 android:hint="@string/budget_form_hint_name"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -129,192 +130,17 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_plan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
-                android:text="@string/budget_form_hint_plan"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_budget_period_date" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_income"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="false"
-                android:focusable="true"
-                android:paddingVertical="@dimen/uikit_margin_padding_size_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_plan">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_income_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:text="@string/budget_form_hint_plan_income_title"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
-                    app:layout_constraintEnd_toStartOf="@+id/text_plan_income_total"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_income_description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:text="@string/budget_form_hint_plan_income_description"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-                    app:layout_constraintEnd_toStartOf="@+id/text_plan_income_total"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_plan_income_title" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_income_total"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:gravity="end"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/text_plan_income_amount"
-                    app:layout_constraintEnd_toStartOf="@+id/image_arrow_income"
-                    app:layout_constraintStart_toEndOf="@+id/text_plan_income_title"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="No Income" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_income_amount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:gravity="end"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/image_arrow_income"
-                    app:layout_constraintStart_toEndOf="@+id/text_plan_income_description"
-                    app:layout_constraintTop_toBottomOf="@+id/text_plan_income_total"
-                    tools:text="Rp0"
-                    tools:visibility="visible" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/image_arrow_income"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/uikit_margin_padding_size_xsmall"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/view_divider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/colorDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_income" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_expense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="false"
-                android:focusable="true"
-                android:paddingVertical="@dimen/uikit_margin_padding_size_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_expense_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:text="@string/budget_form_hint_plan_expense_title"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body1"
-                    app:layout_constraintEnd_toStartOf="@+id/text_plan_expense_total"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_expense_description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:text="@string/budget_form_hint_plan_expense_description"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-                    app:layout_constraintEnd_toStartOf="@+id/text_plan_expense_total"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_plan_expense_title" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_expense_total"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:gravity="end"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/text_plan_expense_amount"
-                    app:layout_constraintEnd_toStartOf="@+id/image_arrow_expense"
-                    app:layout_constraintStart_toEndOf="@+id/text_plan_expense_title"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="99 Category" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_plan_expense_amount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-                    android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
-                    android:gravity="end"
-                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/image_arrow_expense"
-                    app:layout_constraintStart_toEndOf="@+id/text_plan_expense_description"
-                    app:layout_constraintTop_toBottomOf="@+id/text_plan_expense_total"
-                    tools:text="Rp25.000.000"
-                    tools:visibility="visible" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/image_arrow_expense"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/uikit_margin_padding_size_xsmall"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_save"
+        android:id="@+id/button_create"
         style="@style/Uikit.Style.Button.Contained"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
-        android:text="@string/general_save"
+        android:text="@string/general_create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start" />
