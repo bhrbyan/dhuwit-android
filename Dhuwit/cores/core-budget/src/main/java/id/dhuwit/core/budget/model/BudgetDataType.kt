@@ -1,19 +1,19 @@
 package id.dhuwit.core.budget.model
 
-sealed class BudgetPlanType {
+sealed class BudgetDataType {
 
-    object Income : BudgetPlanType()
-    object Expense : BudgetPlanType()
+    object Income : BudgetDataType()
+    object Expense : BudgetDataType()
 
     companion object {
         private const val INCOME: String = "Income"
         private const val EXPENSE: String = "Expense"
 
-        fun getBudgetPlanType(planType: String?): BudgetPlanType {
+        fun getBudgetDataType(planType: String?): BudgetDataType {
             return when (planType) {
                 INCOME -> Income
                 EXPENSE -> Expense
-                else -> throw Exception("Unknown Budget Plan Type")
+                else -> throw Exception("Unknown Budget Data Type")
             }
         }
     }
@@ -22,7 +22,7 @@ sealed class BudgetPlanType {
         return when (this) {
             is Income -> INCOME
             is Expense -> EXPENSE
-            else -> throw Exception("Unknown Budget Plan Type")
+            else -> throw Exception("Unknown Budget Data Type")
         }
     }
 

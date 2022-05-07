@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.budget.model.Budget
+import id.dhuwit.core.budget.model.BudgetDataType
 import id.dhuwit.core.budget.repository.BudgetDataSource
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.state.State
@@ -44,21 +45,34 @@ class BudgetViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = budgetRepository.getBudgets()) {
                 is State.Success -> {
-                    val state = if (result.data?.isNullOrEmpty() == true) {
-                        BudgetViewState.ShowEmptyState
-                    } else {
-                        budget = result.data?.first()
-
-                        BudgetViewState.GetBudget(budget)
-                    }
-
-                    updateViewState(state)
+                    getBudgetData(result.data, date)
                 }
                 is State.Error -> {
                     updateViewState(
                         ViewState.Error(result.message)
                     )
                 }
+            }
+        }
+    }
+
+    private suspend fun getBudgetData(budgets: List<Budget>?, date: String?) {
+        when (val result = budgetRepository.getBudgetData(budget?.id, date)) {
+            is State.Success -> {
+                val budgetDataIncomes =
+                    result.data?.filter { it.budgetDataType is BudgetDataType.Income }
+
+                val budgetDataExpenses =
+                    result.data?.filter { it.budgetDataType is BudgetDataType.Expense }
+
+                updateViewState(
+                    BudgetViewState.GetBudget(budgets, budgetDataIncomes, budgetDataExpenses)
+                )
+            }
+            is State.Error -> {
+                updateViewState(
+                    ViewState.Error(result.message)
+                )
             }
         }
     }

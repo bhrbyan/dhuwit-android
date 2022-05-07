@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseFragment
 import id.dhuwit.core.budget.model.Budget
+import id.dhuwit.core.budget.model.BudgetData
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.budget.R
@@ -65,11 +66,17 @@ class BudgetFragment : BaseFragment() {
         viewModel.viewState.observe(this) {
             when (it) {
                 is BudgetViewState.GetBudget -> {
-                    binding?.groupEmptyState?.gone()
-                    setData(it.budget)
-                }
-                is BudgetViewState.ShowEmptyState -> {
-                    binding?.groupEmptyState?.visible()
+                    if (it.budgets.isNullOrEmpty()) {
+                        binding?.groupData?.gone()
+                        binding?.groupEmptyState?.visible()
+                    } else {
+                        binding?.groupData?.visible()
+                        binding?.groupEmptyState?.gone()
+
+                        setDataBudget(it.budgets.first())
+                        setDataIncomes(it.budgetDataIncomes)
+                        setDataExpenses(it.budgetDataExpenses)
+                    }
                 }
                 is BudgetViewState.OpenFormBudget -> {
                     openFormBudget(it.budgetId)
@@ -82,7 +89,27 @@ class BudgetFragment : BaseFragment() {
         }
     }
 
-    private fun setData(budget: Budget?) {
+    private fun setDataIncomes(budgetDataIncomes: List<BudgetData>?) {
+        if (budgetDataIncomes.isNullOrEmpty()) {
+            binding?.recyclerViewIncomes?.gone()
+            binding?.textIncomesEmpty?.visible()
+        } else {
+            binding?.recyclerViewIncomes?.visible()
+            binding?.textIncomesEmpty?.gone()
+        }
+    }
+
+    private fun setDataExpenses(budgetDataExpenses: List<BudgetData>?) {
+        if (budgetDataExpenses.isNullOrEmpty()) {
+            binding?.recyclerViewExpenses?.gone()
+            binding?.textExpensesEmpty?.visible()
+        } else {
+            binding?.recyclerViewExpenses?.visible()
+            binding?.textExpensesEmpty?.gone()
+        }
+    }
+
+    private fun setDataBudget(budget: Budget?) {
         binding?.textBudgetName?.text = budget?.name
     }
 

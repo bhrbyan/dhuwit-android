@@ -162,6 +162,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_add" />
 
+                    <View
+                        android:id="@+id/view_divider_incomes"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                        android:background="@color/colorDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_add_incomes" />
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_incomes_empty"
                         android:layout_width="wrap_content"
@@ -173,10 +183,24 @@
                         android:maxLines="1"
                         android:text="@string/budget_incomes_empty"
                         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_add_incomes" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_divider_incomes"
+                        tools:visibility="visible" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_incomes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/uikit_margin_padding_size_medium"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_divider_incomes"
+                        tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -228,6 +252,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_add" />
 
+                    <View
+                        android:id="@+id/view_divider_expenses"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                        android:background="@color/colorDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_add_expenses" />
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_expenses_empty"
                         android:layout_width="wrap_content"
@@ -239,14 +273,36 @@
                         android:maxLines="1"
                         android:text="@string/budget_expenses_empty"
                         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_add_expenses" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_divider_expenses"
+                        tools:visibility="visible" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_expenses"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/uikit_margin_padding_size_medium"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_divider_expenses"
+                        tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="text_budget_name, text_month, image_next, image_previous, card_incomes, card_expenses"
+                tools:visibility="visible" />
 
             <!-- Empty State -->
 
@@ -296,7 +352,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="text_empty_budget_title, text_empty_budget_description, button_create_budget, "
+                app:constraint_referenced_ids="text_empty_budget_title, text_empty_budget_description, button_create_budget"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
