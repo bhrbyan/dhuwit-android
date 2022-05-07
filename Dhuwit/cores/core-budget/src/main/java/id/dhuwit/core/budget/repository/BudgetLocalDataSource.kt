@@ -2,7 +2,7 @@ package id.dhuwit.core.budget.repository
 
 import id.dhuwit.core.budget.database.BudgetDao
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetData
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,12 +47,12 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
         }
     }
 
-    override suspend fun getBudgetData(budgetId: Long?, date: String?): State<List<BudgetData>> {
+    override suspend fun getBudgetPlans(budgetId: Long?, date: String?): State<List<BudgetPlan>> {
         return withContext(Dispatchers.IO) {
             try {
-                val budgetData = dao.getBudgetsData(budgetId).map { it.toModel() }
+                val budgetPlan = dao.getBudgetPlans(budgetId).map { it.toModel() }
 
-                State.Success(budgetData)
+                State.Success(budgetPlan)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage)
             }

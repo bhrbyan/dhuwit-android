@@ -1,7 +1,7 @@
 package id.dhuwit.core.budget.repository
 
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetData
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.state.State
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class BudgetRepository @Inject constructor(private val local: BudgetDataSource) 
         return local.getBudget(budgetId)
     }
 
-    override suspend fun getBudgetData(budgetId: Long?, date: String?): State<List<BudgetData>> {
-        return local.getBudgetData(budgetId, date)
+    override suspend fun getBudgetPlans(budgetId: Long?, date: String?): State<List<BudgetPlan>> {
+        return local.getBudgetPlans(budgetId, date)
     }
 }

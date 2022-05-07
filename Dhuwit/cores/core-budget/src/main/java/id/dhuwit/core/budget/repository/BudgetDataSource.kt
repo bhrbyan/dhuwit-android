@@ -1,7 +1,7 @@
 package id.dhuwit.core.budget.repository
 
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetData
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.state.State
 
 interface BudgetDataSource {
@@ -12,6 +12,6 @@ interface BudgetDataSource {
 
     suspend fun getBudget(budgetId: Long?): State<Budget>
 
-    suspend fun getBudgetData(budgetId: Long?, date: String?): State<List<BudgetData>>
+    suspend fun getBudgetPlans(budgetId: Long?, date: String?): State<List<BudgetPlan>>
 
 }

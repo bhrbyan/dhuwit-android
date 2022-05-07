@@ -16,7 +16,7 @@ interface BudgetDao {
     @Query("SELECT * FROM budget_table WHERE id = :budgetId")
     suspend fun getBudget(budgetId: Long?): BudgetEntity
 
-    @Query("SELECT * FROM budget_data_table WHERE id = :budgetId")
-    suspend fun getBudgetsData(budgetId: Long?): List<BudgetDataEntity>
+    @Query("SELECT * FROM budget_plan_table WHERE id = :budgetId")
+    suspend fun getBudgetPlans(budgetId: Long?): List<BudgetPlanEntity>
 
 }
