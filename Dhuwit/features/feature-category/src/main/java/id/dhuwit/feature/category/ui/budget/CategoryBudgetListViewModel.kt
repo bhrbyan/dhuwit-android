@@ -1,4 +1,4 @@
-package id.dhuwit.feature.category
+package id.dhuwit.feature.category.ui.budget
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryListViewModel @Inject constructor(
+class CategoryBudgetListViewModel @Inject constructor(
     private val categoryRepository: CategoryDataSource,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -20,7 +20,7 @@ class CategoryListViewModel @Inject constructor(
     private var categories: List<Category>? = null
 
     private var categoryType: CategoryType = CategoryType.getCategoryType(
-        savedStateHandle.get<String>(CategoryListConstants.KEY_CATEGORY_TYPE)
+        savedStateHandle.get<String>(CategoryBudgetListConstants.KEY_CATEGORY_TYPE)
     )
 
     private val _viewState = MutableLiveData<ViewState>()
@@ -39,7 +39,7 @@ class CategoryListViewModel @Inject constructor(
             when (val result = categoryRepository.getCategories(categoryType)) {
                 is State.Success -> {
                     categories = result.data
-                    updateViewState(CategoryListViewState.GetCategories(result.data))
+                    updateViewState(CategoryBudgetListViewState.GetCategories(result.data))
                 }
                 is State.Error -> {
                     updateViewState(
@@ -52,32 +52,13 @@ class CategoryListViewModel @Inject constructor(
 
     fun searchCategories(keywords: String) {
         updateViewState(
-            CategoryListViewState.SearchCategory(
+            CategoryBudgetListViewState.SearchCategory(
                 CategorySearch(
                     keywords = keywords,
                     categories = categories?.filter { it.name.lowercase().contains(keywords) }
                 )
             )
         )
-    }
-
-    fun addCategory(categoryName: String) {
-        viewModelScope.launch {
-            when (val result = categoryRepository.addCategory(
-                Category(categoryName, categoryType)
-            )) {
-                is State.Success -> {
-                    updateViewState(
-                        CategoryListViewState.AddCategory(result.data)
-                    )
-                }
-                is State.Error -> {
-                    updateViewState(
-                        ViewState.Error(result.message)
-                    )
-                }
-            }
-        }
     }
 
 }

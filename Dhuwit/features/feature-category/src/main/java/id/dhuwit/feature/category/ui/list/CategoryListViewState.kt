@@ -1,4 +1,4 @@
-package id.dhuwit.feature.category
+package id.dhuwit.feature.category.ui.list
 
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategorySearch

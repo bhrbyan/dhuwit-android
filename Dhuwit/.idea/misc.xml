@@ -31,15 +31,18 @@
         <entry key="features/feature-budget/src/main/res/layout/budget_form_activity.xml" value="0.1408367919921875" />
         <entry key="features/feature-budget/src/main/res/layout/budget_form_fragment.xml" value="0.15775972637879435" />
         <entry key="features/feature-budget/src/main/res/layout/budget_fragment.xml" value="0.2106342635815257" />
-        <entry key="features/feature-budget/src/main/res/layout/budget_plan_activity.xml" value="0.2997007268063275" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_plan_activity.xml" value="0.25396575927734377" />
         <entry key="features/feature-budget/src/main/res/layout/budget_plan_amount_dialog_fragment.xml" value="0.2479692176143651" />
         <entry key="features/feature-budget/src/main/res/layout/budget_plan_item.xml" value="0.2997007268063275" />
         <entry key="features/feature-budget/src/main/res/layout/budget_type_item.xml" value="0.2997007268063275" />
         <entry key="features/feature-budget/src/main/res/menu/budget_menu_type.xml" value="0.1" />
+        <entry key="features/feature-category/src/main/res/layout-land/category_budget_list_activity.xml" value="0.14621633176571183" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
+        <entry key="features/feature-category/src/main/res/layout-sw600dp/category_budget_list_activity.xml" value="0.11484375" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_activity.xml" value="0.20833333333333334" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_item.xml" value="0.20833333333333334" />
+        <entry key="features/feature-category/src/main/res/layout/category_budget_list_activity.xml" value="0.18854211201368107" />
         <entry key="features/feature-category/src/main/res/layout/category_list_activity.xml" value="0.28574940425988266" />
         <entry key="features/feature-category/src/main/res/layout/category_list_item.xml" value="0.20833333333333334" />
         <entry key="features/feature-dashboard/src/main/res/layout-land/dashboard_activity.xml" value="0.24072265625" />

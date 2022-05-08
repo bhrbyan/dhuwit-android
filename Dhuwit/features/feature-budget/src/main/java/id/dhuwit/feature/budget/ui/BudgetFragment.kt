@@ -12,12 +12,16 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseFragment
 import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetData
+import id.dhuwit.core.budget.model.BudgetPlan
+import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFragmentBinding
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_PLAN_TYPE
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_ID
 import id.dhuwit.feature.budget.ui.form.BudgetFormActivity
+import id.dhuwit.feature.budget.ui.plan.BudgetPlanActivity
 import id.dhuwit.state.ViewState
 
 @AndroidEntryPoint
@@ -30,6 +34,13 @@ class BudgetFragment : BaseFragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 viewModel.getBudgets()
+            }
+        }
+
+    private val budgetPlanResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // Update data
             }
         }
 
@@ -53,9 +64,18 @@ class BudgetFragment : BaseFragment() {
                 viewModel.openFormBudget()
             }
 
+            it.imageAddIncomes.setOnClickListener {
+                openFormAddBudgetPlan(BudgetPlanType.Income)
+            }
+
+            it.imageAddExpenses.setOnClickListener {
+                openFormAddBudgetPlan(BudgetPlanType.Expense)
+            }
+
             it.imageNext.setOnClickListener {
                 viewModel.onNextPeriodDate()
             }
+
             it.imagePrevious.setOnClickListener {
                 viewModel.onPreviousPeriodDate()
             }
@@ -74,8 +94,8 @@ class BudgetFragment : BaseFragment() {
                         binding?.groupEmptyState?.gone()
 
                         setDataBudget(it.budgets.first())
-                        setDataIncomes(it.budgetDataIncomes)
-                        setDataExpenses(it.budgetDataExpenses)
+                        setDataIncomes(it.budgetPlanIncomes)
+                        setDataExpenses(it.budgetPlanExpens)
                     }
                 }
                 is BudgetViewState.OpenFormBudget -> {
@@ -89,8 +109,8 @@ class BudgetFragment : BaseFragment() {
         }
     }
 
-    private fun setDataIncomes(budgetDataIncomes: List<BudgetData>?) {
-        if (budgetDataIncomes.isNullOrEmpty()) {
+    private fun setDataIncomes(budgetPlanIncomes: List<BudgetPlan>?) {
+        if (budgetPlanIncomes.isNullOrEmpty()) {
             binding?.recyclerViewIncomes?.gone()
             binding?.textIncomesEmpty?.visible()
         } else {
@@ -99,8 +119,8 @@ class BudgetFragment : BaseFragment() {
         }
     }
 
-    private fun setDataExpenses(budgetDataExpenses: List<BudgetData>?) {
-        if (budgetDataExpenses.isNullOrEmpty()) {
+    private fun setDataExpenses(budgetPlanExpens: List<BudgetPlan>?) {
+        if (budgetPlanExpens.isNullOrEmpty()) {
             binding?.recyclerViewExpenses?.gone()
             binding?.textExpensesEmpty?.visible()
         } else {
@@ -118,6 +138,17 @@ class BudgetFragment : BaseFragment() {
             Intent(context, BudgetFormActivity::class.java).apply {
                 budgetId?.let {
                     putExtra(BudgetConstants.KEY_BUDGET_ID, it)
+                }
+            }
+        )
+    }
+
+    private fun openFormAddBudgetPlan(budgetPlanType: BudgetPlanType, categoryId: Long? = null) {
+        budgetPlanResult.launch(
+            Intent(context, BudgetPlanActivity::class.java).apply {
+                putExtra(KEY_BUDGET_PLAN_TYPE, budgetPlanType.toString())
+                categoryId?.let {
+                    putExtra(KEY_CATEGORY_ID, categoryId)
                 }
             }
         )

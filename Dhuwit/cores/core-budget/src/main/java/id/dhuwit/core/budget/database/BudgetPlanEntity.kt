@@ -14,7 +14,6 @@ data class BudgetPlanEntity(
     @ColumnInfo(name = "budget_id") val budgetId: Long,
     @ColumnInfo(name = "budget_type") var budgetType: String,
     @ColumnInfo(name = "budget_amount") var budgetAmount: Double,
-    @ColumnInfo(name = "budget_remaining") var budgetRemainingAmount: Double,
     @ColumnInfo(name = "category_id") var categoryId: Long,
     @ColumnInfo(name = "category_name") var categoryName: String,
     @ColumnInfo(name = "category_type") var categoryType: String,
@@ -23,7 +22,6 @@ data class BudgetPlanEntity(
         return BudgetPlan(
             budgetId, BudgetPlanType.getBudgetPlanType(budgetType),
             budgetAmount,
-            budgetRemainingAmount,
             Category(categoryName, CategoryType.getCategoryType(categoryType), categoryId)
         )
     }

@@ -5,4 +5,5 @@ import android.content.Intent
 
 interface CategoryRouter {
     fun openCategoryListPage(context: Context, categoryType: String): Intent
+    fun openCategoryBudgetListPage(context: Context, categoryType: String): Intent
 }

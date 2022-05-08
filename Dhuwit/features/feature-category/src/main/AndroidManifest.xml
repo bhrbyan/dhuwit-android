@@ -3,7 +3,8 @@
     package="id.dhuwit.feature.category">
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
-        <activity android:name=".CategoryListActivity" />
+        <activity android:name=".ui.list.CategoryListActivity" />
+        <activity android:name=".ui.budget.CategoryBudgetListActivity" />
     </application>
 
 </manifest>

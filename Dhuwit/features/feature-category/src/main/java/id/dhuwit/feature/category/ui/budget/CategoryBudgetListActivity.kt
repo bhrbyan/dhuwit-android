@@ -1,4 +1,4 @@
-package id.dhuwit.feature.category
+package id.dhuwit.feature.category.ui.budget
 
 import android.content.Intent
 import androidx.activity.viewModels
@@ -11,22 +11,24 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
-import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
-import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
+import id.dhuwit.feature.category.R
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
-import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
+import id.dhuwit.feature.category.databinding.CategoryBudgetListActivityBinding
+import id.dhuwit.feature.category.ui.budget.CategoryBudgetListConstants.KEY_SELECT_CATEGORY_ID
+import id.dhuwit.feature.category.ui.budget.CategoryBudgetListConstants.KEY_SELECT_CATEGORY_NAME
+import id.dhuwit.feature.category.ui.budget.CategoryBudgetListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.state.ViewState
 
 @AndroidEntryPoint
-class CategoryListActivity : BaseActivity(), CategoryListListener {
+class CategoryBudgetListActivity : BaseActivity(), CategoryListListener {
 
-    private lateinit var binding: CategoryListActivityBinding
+    private lateinit var binding: CategoryBudgetListActivityBinding
     private lateinit var adapterCategoryList: CategoryListAdapter
-    private val viewModel: CategoryListViewModel by viewModels()
+    private val viewModel: CategoryBudgetListViewModel by viewModels()
 
     override fun init() {
-        binding = CategoryListActivityBinding.inflate(layoutInflater)
+        binding = CategoryBudgetListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpToolbar()
@@ -39,22 +41,14 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                 val keywords = it?.toString()?.lowercase() ?: ""
                 viewModel.searchCategories(keywords)
             }
-
-            layoutAddCategory.setOnClickListener {
-                val categoryName: String = inputTextSearch.text
-                    .toString()
-                    .replaceFirstChar { char -> char.uppercase() }
-
-                viewModel.addCategory(categoryName)
-            }
         }
     }
 
     override fun observer() {
         with(viewModel) {
-            viewState.observe(this@CategoryListActivity) {
+            viewState.observe(this@CategoryBudgetListActivity) {
                 when (it) {
-                    is CategoryListViewState.GetCategories -> {
+                    is CategoryBudgetListViewState.GetCategories -> {
                         hideLoading()
                         if (it.categories?.isNullOrEmpty() == true) {
                             showMessageEmptyCategories(getString(R.string.category_list_message_empty))
@@ -63,17 +57,12 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                             hideMessageEmptyCategories()
                         }
                     }
-                    is CategoryListViewState.AddCategory -> {
-                        onSelectCategory(it.category)
-                    }
-                    is CategoryListViewState.SearchCategory -> {
+                    is CategoryBudgetListViewState.SearchCategory -> {
                         if (it.searchCategory.categories.isNullOrEmpty()) {
                             showMessageEmptyCategories(getString(R.string.category_list_message_not_found))
-                            showMessageAddCategory(it.searchCategory.keywords)
                         } else {
                             adapterCategoryList.updateList(it.searchCategory.categories)
                             hideMessageEmptyCategories()
-                            hideMessageAddCategory()
                         }
                     }
                     is ViewState.Error -> {
@@ -98,14 +87,14 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
 
     private fun initAdapter() {
         adapterCategoryList = CategoryListAdapter().apply {
-            listener = this@CategoryListActivity
+            listener = this@CategoryBudgetListActivity
         }
         binding.recyclerViewCategory.apply {
             adapter = adapterCategoryList
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 DividerItemDecoration(
-                    this@CategoryListActivity,
+                    this@CategoryBudgetListActivity,
                     DividerItemDecoration.VERTICAL
                 )
             )
@@ -115,8 +104,10 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
     override fun onSelectCategory(category: Category?) {
         val data = Intent().apply {
             putExtra(KEY_SELECT_CATEGORY_ID, category?.id)
+            putExtra(KEY_SELECT_CATEGORY_NAME, category?.name)
             putExtra(KEY_SELECT_CATEGORY_TYPE, category?.type.toString())
         }
+
         setResult(RESULT_OK, data)
         finish()
     }
@@ -140,30 +131,6 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
                 text = null
                 gone()
             }
-        }
-    }
-
-    private fun showMessageAddCategory(keyword: String) {
-        with(binding) {
-            layoutAddCategory?.visible()
-            textMessageAddCategory?.text =
-                getString(R.string.category_list_message_add_category, keyword)
-        }
-    }
-
-    private fun hideMessageAddCategory() {
-        with(binding) {
-            layoutAddCategory?.gone()
-            textMessageAddCategory?.text = null
-        }
-    }
-
-    private fun showLoading() {
-        with(binding) {
-            progressBar.show()
-            recyclerViewCategory.gone()
-            textMessageEmptyCategory.gone()
-            layoutAddCategory?.gone()
         }
     }
 

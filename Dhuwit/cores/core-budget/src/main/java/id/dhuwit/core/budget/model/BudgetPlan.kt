@@ -6,6 +6,5 @@ data class BudgetPlan(
     val budgetId: Long,
     var budgetPlanType: BudgetPlanType,
     var budgetAmount: Double,
-    var budgetRemainingAmount: Double,
     val category: Category
 )
