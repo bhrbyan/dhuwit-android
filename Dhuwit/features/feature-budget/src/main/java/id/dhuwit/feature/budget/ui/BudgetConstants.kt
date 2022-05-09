@@ -7,5 +7,5 @@ object BudgetConstants {
     /* Open Select Page */
     const val KEY_SELECT_BUDGET_PLAN_TYPE: String = "select_budget_plan_type"
     const val KEY_SELECT_BUDGET_ID: String = "select_budget_id"
-    const val KEY_SELECT_CATEGORY_ID: String = "select_category_id"
+    const val KEY_SELECT_BUDGET_PLAN_ID: String = "select_budget_plan_id"
 }

@@ -10,7 +10,7 @@ import id.dhuwit.core.category.model.CategoryType
 
 @Entity(tableName = "budget_plan_table")
 data class BudgetPlanEntity(
-    @PrimaryKey(autoGenerate = true) var id: Long?,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "budget_id") val budgetId: Long,
     @ColumnInfo(name = "budget_type") var budgetType: String,
     @ColumnInfo(name = "budget_amount") var budgetAmount: Double,
@@ -20,9 +20,14 @@ data class BudgetPlanEntity(
 ) {
     fun toModel(): BudgetPlan {
         return BudgetPlan(
-            budgetId, BudgetPlanType.getBudgetPlanType(budgetType),
+            budgetId,
+            BudgetPlanType.getBudgetPlanType(budgetType),
             budgetAmount,
-            Category(categoryName, CategoryType.getCategoryType(categoryType), categoryId)
+            Category(
+                categoryName,
+                CategoryType.getCategoryType(categoryType),
+                categoryId
+            )
         )
     }
 }

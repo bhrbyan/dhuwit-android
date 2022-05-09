@@ -3,17 +3,22 @@ package id.dhuwit.feature.budget.ui.form.select
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.budget.model.BudgetPlan
 import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
 import id.dhuwit.core.extension.visible
+import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormPlanSelectActivityBinding
 import id.dhuwit.feature.category.router.CategoryRouter
 import id.dhuwit.feature.category.ui.budget.CategoryBudgetListConstants
+import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
@@ -21,7 +26,6 @@ import javax.inject.Inject
 class BudgetFormPlanSelectActivity : BaseActivity() {
 
     private lateinit var binding: BudgetFormPlanSelectActivityBinding
-    private lateinit var budgetPlanType: BudgetPlanType
 
     private val viewModel: BudgetFormPlanSelectViewModel by viewModels()
 
@@ -60,9 +64,6 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
     override fun init() {
         binding = BudgetFormPlanSelectActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        budgetPlanType =
-            BudgetPlanType.getBudgetPlanType(intent.getStringExtra("KEY_BUDGET_PLAN_TYPE"))
     }
 
     override fun listener() {
@@ -72,7 +73,7 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
         }
 
         binding.inputTextCategory.setOnClickListener {
-            openBudgetCategoryPage(budgetPlanType)
+            viewModel.onOpenBudgetCategoryPage()
         }
 
         binding.inputTextAmount.apply {
@@ -83,19 +84,56 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
                 validationRequirement()
             }
         }
+
+        binding.inputTextCategory.addTextChangedListener {
+            validationRequirement()
+        }
+
+        binding.buttonSave.setOnClickListener {
+            viewModel.saveBudgetPlan(
+                binding.inputTextAmount.cleanDoubleValue
+            )
+        }
+
+        binding.buttonUpdate.setOnClickListener {
+            viewModel.updateBudgetPlan()
+        }
+
+        binding.buttonDelete.setOnClickListener {
+            viewModel.deleteBudgetPlan()
+        }
     }
 
     override fun observer() {
         viewModel.viewState.observe(this) {
             when (it) {
-                is BudgetFormPlanSelectViewState.SetSelectedCategory -> {
+                is BudgetFormPlanSelectViewState.OpenBudgetCategoryPage -> {
+                    openBudgetCategoryPage(it.budgetPlanType)
+                }
+                is BudgetFormPlanSelectViewState.SelectCategory -> {
                     binding.inputTextCategory.setText(it.category.name)
                 }
-                is BudgetFormPlanSelectViewState.SetUpViewAddPlan -> {
-                    setUpViewAddPlan()
+                is BudgetFormPlanSelectViewState.SaveBudget -> {
+                    setResult(RESULT_OK)
+                    finish()
                 }
-                is BudgetFormPlanSelectViewState.SetUpViewUpdatePlan -> {
-                    setUpViewUpdatePlan()
+                is BudgetFormPlanSelectViewState.UpdateBudget -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                is BudgetFormPlanSelectViewState.DeleteBudget -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                is BudgetFormPlanSelectViewState.GetBudgetPlan -> {
+                    if (it.budgetPlan != null) {
+                        setUpViewUpdatePlan(it.budgetPlan)
+                    } else {
+                        setUpViewAddPlan()
+                    }
+                }
+                is ViewState.Error -> {
+                    showError()
                 }
             }
         }
@@ -103,9 +141,17 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
 
     private fun setUpViewAddPlan() {
         binding.buttonSave.visible()
+        binding.buttonSave.disabled()
     }
 
-    private fun setUpViewUpdatePlan() {
+    private fun setUpViewUpdatePlan(budgetPlan: BudgetPlan?) {
+        binding.inputTextCategory.setText(budgetPlan?.category?.name)
+        binding.inputTextAmount.setText(
+            budgetPlan?.budgetAmount?.convertPriceWithCurrencyFormat(
+                storage.getSymbolCurrency()
+            )
+        )
+
         binding.buttonDelete.visible()
         binding.buttonUpdate.visible()
     }
@@ -135,6 +181,14 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
                 buttonUpdate.enabled()
             }
         }
+    }
+
+    private fun showError() {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.general_error_message),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     companion object {

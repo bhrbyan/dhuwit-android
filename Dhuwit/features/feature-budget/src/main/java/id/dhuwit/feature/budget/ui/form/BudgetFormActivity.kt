@@ -60,7 +60,6 @@ class BudgetFormActivity : BaseActivity() {
     }
 
     fun showFormPlanPage(
-        budgetId: Long? = null,
         budgetPlanType: BudgetPlanType = BudgetPlanType.Income
     ) {
         when (budgetPlanType) {
@@ -79,7 +78,7 @@ class BudgetFormActivity : BaseActivity() {
         supportFragmentManager.beginTransaction()
             .replace(
                 binding.frameLayout.id,
-                BudgetFormPlanFragment.newInstance(budgetId, budgetPlanType)
+                BudgetFormPlanFragment.newInstance(budgetPlanType)
             )
             .commit()
     }

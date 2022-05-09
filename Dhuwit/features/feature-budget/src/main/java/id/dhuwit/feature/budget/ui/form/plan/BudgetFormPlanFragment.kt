@@ -19,8 +19,8 @@ import id.dhuwit.core.extension.*
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormPlanFragmentBinding
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_SELECT_BUDGET_ID
+import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_SELECT_BUDGET_PLAN_ID
 import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_SELECT_BUDGET_PLAN_TYPE
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.budget.ui.form.BudgetFormActivity
 import id.dhuwit.feature.budget.ui.form.plan.adapter.BudgetFormPlanAdapter
 import id.dhuwit.feature.budget.ui.form.plan.adapter.BudgetFormPlanListener
@@ -37,17 +37,14 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
 
     private lateinit var adapterPlan: BudgetFormPlanAdapter
 
-    private var budgetPlanType: BudgetPlanType = BudgetPlanType.Income
-
     @Inject
     lateinit var storage: Storage
 
     private val selectPlanResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-
+                viewModel.getLatestBudgetPlans()
             }
-
         }
 
     override fun onCreateView(
@@ -61,14 +58,11 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
 
     override fun init() {
         setUpAdapter()
-
-        budgetPlanType =
-            BudgetPlanType.getBudgetPlanType(arguments?.getString(KEY_BUDGET_PLAN_TYPE))
     }
 
     override fun listener() {
         binding?.buttonAdd?.setOnClickListener {
-            openBudgetFormPlanSelect(budgetPlanType)
+            viewModel.onAddBudgetPlan()
         }
 
         binding?.buttonNext?.setOnClickListener {
@@ -77,15 +71,15 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
     }
 
     private fun openBudgetFormPlanSelect(
+        budgetId: Long?,
         budgetPlanType: BudgetPlanType?,
-        budgetId: Long? = null,
-        categoryId: Long? = null
+        budgetPlanId: Long? = null
     ) {
         selectPlanResult.launch(
             Intent(requireContext(), BudgetFormPlanSelectActivity::class.java).apply {
                 putExtra(KEY_SELECT_BUDGET_PLAN_TYPE, budgetPlanType.toString())
                 putExtra(KEY_SELECT_BUDGET_ID, budgetId)
-                putExtra(KEY_SELECT_CATEGORY_ID, categoryId)
+                putExtra(KEY_SELECT_BUDGET_PLAN_ID, budgetPlanId)
             }
         )
     }
@@ -110,6 +104,9 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
                         binding?.buttonNext?.enabled()
                     }
                 }
+                is BudgetFormPlanViewState.AddBudgetPlan -> {
+                    openBudgetFormPlanSelect(it.budgetId, it.budgetPlanType)
+                }
                 is ViewState.Error -> showError()
             }
         }
@@ -133,7 +130,11 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
     }
 
     override fun onClickItemPlan(plan: BudgetPlan?) {
-        openBudgetFormPlanSelect(plan?.budgetPlanType, plan?.budgetId, plan?.category?.id)
+        openBudgetFormPlanSelect(
+            plan?.budgetId,
+            plan?.budgetPlanType,
+            plan?.id
+        )
     }
 
     private fun showError() {
@@ -154,19 +155,14 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
     companion object {
         private const val DEFAULT_TOTAL_PLAN: Double = 0.0
 
-        const val KEY_BUDGET_ID: String = "key_budget_id"
         const val KEY_BUDGET_PLAN_TYPE: String = "key_budget_plan_type"
 
         fun newInstance(
-            budgetId: Long? = null,
             budgetPlanType: BudgetPlanType? = null
         ): BudgetFormPlanFragment {
             return BudgetFormPlanFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_BUDGET_PLAN_TYPE, budgetPlanType.toString())
-                    budgetId?.let {
-                        putLong(KEY_BUDGET_ID, budgetId)
-                    }
                 }
             }
         }

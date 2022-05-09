@@ -45,7 +45,7 @@ class BudgetViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = budgetRepository.getBudgets()) {
                 is State.Success -> {
-                    getBudgetPlan(result.data, date)
+                    getBudgetPlan(result.data)
                 }
                 is State.Error -> {
                     updateViewState(
@@ -56,8 +56,8 @@ class BudgetViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getBudgetPlan(budgets: List<Budget>?, date: String?) {
-        when (val result = budgetRepository.getBudgetPlans(budget?.id, date)) {
+    private suspend fun getBudgetPlan(budgets: List<Budget>?) {
+        when (val result = budgetRepository.getBudgetPlans(budget?.id, BudgetPlanType.Income)) {
             is State.Success -> {
                 val budgetPlanIncomes =
                     result.data?.filter { it.budgetPlanType is BudgetPlanType.Income }
