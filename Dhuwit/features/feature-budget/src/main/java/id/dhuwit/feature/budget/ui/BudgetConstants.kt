@@ -1,9 +1,11 @@
 package id.dhuwit.feature.budget.ui
 
 object BudgetConstants {
+    /* Open Budget Form Page */
     const val KEY_BUDGET_ID: String = "budget_id"
-    const val KEY_BUDGET_PLAN_TYPE: String = "budget_plan_type"
-    const val KEY_CATEGORY_ID: String = "category_id"
 
-    const val DEFAULT_BUDGET_ID: Long = -1
+    /* Open Select Page */
+    const val KEY_SELECT_BUDGET_PLAN_TYPE: String = "select_budget_plan_type"
+    const val KEY_SELECT_BUDGET_ID: String = "select_budget_id"
+    const val KEY_SELECT_CATEGORY_ID: String = "select_category_id"
 }

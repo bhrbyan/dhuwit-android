@@ -1,4 +1,4 @@
-package id.dhuwit.feature.budget.ui.plan
+package id.dhuwit.feature.budget.ui.form.select
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -10,20 +10,20 @@ import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.extension.disabled
 import id.dhuwit.core.extension.enabled
-import id.dhuwit.feature.budget.databinding.BudgetPlanActivityBinding
-import id.dhuwit.feature.budget.ui.BudgetConstants
+import id.dhuwit.core.extension.visible
+import id.dhuwit.feature.budget.databinding.BudgetFormPlanSelectActivityBinding
 import id.dhuwit.feature.category.router.CategoryRouter
 import id.dhuwit.feature.category.ui.budget.CategoryBudgetListConstants
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BudgetPlanActivity : BaseActivity() {
+class BudgetFormPlanSelectActivity : BaseActivity() {
 
-    private lateinit var binding: BudgetPlanActivityBinding
+    private lateinit var binding: BudgetFormPlanSelectActivityBinding
     private lateinit var budgetPlanType: BudgetPlanType
 
-    private val viewModel: BudgetPlanViewModel by viewModels()
+    private val viewModel: BudgetFormPlanSelectViewModel by viewModels()
 
     @Inject
     lateinit var storage: Storage
@@ -38,31 +38,31 @@ class BudgetPlanActivity : BaseActivity() {
                     CategoryBudgetListConstants.KEY_SELECT_CATEGORY_ID,
                     -1
                 ) ?: 0L
-                val name =
+                val categoryName =
                     result.data?.getStringExtra(CategoryBudgetListConstants.KEY_SELECT_CATEGORY_NAME)
                         ?: ""
-                val type = CategoryType.getCategoryType(
+                val categoryType = CategoryType.getCategoryType(
                     result.data?.getStringExtra(
                         CategoryBudgetListConstants.KEY_SELECT_CATEGORY_TYPE
                     )
                 )
 
-                val category = Category(
-                    id = categoryId,
-                    name = name,
-                    type = type
+                viewModel.setSelectedCategory(
+                    Category(
+                        id = categoryId,
+                        name = categoryName,
+                        type = categoryType
+                    )
                 )
-
-                viewModel.setSelectedCategory(category)
             }
         }
 
     override fun init() {
-        binding = BudgetPlanActivityBinding.inflate(layoutInflater)
+        binding = BudgetFormPlanSelectActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         budgetPlanType =
-            BudgetPlanType.getBudgetPlanType(intent.getStringExtra(BudgetConstants.KEY_BUDGET_PLAN_TYPE))
+            BudgetPlanType.getBudgetPlanType(intent.getStringExtra("KEY_BUDGET_PLAN_TYPE"))
     }
 
     override fun listener() {
@@ -88,11 +88,26 @@ class BudgetPlanActivity : BaseActivity() {
     override fun observer() {
         viewModel.viewState.observe(this) {
             when (it) {
-                is BudgetPlanViewState.SetSelectedCategory -> {
+                is BudgetFormPlanSelectViewState.SetSelectedCategory -> {
                     binding.inputTextCategory.setText(it.category.name)
+                }
+                is BudgetFormPlanSelectViewState.SetUpViewAddPlan -> {
+                    setUpViewAddPlan()
+                }
+                is BudgetFormPlanSelectViewState.SetUpViewUpdatePlan -> {
+                    setUpViewUpdatePlan()
                 }
             }
         }
+    }
+
+    private fun setUpViewAddPlan() {
+        binding.buttonSave.visible()
+    }
+
+    private fun setUpViewUpdatePlan() {
+        binding.buttonDelete.visible()
+        binding.buttonUpdate.visible()
     }
 
     private fun openBudgetCategoryPage(budgetPlanType: BudgetPlanType) {
@@ -109,7 +124,7 @@ class BudgetPlanActivity : BaseActivity() {
 
     private fun validationRequirement() {
         with(binding) {
-            if (inputTextAmount.text.isNullOrEmpty() ||
+            if (inputTextCategory.text.isNullOrEmpty() ||
                 inputTextAmount.text.isNullOrEmpty() ||
                 inputTextAmount.cleanDoubleValue == 0.0
             ) {

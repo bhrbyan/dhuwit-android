@@ -28,8 +28,13 @@
         <entry key="features/feature-account/src/main/res/layout/dashboard_account_fragment.xml" value="0.2389193752638244" />
         <entry key="features/feature-budget/src/main/res/layout/budget_category_activity.xml" value="0.2997007268063275" />
         <entry key="features/feature-budget/src/main/res/layout/budget_empty_state_fragment.xml" value="0.3189397178281317" />
-        <entry key="features/feature-budget/src/main/res/layout/budget_form_activity.xml" value="0.1408367919921875" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_activity.xml" value="0.25" />
         <entry key="features/feature-budget/src/main/res/layout/budget_form_fragment.xml" value="0.15775972637879435" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_plan_fragment.xml" value="0.2997007268063275" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_plan_item.xml" value="0.2997007268063275" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_plan_manage_activity.xml" value="0.2821718683197948" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_plan_select_activity.xml" value="0.2821718683197948" />
+        <entry key="features/feature-budget/src/main/res/layout/budget_form_setting_fragment.xml" value="0.18854211201368107" />
         <entry key="features/feature-budget/src/main/res/layout/budget_fragment.xml" value="0.2106342635815257" />
         <entry key="features/feature-budget/src/main/res/layout/budget_plan_activity.xml" value="0.25396575927734377" />
         <entry key="features/feature-budget/src/main/res/layout/budget_plan_amount_dialog_fragment.xml" value="0.2479692176143651" />
@@ -116,6 +121,8 @@
         <entry key="uikit/src/main/res/drawable/ic_arrow_bottom.xml" value="0.2495" />
         <entry key="uikit/src/main/res/drawable/ic_category.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_category_white.xml" value="0.162" />
+        <entry key="uikit/src/main/res/drawable/ic_close.xml" value="0.1625" />
+        <entry key="uikit/src/main/res/drawable/ic_close_white.xml" value="0.1625" />
         <entry key="uikit/src/main/res/drawable/ic_dashboard.xml" value="0.162" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />

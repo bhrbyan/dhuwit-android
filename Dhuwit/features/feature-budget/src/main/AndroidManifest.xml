@@ -4,6 +4,6 @@
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
         <activity android:name=".ui.form.BudgetFormActivity" />
-        <activity android:name=".ui.plan.BudgetPlanActivity" />
+        <activity android:name=".ui.form.select.BudgetFormPlanSelectActivity" />
     </application>
 </manifest>

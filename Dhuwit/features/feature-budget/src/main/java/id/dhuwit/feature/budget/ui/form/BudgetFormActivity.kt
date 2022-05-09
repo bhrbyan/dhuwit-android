@@ -1,22 +1,13 @@
 package id.dhuwit.feature.budget.ui.form
 
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.appcompat.widget.ListPopupWindow
-import androidx.core.widget.addTextChangedListener
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.budget.model.Budget
-import id.dhuwit.core.budget.model.BudgetPeriodType
-import id.dhuwit.core.extension.disabled
+import id.dhuwit.core.budget.model.BudgetPlanType
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFormActivityBinding
-import id.dhuwit.feature.budget.ui.BudgetConstants.DEFAULT_BUDGET_ID
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_ID
-import id.dhuwit.state.ViewState
+import id.dhuwit.feature.budget.ui.form.plan.BudgetFormPlanFragment
+import id.dhuwit.feature.budget.ui.form.setting.BudgetFormSettingFragment
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
@@ -27,157 +18,69 @@ class BudgetFormActivity : BaseActivity() {
 
     private val viewModel: BudgetFormViewModel by viewModels()
 
-    private var dropDownBudgetType: ListPopupWindow? = null
-    private var dropDownBudgetPeriodDate: ListPopupWindow? = null
-
-    private val periodDates: MutableList<String> = mutableListOf()
-    private var periodTypes: MutableList<String> = mutableListOf()
-
     @Inject
     lateinit var storage: Storage
 
     override fun init() {
         binding = BudgetFormActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val budgetId: Long = intent.getLongExtra(KEY_BUDGET_ID, DEFAULT_BUDGET_ID)
-        setUpToolbarTitle(budgetId)
-        setUpBudgetType()
-        setUpBudgetPeriodDate()
     }
 
     override fun listener() {
-        binding.toolbar.setNavigationOnClickListener {
+        binding.imageClose.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
-        }
-
-        binding.inputTextBudgetType.setOnClickListener {
-            dropDownBudgetType?.show()
-        }
-
-        binding.inputTextBudgetPeriodDate.setOnClickListener {
-            dropDownBudgetPeriodDate?.show()
-        }
-
-        binding.buttonCreate.setOnClickListener {
-            viewModel.saveBudget(name = binding.inputTextBudgetName.text.toString())
-        }
-
-        binding.inputTextBudgetName.addTextChangedListener {
-            if (it.toString().isNotEmpty()) {
-                binding.inputLayoutBudgetName.isErrorEnabled = false
-                binding.inputLayoutBudgetName.error = ""
-            }
         }
     }
 
     override fun observer() {
         viewModel.viewState.observe(this) {
             when (it) {
-                is BudgetFormViewState.GetBudget -> {
-                    setUpData(it.budget)
+                is BudgetFormViewState.SetUpViewFormBudget -> {
+                    showFormSettingPage(it.budgetId)
                 }
-                is BudgetFormViewState.SaveBudget -> {
-                    setResult(RESULT_OK)
-                    finish()
-                }
-                is BudgetFormViewState.ShowErrorRequirement -> {
-                    binding.inputLayoutBudgetName.isErrorEnabled = true
-                    binding.inputLayoutBudgetName.error =
-                        getString(R.string.general_error_message_required)
-                }
-                is ViewState.Error -> showError()
             }
         }
     }
 
-    private fun setUpData(budget: Budget?) {
-        binding.inputTextBudgetName.setText(budget?.name)
-        binding.inputTextBudgetType.setText(budget?.periodType?.toString())
-
-        val periodDate = when (budget?.periodDate) {
-            1 -> getString(R.string.budget_form_period_date_first)
-            31 -> getString(R.string.budget_form_period_date_last)
-            else -> {
-                when (budget?.periodDate) {
-                    2 -> "${budget.periodDate}nd"
-                    3 -> "${budget.periodDate}rd"
-                    else -> "${budget?.periodDate}th"
-                }
-            }
-        }
-        binding.inputTextBudgetPeriodDate.setText(periodDate)
-    }
-
-    private fun setUpToolbarTitle(budgetId: Long) {
-        binding.textTitle.text = if (budgetId == DEFAULT_BUDGET_ID) {
-            getString(R.string.budget_form_title_add)
+    private fun showFormSettingPage(budgetId: Long? = null) {
+        if (budgetId != null) {
+            binding.textTitle.text = getString(R.string.budget_form_setting_update_title)
+            binding.textDescription.text =
+                getString(R.string.budget_form_setting_update_description)
         } else {
-            getString(R.string.budget_form_title_edit)
+            binding.textTitle.text = getString(R.string.budget_form_setting_create_title)
+            binding.textDescription.text =
+                getString(R.string.budget_form_setting_create_description)
         }
+
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, BudgetFormSettingFragment.newInstance(budgetId))
+            .commit()
     }
 
-    private fun setUpBudgetPeriodDate() {
-        dropDownBudgetPeriodDate = ListPopupWindow(this, null, R.attr.listPopupWindowStyle).apply {
-            anchorView = binding.inputTextBudgetPeriodDate
-
-            periodDates.apply {
-                for (date in 1..31) {
-                    val dateString = when (date) {
-                        1 -> getString(R.string.budget_form_period_date_first)
-                        2 -> "${date}nd"
-                        3 -> "${date}rd"
-                        31 -> getString(R.string.budget_form_period_date_last)
-                        else -> "${date}th"
-                    }
-
-                    add(dateString)
-                }
+    fun showFormPlanPage(
+        budgetId: Long? = null,
+        budgetPlanType: BudgetPlanType = BudgetPlanType.Income
+    ) {
+        when (budgetPlanType) {
+            is BudgetPlanType.Income -> {
+                binding.textTitle.text = getString(R.string.budget_form_plan_income_title)
+                binding.textDescription.text =
+                    getString(R.string.budget_form_plan_income_description)
             }
-
-            val adapter =
-                ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, periodDates)
-            setAdapter(adapter)
-
-            setOnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                binding.inputTextBudgetType.setText(periodDates[position])
-                dismiss()
+            is BudgetPlanType.Expense -> {
+                binding.textTitle.text = getString(R.string.budget_form_plan_expense_title)
+                binding.textDescription.text =
+                    getString(R.string.budget_form_plan_expense_description)
             }
-
-            // Set default budget type, not support weekly and yearly for now
-            binding.inputTextBudgetPeriodDate.disabled()
         }
-    }
 
-    private fun setUpBudgetType() {
-        dropDownBudgetType = ListPopupWindow(this, null, R.attr.listPopupWindowStyle).apply {
-            anchorView = binding.inputTextBudgetType
-
-            periodTypes = mutableListOf(
-                BudgetPeriodType.Weekly.toString(),
-                BudgetPeriodType.Monthly.toString(),
-                BudgetPeriodType.Yearly.toString()
+        supportFragmentManager.beginTransaction()
+            .replace(
+                binding.frameLayout.id,
+                BudgetFormPlanFragment.newInstance(budgetId, budgetPlanType)
             )
-            val adapter =
-                ArrayAdapter(this@BudgetFormActivity, R.layout.budget_type_item, periodTypes)
-            setAdapter(adapter)
-
-            setOnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                binding.inputTextBudgetType.setText(periodTypes[position])
-                dismiss()
-            }
-
-            // Set default budget type, not support weekly and yearly for now
-            binding.inputTextBudgetType.disabled()
-        }
-    }
-
-    private fun showError() {
-        Snackbar.make(
-            binding.root,
-            getString(R.string.general_error_message),
-            Snackbar.LENGTH_SHORT
-        ).show()
+            .commit()
     }
 }

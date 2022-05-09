@@ -19,130 +19,158 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_medium" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:backgroundTint="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/uikit_margin_padding_size_medium"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_close"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:srcCompat="@drawable/ic_close" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/image_close"
+        tools:text="@string/budget_form_setting_create_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-        android:gravity="center"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title" />
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        tools:text="@string/budget_form_setting_create_description" />
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        android:scrollbars="none"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_create"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_description" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/text_title"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"-->
+    <!--        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"-->
+    <!--        android:gravity="center"-->
+    <!--        android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:text="Title" />-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_budget_name"
-                style="@style/Uikit.Style.Input.Layout.Outline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:hint="@string/budget_form_hint_name"
-                app:endIconMode="clear_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+    <!--    <ScrollView-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"-->
+    <!--        android:scrollbars="none"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_create"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/guideline_end"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline_start"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/toolbar">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_text_budget_name"
-                    style="@style/Uikit.Style.Input.Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content">-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_setting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"
-                android:text="@string/budget_form_hint_setting"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_budget_name" />
+    <!--            <com.google.android.material.textfield.TextInputLayout-->
+    <!--                android:id="@+id/input_layout_budget_name"-->
+    <!--                style="@style/Uikit.Style.Input.Layout.Outline"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"-->
+    <!--                android:hint="@string/budget_form_hint_name"-->
+    <!--                app:endIconMode="clear_text"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_budget_type"
-                style="@style/Uikit.Style.Input.Layout.Outline.DropDown"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:hint="@string/budget_form_hint_type"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_setting">
+    <!--                <com.google.android.material.textfield.TextInputEditText-->
+    <!--                    android:id="@+id/input_text_budget_name"-->
+    <!--                    style="@style/Uikit.Style.Input.Text"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content" />-->
+    <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/input_text_budget_type"
-                    style="@style/Uikit.Style.Input.Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
+    <!--            <androidx.appcompat.widget.AppCompatTextView-->
+    <!--                android:id="@+id/text_setting"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/uikit_margin_padding_size_large"-->
+    <!--                android:text="@string/budget_form_hint_setting"-->
+    <!--                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"-->
+    <!--                android:textStyle="bold"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/input_layout_budget_name" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <!--            <com.google.android.material.textfield.TextInputLayout-->
+    <!--                android:id="@+id/input_layout_budget_type"-->
+    <!--                style="@style/Uikit.Style.Input.Layout.Outline.DropDown"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"-->
+    <!--                android:hint="@string/budget_form_hint_type"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/text_setting">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_budget_period_date"
-                style="@style/Uikit.Style.Input.Layout.Outline.DropDown"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-                android:hint="@string/budget_form_hint_period_date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_budget_type">
+    <!--                <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
+    <!--                    android:id="@+id/input_text_budget_type"-->
+    <!--                    style="@style/Uikit.Style.Input.Text"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:inputType="none" />-->
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/input_text_budget_period_date"
-                    style="@style/Uikit.Style.Input.Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
+    <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <!--            <com.google.android.material.textfield.TextInputLayout-->
+    <!--                android:id="@+id/input_layout_budget_period_date"-->
+    <!--                style="@style/Uikit.Style.Input.Layout.Outline.DropDown"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"-->
+    <!--                android:hint="@string/budget_form_hint_period_date"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/input_layout_budget_type">-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--                <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
+    <!--                    android:id="@+id/input_text_budget_period_date"-->
+    <!--                    style="@style/Uikit.Style.Input.Text"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:inputType="none" />-->
 
-    </ScrollView>
+    <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_create"
-        style="@style/Uikit.Style.Button.Contained"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
-        android:text="@string/general_create"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_start" />
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    </ScrollView>-->
+
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/button_create"-->
+    <!--        style="@style/Uikit.Style.Button.Contained"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"-->
+    <!--        android:text="@string/general_create"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/guideline_end"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/guideline_start" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

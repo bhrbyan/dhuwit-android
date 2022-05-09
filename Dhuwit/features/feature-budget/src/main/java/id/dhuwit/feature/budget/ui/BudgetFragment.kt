@@ -1,5 +1,6 @@
 package id.dhuwit.feature.budget.ui
 
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
@@ -18,10 +19,8 @@ import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.budget.R
 import id.dhuwit.feature.budget.databinding.BudgetFragmentBinding
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_BUDGET_PLAN_TYPE
-import id.dhuwit.feature.budget.ui.BudgetConstants.KEY_CATEGORY_ID
 import id.dhuwit.feature.budget.ui.form.BudgetFormActivity
-import id.dhuwit.feature.budget.ui.plan.BudgetPlanActivity
+import id.dhuwit.feature.budget.ui.form.select.BudgetFormPlanSelectActivity
 import id.dhuwit.state.ViewState
 
 @AndroidEntryPoint
@@ -32,7 +31,7 @@ class BudgetFragment : BaseFragment() {
 
     private val budgetFormResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
+            if (result.resultCode == RESULT_OK || result.resultCode == RESULT_CANCELED) {
                 viewModel.getBudgets()
             }
         }
@@ -143,12 +142,17 @@ class BudgetFragment : BaseFragment() {
         )
     }
 
-    private fun openFormAddBudgetPlan(budgetPlanType: BudgetPlanType, categoryId: Long? = null) {
+    private fun openFormAddBudgetPlan(
+        budgetPlanType: BudgetPlanType,
+        categoryId: Long? = null,
+        categoryAmount: Double = 0.0
+    ) {
         budgetPlanResult.launch(
-            Intent(context, BudgetPlanActivity::class.java).apply {
-                putExtra(KEY_BUDGET_PLAN_TYPE, budgetPlanType.toString())
+            Intent(context, BudgetFormPlanSelectActivity::class.java).apply {
+                putExtra("KEY_BUDGET_PLAN_TYPE", budgetPlanType.toString())
                 categoryId?.let {
-                    putExtra(KEY_CATEGORY_ID, categoryId)
+                    putExtra("KEY_CATEGORY_ID", categoryId)
+                    putExtra("KEY_CATEGORY_AMOUNT", categoryAmount)
                 }
             }
         )
