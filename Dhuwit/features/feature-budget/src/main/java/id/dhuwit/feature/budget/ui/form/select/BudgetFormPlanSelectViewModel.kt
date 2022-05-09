@@ -103,12 +103,14 @@ class BudgetFormPlanSelectViewModel @Inject constructor(
 
     fun deleteBudgetPlan() {
         viewModelScope.launch {
-            when (val result = budgetRepository.deleteBudgetPlan(budgetPlan)) {
-                is State.Success -> {
-                    updateViewState(BudgetFormPlanSelectViewState.DeleteBudget)
-                }
-                is State.Error -> {
-                    updateViewState(ViewState.Error(result.message))
+            budgetPlan?.let {
+                when (val result = budgetRepository.deleteBudgetPlan(it.id)) {
+                    is State.Success -> {
+                        updateViewState(BudgetFormPlanSelectViewState.DeleteBudget)
+                    }
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
+                    }
                 }
             }
         }

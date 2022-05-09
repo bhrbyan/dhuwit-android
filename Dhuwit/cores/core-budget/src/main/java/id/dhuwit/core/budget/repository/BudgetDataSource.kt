@@ -24,6 +24,6 @@ interface BudgetDataSource {
 
     suspend fun updateBudgetPlan(budgetPlan: BudgetPlan?): State<Boolean>
 
-    suspend fun deleteBudgetPlan(budgetPlan: BudgetPlan?): State<Boolean>
+    suspend fun deleteBudgetPlan(budgetPlanId: Long): State<Boolean>
 
 }

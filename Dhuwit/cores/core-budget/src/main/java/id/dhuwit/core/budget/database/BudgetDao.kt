@@ -1,6 +1,9 @@
 package id.dhuwit.core.budget.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface BudgetDao {
@@ -26,7 +29,7 @@ interface BudgetDao {
     @Update
     suspend fun updateBudgetPlan(budgetPlanEntity: BudgetPlanEntity?)
 
-    @Delete
-    suspend fun deleteBudgetPlan(budgetPlanEntity: BudgetPlanEntity?)
+    @Query("DELETE FROM budget_plan_table WHERE id = :budgetPlanId")
+    suspend fun deleteBudgetPlan(budgetPlanId: Long)
 
 }

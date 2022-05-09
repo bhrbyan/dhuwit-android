@@ -39,7 +39,7 @@ class BudgetRepository @Inject constructor(private val local: BudgetDataSource) 
         return local.updateBudgetPlan(budgetPlan)
     }
 
-    override suspend fun deleteBudgetPlan(budgetPlan: BudgetPlan?): State<Boolean> {
-        return deleteBudgetPlan(budgetPlan)
+    override suspend fun deleteBudgetPlan(budgetPlanId: Long): State<Boolean> {
+        return local.deleteBudgetPlan(budgetPlanId)
     }
 }

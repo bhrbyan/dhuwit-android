@@ -98,10 +98,10 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
         }
     }
 
-    override suspend fun deleteBudgetPlan(budgetPlan: BudgetPlan?): State<Boolean> {
+    override suspend fun deleteBudgetPlan(budgetPlanId: Long): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                dao.deleteBudgetPlan(budgetPlan?.toEntity())
+                dao.deleteBudgetPlan(budgetPlanId)
                 State.Success(true)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage)
