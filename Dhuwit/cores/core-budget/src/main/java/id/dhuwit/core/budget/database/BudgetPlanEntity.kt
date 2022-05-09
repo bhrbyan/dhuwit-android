@@ -27,7 +27,8 @@ data class BudgetPlanEntity(
                 categoryName,
                 CategoryType.getCategoryType(categoryType),
                 categoryId
-            )
+            ),
+            id
         )
     }
 }

@@ -64,10 +64,10 @@ class BudgetLocalDataSource @Inject constructor(private val dao: BudgetDao) : Bu
         }
     }
 
-    override suspend fun getBudgetPlan(budgetPlanid: Long?): State<BudgetPlan> {
+    override suspend fun getBudgetPlan(budgetPlanId: Long?): State<BudgetPlan> {
         return withContext(Dispatchers.IO) {
             try {
-                val budgetPlan = dao.getBudgetPlan(budgetPlanid).toModel()
+                val budgetPlan = dao.getBudgetPlan(budgetPlanId).toModel()
 
                 State.Success(budgetPlan)
             } catch (e: Exception) {
