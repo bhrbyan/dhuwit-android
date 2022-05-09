@@ -96,7 +96,9 @@ class BudgetFormPlanSelectActivity : BaseActivity() {
         }
 
         binding.buttonUpdate.setOnClickListener {
-            viewModel.updateBudgetPlan()
+            viewModel.updateBudgetPlan(
+                binding.inputTextAmount.cleanDoubleValue
+            )
         }
 
         binding.buttonDelete.setOnClickListener {

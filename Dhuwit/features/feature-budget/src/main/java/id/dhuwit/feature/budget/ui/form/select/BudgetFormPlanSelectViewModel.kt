@@ -46,7 +46,10 @@ class BudgetFormPlanSelectViewModel @Inject constructor(
                 when (val result = budgetRepository.getBudgetPlan(budgetPlanId)) {
                     is State.Success -> {
                         budgetPlan = result.data
-                        updateViewState(BudgetFormPlanSelectViewState.GetBudgetPlan(budgetPlan))
+                        budgetPlan?.let {
+                            selectedCategory = it.category
+                            updateViewState(BudgetFormPlanSelectViewState.GetBudgetPlan(it))
+                        }
                     }
                     is State.Error -> {
                         updateViewState(
@@ -88,14 +91,24 @@ class BudgetFormPlanSelectViewModel @Inject constructor(
         }
     }
 
-    fun updateBudgetPlan() {
+    fun updateBudgetPlan(amount: Double) {
         viewModelScope.launch {
-            when (val result = budgetRepository.updateBudgetPlan(budgetPlan)) {
-                is State.Success -> {
-                    updateViewState(BudgetFormPlanSelectViewState.UpdateBudget)
-                }
-                is State.Error -> {
-                    updateViewState(ViewState.Error(result.message))
+            budgetPlan?.let {
+                when (val result = budgetRepository.updateBudgetPlan(
+                    BudgetPlan(
+                        it.budgetId,
+                        it.budgetPlanType,
+                        amount,
+                        selectedCategory,
+                        it.id
+                    )
+                )) {
+                    is State.Success -> {
+                        updateViewState(BudgetFormPlanSelectViewState.UpdateBudget)
+                    }
+                    is State.Error -> {
+                        updateViewState(ViewState.Error(result.message))
+                    }
                 }
             }
         }
