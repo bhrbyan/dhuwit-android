@@ -8,11 +8,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
 import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
 import id.dhuwit.state.ViewState
+import id.dhuwit.uikit.databinding.EmptyStateBinding
 import id.dhuwit.uikit.databinding.ToolbarBinding
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class AccountMainActivity : BaseActivity() {
 
     private lateinit var binding: AccountMainActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding
+    private lateinit var bindingEmptyState: EmptyStateBinding
     private lateinit var viewPagerCallback: ViewPager2.OnPageChangeCallback
     private lateinit var viewPagerAdapter: AccountMainAdapter
 
@@ -28,10 +31,12 @@ class AccountMainActivity : BaseActivity() {
     override fun init() {
         binding = AccountMainActivityBinding.inflate(layoutInflater)
         bindingToolbar = binding.layoutToolbar
+        bindingEmptyState = binding.layoutEmptyState
         setContentView(binding.root)
 
         setUpToolbar()
         setUpViewPagerAdapter()
+        setUpEmptyState()
     }
 
     override fun listener() {
@@ -48,8 +53,9 @@ class AccountMainActivity : BaseActivity() {
             when (viewState) {
                 is AccountMainViewState.GetAccounts -> {
                     if (viewState.accounts.isNullOrEmpty()) {
-                        // TODO: Show empty state
+                        showEmptyState()
                     } else {
+                        hideEmptyState()
                         setTabLayoutName(viewState.accounts)
                         viewPagerAdapter.updateAccounts(viewState.accounts)
                     }
@@ -90,6 +96,33 @@ class AccountMainActivity : BaseActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = accounts[position].name
         }.attach()
+    }
+
+    private fun setUpEmptyState() {
+        bindingEmptyState.apply {
+            textTitle.apply {
+                text = getString(R.string.account_main_empty_state_title)
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+            }
+            textDescription.apply {
+                text = getString(R.string.account_main_empty_state_description)
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+            }
+        }
+    }
+
+    private fun showEmptyState() {
+        bindingEmptyState.apply {
+            textTitle.visible()
+            textDescription.visible()
+        }
+    }
+
+    private fun hideEmptyState() {
+        bindingEmptyState.apply {
+            textTitle.gone()
+            textDescription.gone()
+        }
     }
 
     private fun showError() {

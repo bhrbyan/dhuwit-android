@@ -52,6 +52,7 @@
         <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/ic_setting_black.xml" value="0.2665" />
         <entry key="uikit/src/main/res/drawable/ic_star.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/layout/empty_state.xml" value="0.3189397178281317" />
         <entry key="uikit/src/main/res/layout/layout_toolbar.xml" value="0.3189397178281317" />
         <entry key="uikit/src/main/res/layout/toolbar.xml" value="0.3189397178281317" />
       </map>
