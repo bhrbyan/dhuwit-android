@@ -5,7 +5,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.util.CategoryUtil
 import id.dhuwit.core.currency.util.CurrencyUtil
-import id.dhuwit.feature.dashboard.router.DashboardRouter
+import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.onboarding.router.OnBoardingRouter
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class LauncherActivity : BaseActivity() {
     lateinit var onBoardingRouter: OnBoardingRouter
 
     @Inject
-    lateinit var dashboardRouter: DashboardRouter
+    lateinit var accountRouter: AccountRouter
 
     @Inject
     lateinit var storage: Storage
@@ -61,7 +61,7 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun openDashboardPage() {
-        startActivity(dashboardRouter.openDashboardPage(this))
+        startActivity(accountRouter.openAccountMainPage(this))
         finish()
     }
 }
