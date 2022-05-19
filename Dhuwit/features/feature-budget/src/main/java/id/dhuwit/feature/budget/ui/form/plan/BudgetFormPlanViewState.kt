@@ -6,7 +6,8 @@ import id.dhuwit.state.ViewState
 
 sealed class BudgetFormPlanViewState : ViewState.Feature() {
 
-    data class SetUpViewPlans(val plans: List<BudgetPlan>?) : BudgetFormPlanViewState()
+    data class SetUpViewPlans(val plans: List<BudgetPlan>?, val budgetPlanType: BudgetPlanType) :
+        BudgetFormPlanViewState()
 
     data class AddBudgetPlan(val budgetId: Long?, val budgetPlanType: BudgetPlanType) :
         BudgetFormPlanViewState()

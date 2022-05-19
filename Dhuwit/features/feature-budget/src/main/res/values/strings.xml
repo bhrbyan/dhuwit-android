@@ -27,7 +27,9 @@
     <string name="budget_form_plan_expense_title">Expense Plan</string>
     <string name="budget_form_plan_expense_description">Plan your regular expenses and make sure it doesn\'t exceed your income that you previously entered</string>
     <string name="budget_form_plan_empty">You haven\'t added any plans yet</string>
-    <string name="budget_form_plan_total">Total Income Plan</string>
+    <string name="budget_form_plan_total">Total Plan</string>
+    <string name="budget_form_plan_expense_remaining">Still %1$d left for expenses</string>
+    <string name="budget_form_plan_expense_over">Exceeding the income budget of %1$d</string>
 
     <string name="budget_form_title_add">Create Budget</string>
     <string name="budget_form_title_edit">Edit Budget</string>

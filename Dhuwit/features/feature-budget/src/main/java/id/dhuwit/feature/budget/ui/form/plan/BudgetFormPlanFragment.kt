@@ -88,20 +88,85 @@ class BudgetFormPlanFragment : BaseFragment(), BudgetFormPlanListener {
         viewModel.viewState.observe(this) {
             when (it) {
                 is BudgetFormPlanViewState.SetUpViewPlans -> {
-                    if (it.plans.isNullOrEmpty()) {
-                        binding?.textTotalIncome?.text =
-                            DEFAULT_TOTAL_PLAN.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
-                        binding?.recyclerView?.gone()
-                        binding?.textEmptyPlans?.visible()
-                        binding?.buttonNext?.disabled()
-                    } else {
-                        adapterPlan.updateList(it.plans)
-                        binding?.textTotalIncome?.text = it.plans.sumOf { it.budgetAmount }
-                            .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+                    val plans = it.plans?.filter { budgetPlan ->
+                        budgetPlan.budgetPlanType == it.budgetPlanType
+                    }
 
-                        binding?.recyclerView?.visible()
-                        binding?.textEmptyPlans?.gone()
-                        binding?.buttonNext?.enabled()
+                    when (it.budgetPlanType) {
+                        is BudgetPlanType.Income -> {
+                            binding?.textTotalIncome?.gone()
+                            if (plans.isNullOrEmpty()) {
+                                binding?.textTotalPlan?.text =
+                                    DEFAULT_TOTAL_PLAN.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+
+                                binding?.recyclerView?.gone()
+                                binding?.textEmptyPlans?.visible()
+                                binding?.buttonNext?.disabled()
+                            } else {
+                                adapterPlan.updateList(plans)
+                                binding?.textTotalPlan?.text = plans
+                                    .filter { budgetPlan -> budgetPlan.budgetPlanType == it.budgetPlanType }
+                                    .sumOf { budgetPlan -> budgetPlan.budgetAmount }
+                                    .convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+
+                                binding?.recyclerView?.visible()
+                                binding?.textEmptyPlans?.gone()
+                                binding?.buttonNext?.enabled()
+                            }
+                        }
+                        is BudgetPlanType.Expense -> {
+                            binding?.textTotalIncome?.visible()
+                            val totalIncome = it.plans
+                                ?.filter { budgetPlan ->
+                                    budgetPlan.budgetPlanType == BudgetPlanType.Income
+                                }
+                                ?.sumOf { budgetPlan ->
+                                    budgetPlan.budgetAmount
+                                }
+
+                            if (plans.isNullOrEmpty()) {
+                                binding?.textTotalPlan?.text =
+                                    DEFAULT_TOTAL_PLAN.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+
+
+                                binding?.textTotalIncome?.text = getString(
+                                    R.string.budget_form_plan_expense_remaining,
+                                    totalIncome
+                                )
+
+                                binding?.recyclerView?.gone()
+                                binding?.textEmptyPlans?.visible()
+                                binding?.buttonNext?.disabled()
+                            } else {
+                                adapterPlan.updateList(plans)
+                                val totalExpense = plans
+                                    .filter { budgetPlan -> budgetPlan.budgetPlanType == it.budgetPlanType }
+                                    .sumOf { budgetPlan -> budgetPlan.budgetAmount }
+
+                                binding?.textTotalPlan?.text =
+                                    totalExpense.convertPriceWithCurrencyFormat(
+                                        storage.getSymbolCurrency()
+                                    )
+
+                                binding?.textTotalIncome?.text =
+                                    if (totalExpense <= totalIncome ?: 0.0) {
+                                        getString(
+                                            R.string.budget_form_plan_expense_remaining,
+                                            totalIncome
+                                        )
+                                    } else {
+                                        val amountOver = totalExpense.minus(totalIncome ?: 0.0)
+                                        getString(
+                                            R.string.budget_form_plan_expense_over,
+                                            amountOver
+                                        )
+                                    }
+
+                                binding?.recyclerView?.visible()
+                                binding?.textEmptyPlans?.gone()
+                                binding?.buttonNext?.enabled()
+                            }
+                        }
                     }
                 }
                 is BudgetFormPlanViewState.AddBudgetPlan -> {

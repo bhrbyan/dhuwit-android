@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        app:layout_constraintBottom_toTopOf="@+id/text_total_income"
+        app:layout_constraintBottom_toTopOf="@+id/text_total_plan"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,35 +36,57 @@
         android:text="@string/budget_form_plan_empty"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/text_total_income"
+        app:layout_constraintBottom_toTopOf="@+id/text_total_plan"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_total_income_caption"
+        android:id="@+id/text_total_plan_caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         android:text="@string/budget_form_plan_total"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_next"
-        app:layout_constraintEnd_toStartOf="@+id/text_total_income"
         app:layout_constraintStart_toStartOf="@id/guideline_start" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_total_plan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+        android:gravity="end"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/text_total_income"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/text_total_plan_caption"
+        tools:text="Rp200.000" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_total_income"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
         android:gravity="end"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toEndOf="@+id/text_total_income_caption"
-        tools:text="Rp200.000" />
+        app:layout_constraintStart_toEndOf="@+id/text_total_plan_caption"
+        tools:text="There's still IDR 20,000,000 left for expenses"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="text_total_plan_caption" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_next"
@@ -83,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_large"
-        app:layout_constraintBottom_toTopOf="@+id/text_total_income"
+        app:layout_constraintBottom_toTopOf="@+id/text_total_plan"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:srcCompat="@drawable/ic_add" />
 

@@ -57,7 +57,7 @@ class BudgetViewModel @Inject constructor(
     }
 
     private suspend fun getBudgetPlan(budgets: List<Budget>?) {
-        when (val result = budgetRepository.getBudgetPlans(budget?.id, BudgetPlanType.Income)) {
+        when (val result = budgetRepository.getBudgetPlans(budget?.id)) {
             is State.Success -> {
                 val budgetPlanIncomes =
                     result.data?.filter { it.budgetPlanType is BudgetPlanType.Income }

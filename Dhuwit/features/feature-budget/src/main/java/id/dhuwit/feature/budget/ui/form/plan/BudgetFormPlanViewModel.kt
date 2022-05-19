@@ -54,10 +54,10 @@ class BudgetFormPlanViewModel @Inject constructor(
 
     fun getLatestBudgetPlans() {
         viewModelScope.launch {
-            when (val result = budgetRepository.getBudgetPlans(budget?.id, budgetPlanType)) {
+            when (val result = budgetRepository.getBudgetPlans(budget?.id)) {
                 is State.Success -> {
                     updateViewState(
-                        BudgetFormPlanViewState.SetUpViewPlans(result.data)
+                        BudgetFormPlanViewState.SetUpViewPlans(result.data, budgetPlanType)
                     )
                 }
                 is State.Error -> {
