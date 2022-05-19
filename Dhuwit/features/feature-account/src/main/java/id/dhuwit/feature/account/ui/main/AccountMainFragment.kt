@@ -36,4 +36,16 @@ class AccountMainFragment : BaseFragment() {
         super.onDestroyView()
         binding = null
     }
+
+    companion object {
+        private const val KEY_ACCOUNT_ID: String = "account_id"
+
+        fun newInstance(id: Long): AccountMainFragment {
+            return AccountMainFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(KEY_ACCOUNT_ID, id)
+                }
+            }
+        }
+    }
 }
