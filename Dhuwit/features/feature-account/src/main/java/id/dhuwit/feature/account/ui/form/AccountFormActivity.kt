@@ -8,23 +8,23 @@ import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.*
 import id.dhuwit.feature.account.R
-import id.dhuwit.feature.account.databinding.AccountActivityBinding
+import id.dhuwit.feature.account.databinding.AccountFormActivityBinding
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountActivity : BaseActivity() {
+class AccountFormActivity : BaseActivity() {
 
-    private val viewModel: AccountViewModel by viewModels()
+    private val viewModel: AccountFormViewModel by viewModels()
 
-    private lateinit var binding: AccountActivityBinding
+    private lateinit var binding: AccountFormActivityBinding
 
     @Inject
     lateinit var storage: Storage
 
     override fun init() {
-        binding = AccountActivityBinding.inflate(layoutInflater)
+        binding = AccountFormActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpToolbar()
@@ -73,15 +73,15 @@ class AccountActivity : BaseActivity() {
 
     override fun observer() {
         with(viewModel) {
-            viewState.observe(this@AccountActivity) {
+            viewState.observe(this@AccountFormActivity) {
                 when (it) {
-                    is AccountViewState.CreateAccount -> {
+                    is AccountFormViewState.CreateAccount -> {
                         setUpViewCreateAccount()
                     }
-                    is AccountViewState.GetAccount -> {
+                    is AccountFormViewState.GetAccount -> {
                         setUpViewUpdateAccount(it.account, it.accountsMoreThanOne)
                     }
-                    is AccountViewState.Success -> {
+                    is AccountFormViewState.Success -> {
                         closePage()
                     }
                     is ViewState.Error -> {

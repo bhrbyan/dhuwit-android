@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
+class AccountFormViewModel @Inject constructor(
     private val accountRepository: AccountDataSource,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -30,7 +30,7 @@ class AccountViewModel @Inject constructor(
         if (accountId != DEFAULT_ACCOUNT_ID) {
             getAccount(accountId)
         } else {
-            updateViewState(AccountViewState.CreateAccount)
+            updateViewState(AccountFormViewState.CreateAccount)
         }
     }
 
@@ -41,7 +41,12 @@ class AccountViewModel @Inject constructor(
                     result.data?.let { accounts ->
                         account = accounts.find { it.id == id }
                         val accountsMoreThanOne = accounts.size > 1
-                        updateViewState(AccountViewState.GetAccount(account, accountsMoreThanOne))
+                        updateViewState(
+                            AccountFormViewState.GetAccount(
+                                account,
+                                accountsMoreThanOne
+                            )
+                        )
                     }
                 }
                 is State.Error -> {
@@ -55,7 +60,7 @@ class AccountViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = accountRepository.createAccount(Account(name, balance, isPrimary))) {
                 is State.Success -> {
-                    updateViewState(AccountViewState.Success)
+                    updateViewState(AccountFormViewState.Success)
                 }
                 is State.Error -> {
                     updateViewState(ViewState.Error(result.message))
@@ -69,7 +74,7 @@ class AccountViewModel @Inject constructor(
             when (val result =
                 accountRepository.updateAccount(Account(name, balance, isPrimary, account?.id))) {
                 is State.Success -> {
-                    updateViewState(AccountViewState.Success)
+                    updateViewState(AccountFormViewState.Success)
                 }
                 is State.Error -> {
                     updateViewState(ViewState.Error(result.message))
@@ -82,7 +87,7 @@ class AccountViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = accountRepository.deleteAccount(account?.id)) {
                 is State.Success -> {
-                    updateViewState(AccountViewState.Success)
+                    updateViewState(AccountFormViewState.Success)
                 }
                 is State.Error -> {
                     updateViewState(ViewState.Error(result.message))

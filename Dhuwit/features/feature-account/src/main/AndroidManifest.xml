@@ -4,7 +4,7 @@
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
         <activity
-            android:name=".ui.form.AccountActivity"
+            android:name=".ui.form.AccountFormActivity"
             android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".ui.selection.AccountSelectionActivity" />

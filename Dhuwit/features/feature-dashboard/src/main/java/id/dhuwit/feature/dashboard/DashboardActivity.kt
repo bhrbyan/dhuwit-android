@@ -231,7 +231,7 @@ class DashboardActivity : BaseActivity(), DashboardTransactionItemListener, Acco
     }
 
     private fun openAccountPage(accountId: Long?) {
-        accountResult.launch(accountRouter.openAccountPage(this, accountId))
+        accountResult.launch(accountRouter.openAccountFormPage(this, accountId))
     }
 
     private fun showError(message: String) {
