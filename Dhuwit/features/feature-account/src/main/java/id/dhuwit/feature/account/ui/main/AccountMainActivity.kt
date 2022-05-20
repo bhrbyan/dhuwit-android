@@ -1,14 +1,10 @@
 package id.dhuwit.feature.account.ui.main
 
-import android.content.Context
-import android.graphics.Rect
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +19,7 @@ import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.EmptyStateBinding
 import id.dhuwit.uikit.databinding.ToolbarBinding
+import id.dhuwit.uikit.divider.DividerMarginItemDecorationViewPager
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -121,6 +118,7 @@ class AccountMainActivity : BaseActivity() {
             adapter = viewPagerAdapter
 
             offscreenPageLimit = 1
+
             // Add a PageTransformer that translates the next and previous items horizontally
             // towards the center of the screen, which makes them visible
             val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_item_visible)
@@ -129,8 +127,10 @@ class AccountMainActivity : BaseActivity() {
             val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
             val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
                 page.translationX = -pageTranslationX * position
+
                 // Next line scales the item's height. You can remove it if you don't want this effect
-//                page.scaleY = 1 - (0.25f * abs(position))
+                // page.scaleY = 1 - (0.25f * abs(position))
+
                 // If you want a fading effect uncomment the next line:
                 // page.alpha = 0.25f + (1 - abs(position))
             }
@@ -138,7 +138,7 @@ class AccountMainActivity : BaseActivity() {
 
             // The ItemDecoration gives the current (centered) item horizontal margin so that
             // it doesn't occupy the whole screen width. Without it the items overlap
-            val itemDecoration = HorizontalMarginItemDecoration(
+            val itemDecoration = DividerMarginItemDecorationViewPager(
                 context,
                 R.dimen.view_pager_current_item_horizontal_margin
             )
@@ -185,19 +185,4 @@ class AccountMainActivity : BaseActivity() {
         super.onDestroy()
         binding.viewPager.unregisterOnPageChangeCallback(viewPagerCallback)
     }
-}
-
-class HorizontalMarginItemDecoration(context: Context, @DimenRes horizontalMarginInDp: Int) :
-    RecyclerView.ItemDecoration() {
-
-    private val horizontalMarginInPx: Int =
-        context.resources.getDimension(horizontalMarginInDp).toInt()
-
-    override fun getItemOffsets(
-        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
-    ) {
-        outRect.right = horizontalMarginInPx
-        outRect.left = horizontalMarginInPx
-    }
-
 }
