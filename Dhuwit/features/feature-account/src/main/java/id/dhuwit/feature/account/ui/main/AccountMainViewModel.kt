@@ -26,7 +26,7 @@ class AccountMainViewModel @Inject constructor(private val accountRepository: Ac
         getAccounts()
     }
 
-    private fun getAccounts() {
+    fun getAccounts() {
         viewModelScope.launch {
             when (val result = accountRepository.getAccounts()) {
                 is State.Success -> {

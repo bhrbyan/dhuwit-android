@@ -1,5 +1,6 @@
 package id.dhuwit.feature.account.ui.main
 
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -12,10 +13,12 @@ import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
+import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
 import id.dhuwit.state.ViewState
 import id.dhuwit.uikit.databinding.EmptyStateBinding
 import id.dhuwit.uikit.databinding.ToolbarBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountMainActivity : BaseActivity() {
@@ -27,6 +30,16 @@ class AccountMainActivity : BaseActivity() {
     private lateinit var viewPagerAdapter: AccountMainAdapter
 
     private val viewModel: AccountMainViewModel by viewModels()
+
+    @Inject
+    lateinit var accountRouter: AccountRouter
+
+    private val createAccountResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.getAccounts()
+            }
+        }
 
     override fun init() {
         binding = AccountMainActivityBinding.inflate(layoutInflater)
@@ -46,6 +59,13 @@ class AccountMainActivity : BaseActivity() {
             }
         }
         binding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
+
+        bindingToolbar.imageActionRight.setOnClickListener {
+            // Set account to null for create new account
+            createAccountResult.launch(
+                accountRouter.openAccountFormPage(this, null)
+            )
+        }
     }
 
     override fun observer() {
