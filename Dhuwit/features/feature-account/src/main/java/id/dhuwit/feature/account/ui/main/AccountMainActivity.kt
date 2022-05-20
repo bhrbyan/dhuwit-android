@@ -1,13 +1,17 @@
 package id.dhuwit.feature.account.ui.main
 
+import android.content.Context
+import android.graphics.Rect
+import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
@@ -16,6 +20,7 @@ import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
 import id.dhuwit.state.ViewState
+import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.EmptyStateBinding
 import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
@@ -30,6 +35,9 @@ class AccountMainActivity : BaseActivity() {
     private lateinit var viewPagerAdapter: AccountMainAdapter
 
     private val viewModel: AccountMainViewModel by viewModels()
+
+    @Inject
+    lateinit var storage: Storage
 
     @Inject
     lateinit var accountRouter: AccountRouter
@@ -56,6 +64,7 @@ class AccountMainActivity : BaseActivity() {
         viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 // get data
+                Log.d("WEHOFIJEWOF", "$position")
             }
         }
         binding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
@@ -76,8 +85,7 @@ class AccountMainActivity : BaseActivity() {
                         showEmptyState()
                     } else {
                         hideEmptyState()
-                        setTabLayoutName(viewState.accounts)
-                        viewPagerAdapter.updateAccounts(viewState.accounts)
+                        viewPagerAdapter.submitList(viewState.accounts)
                     }
                 }
                 is ViewState.Error -> showError()
@@ -108,14 +116,34 @@ class AccountMainActivity : BaseActivity() {
     }
 
     private fun setUpViewPagerAdapter() {
-        viewPagerAdapter = AccountMainAdapter(this)
-        binding.viewPager.adapter = viewPagerAdapter
-    }
+        viewPagerAdapter = AccountMainAdapter(storage)
+        binding.viewPager.apply {
+            adapter = viewPagerAdapter
 
-    private fun setTabLayoutName(accounts: List<Account>) {
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = accounts[position].name
-        }.attach()
+            offscreenPageLimit = 1
+            // Add a PageTransformer that translates the next and previous items horizontally
+            // towards the center of the screen, which makes them visible
+            val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_item_visible)
+            val currentItemHorizontalMarginPx =
+                resources.getDimension(R.dimen.view_pager_current_item_horizontal_margin)
+            val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+            val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+                page.translationX = -pageTranslationX * position
+                // Next line scales the item's height. You can remove it if you don't want this effect
+//                page.scaleY = 1 - (0.25f * abs(position))
+                // If you want a fading effect uncomment the next line:
+                // page.alpha = 0.25f + (1 - abs(position))
+            }
+            setPageTransformer(pageTransformer)
+
+            // The ItemDecoration gives the current (centered) item horizontal margin so that
+            // it doesn't occupy the whole screen width. Without it the items overlap
+            val itemDecoration = HorizontalMarginItemDecoration(
+                context,
+                R.dimen.view_pager_current_item_horizontal_margin
+            )
+            addItemDecoration(itemDecoration)
+        }
     }
 
     private fun setUpEmptyState() {
@@ -157,4 +185,19 @@ class AccountMainActivity : BaseActivity() {
         super.onDestroy()
         binding.viewPager.unregisterOnPageChangeCallback(viewPagerCallback)
     }
+}
+
+class HorizontalMarginItemDecoration(context: Context, @DimenRes horizontalMarginInDp: Int) :
+    RecyclerView.ItemDecoration() {
+
+    private val horizontalMarginInPx: Int =
+        context.resources.getDimension(horizontalMarginInDp).toInt()
+
+    override fun getItemOffsets(
+        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+    ) {
+        outRect.right = horizontalMarginInPx
+        outRect.left = horizontalMarginInPx
+    }
+
 }

@@ -1,28 +1,35 @@
 package id.dhuwit.feature.account.ui.main.adapter
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.feature.account.ui.main.AccountMainFragment
+import id.dhuwit.feature.account.databinding.AccountMainItemBinding
+import id.dhuwit.storage.Storage
 
-class AccountMainAdapter(activity: AppCompatActivity) :
-    FragmentStateAdapter(activity) {
+class AccountMainAdapter(private val storage: Storage) :
+    ListAdapter<Account, AccountMainViewHolder>(object : DiffUtil.ItemCallback<Account>() {
+        override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
+            return oldItem == newItem
+        }
 
-    private var accounts: List<Account> = emptyList()
+        override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }) {
 
-    fun updateAccounts(accounts: List<Account>) {
-        this.accounts = accounts
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return accounts.size
-    }
-
-    override fun createFragment(position: Int): Fragment {
-        return AccountMainFragment.newInstance(
-            accounts[position].id ?: 0
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountMainViewHolder {
+        return AccountMainViewHolder(
+            AccountMainItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
+    }
+
+    override fun onBindViewHolder(holder: AccountMainViewHolder, position: Int) {
+        holder.onBind(getItem(position), storage)
     }
 }

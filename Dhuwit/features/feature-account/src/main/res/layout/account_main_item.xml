@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_account"
+        style="@style/Uikit.Style.CardView.All"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/uikit_margin_padding_size_xxsmall"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="false"
+            android:focusable="true"
+            android:padding="@dimen/uikit_margin_padding_size_medium">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_primary_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/text_account_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                app:layout_constraintBottom_toTopOf="@+id/text_account_balance"
+                app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
+                app:layout_constraintStart_toEndOf="@+id/image_primary_account"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Account Name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_balance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                android:maxLines="1"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="24sp"
+                app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_account_name"
+                tools:text="Rp1.500.000" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
