@@ -7,4 +7,6 @@ sealed class AccountMainViewState : ViewState.Feature() {
 
     data class GetAccounts(val accounts: List<Account>?) : AccountMainViewState()
 
+    data class UpdateAccount(val accoundId: Long?) : AccountMainViewState()
+
 }

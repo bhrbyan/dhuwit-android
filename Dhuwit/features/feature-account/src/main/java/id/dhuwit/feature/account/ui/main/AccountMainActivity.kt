@@ -1,6 +1,5 @@
 package id.dhuwit.feature.account.ui.main
 
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -60,17 +59,18 @@ class AccountMainActivity : BaseActivity() {
     override fun listener() {
         viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                // get data
-                Log.d("WEHOFIJEWOF", "$position")
+                viewModel.getDetailSelectedAccount(position)
             }
         }
         binding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
 
         bindingToolbar.imageActionRight.setOnClickListener {
-            // Set account to null for create new account
-            createAccountResult.launch(
-                accountRouter.openAccountFormPage(this, null)
-            )
+            // Set account id to null for create new account
+            openAccountFormPage(null)
+        }
+
+        bindingToolbar.imageActionLeft.setOnClickListener {
+            viewModel.onClickUpdateAccount()
         }
     }
 
@@ -84,6 +84,9 @@ class AccountMainActivity : BaseActivity() {
                         hideEmptyState()
                         viewPagerAdapter.submitList(viewState.accounts)
                     }
+                }
+                is AccountMainViewState.UpdateAccount -> {
+                    openAccountFormPage(viewState.accoundId)
                 }
                 is ViewState.Error -> showError()
             }
@@ -171,6 +174,12 @@ class AccountMainActivity : BaseActivity() {
             textTitle.gone()
             textDescription.gone()
         }
+    }
+
+    private fun openAccountFormPage(accountId: Long?) {
+        createAccountResult.launch(
+            accountRouter.openAccountFormPage(this, accountId)
+        )
     }
 
     private fun showError() {
