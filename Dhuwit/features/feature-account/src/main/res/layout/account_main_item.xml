@@ -25,7 +25,7 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="false"
             android:focusable="true"
-            android:padding="@dimen/uikit_margin_padding_size_medium">
+            android:padding="@dimen/uikit_margin_padding_size_small">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image_primary_account"
@@ -33,33 +33,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/text_account_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_star"
                 tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_account_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                app:layout_constraintBottom_toTopOf="@+id/text_account_balance"
-                app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
-                app:layout_constraintStart_toEndOf="@+id/image_primary_account"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="Account Name" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_account_balance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-                android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+                android:gravity="center"
                 android:maxLines="1"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
                 android:textStyle="bold"
@@ -67,20 +50,27 @@
                 app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
                 app:autoSizeStepGranularity="2sp"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/image_arrow_right"
+                app:layout_constraintBottom_toTopOf="@+id/text_account_name"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_account_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Rp1.500.000" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image_arrow_right"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_right" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_account_balance"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Account Name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
