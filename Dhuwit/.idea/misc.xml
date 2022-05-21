@@ -50,6 +50,8 @@
         <entry key="uikit/src/main/res/drawable/background_gradient_primary_account.xml" value="0.2265" />
         <entry key="uikit/src/main/res/drawable/background_launcher_screen.xml" value="0.3453333333333333" />
         <entry key="uikit/src/main/res/drawable/ic_add_account.xml" value="0.2665" />
+        <entry key="uikit/src/main/res/drawable/ic_chart_down_red.xml" value="0.2265" />
+        <entry key="uikit/src/main/res/drawable/ic_chart_up_green.xml" value="0.2265" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />

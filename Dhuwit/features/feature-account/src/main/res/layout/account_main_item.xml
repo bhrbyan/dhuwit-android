@@ -9,7 +9,7 @@
         android:id="@+id/card_account"
         style="@style/Uikit.Style.CardView.All"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/uikit_margin_padding_size_xxsmall"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,13 +25,13 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="false"
             android:focusable="true"
-            android:paddingHorizontal="@dimen/uikit_margin_padding_size_large"
-            android:paddingVertical="@dimen/uikit_margin_padding_size_small">
+            android:padding="@dimen/uikit_margin_padding_size_large">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_account_balance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:maxLines="1"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
                 android:textStyle="bold"
@@ -50,6 +50,7 @@
                 android:id="@+id/text_account_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"

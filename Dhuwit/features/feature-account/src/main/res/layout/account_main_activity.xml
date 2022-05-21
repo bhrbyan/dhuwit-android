@@ -19,6 +19,146 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
         app:layout_constraintVertical_bias="0" />
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_income"
+        style="@style/Uikit.Style.CardView.All"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintEnd_toStartOf="@+id/card_expense"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_pager">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_income"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="false"
+            android:focusable="true"
+            android:paddingHorizontal="@dimen/uikit_margin_padding_size_large"
+            android:paddingVertical="@dimen/uikit_margin_padding_size_small">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_income_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                android:maxLines="1"
+                android:text="Rp1.500.000"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/text_income"
+                app:layout_constraintEnd_toStartOf="@+id/image_income"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_income"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                android:maxLines="1"
+                android:text="@string/account_main_income"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_income"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_income_amount"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_chart_up_green" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_expense"
+        style="@style/Uikit.Style.CardView.All"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
+        android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_income"
+        app:layout_constraintTop_toBottomOf="@+id/view_pager">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_expense"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="false"
+            android:focusable="true"
+            android:paddingHorizontal="@dimen/uikit_margin_padding_size_large"
+            android:paddingVertical="@dimen/uikit_margin_padding_size_small">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_expense_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                android:maxLines="1"
+                android:text="Rp1.500.000"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/text_expense"
+                app:layout_constraintEnd_toStartOf="@+id/image_expense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_expense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
+                android:maxLines="1"
+                android:text="@string/account_main_income"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_expense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_expense_amount"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_chart_down_red" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <include
         android:id="@+id/layout_empty_state"
         layout="@layout/empty_state"
