@@ -2,6 +2,7 @@ package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.account.database.AccountDao
 import id.dhuwit.core.transaction.database.TransactionDao
+import id.dhuwit.core.transaction.model.GetTransactionType
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.state.State
@@ -15,10 +16,17 @@ class TransactionLocalDataSource @Inject constructor(
     private val accountDao: AccountDao,
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(): State<List<Transaction>> {
+    override suspend fun getTransactions(getTransactionType: GetTransactionType): State<List<Transaction>> {
         return withContext(Dispatchers.IO) {
             try {
-                val transactions = transactionDao.getTransactions().map { it.toModel() }
+                val transactions = when (getTransactionType) {
+                    is GetTransactionType.None -> transactionDao.getTransactions()
+                    is GetTransactionType.ByAccountId -> transactionDao.getTransactionsByAccountId(
+                        getTransactionType.accountId
+                    )
+                }.map {
+                    it.toModel()
+                }
 
                 State.Success(transactions)
             } catch (e: Exception) {
@@ -26,6 +34,7 @@ class TransactionLocalDataSource @Inject constructor(
             }
         }
     }
+
 
     override suspend fun getTransaction(id: Long): State<Transaction> {
         return withContext(Dispatchers.IO) {

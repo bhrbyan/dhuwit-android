@@ -1,5 +1,6 @@
 package id.dhuwit.core.transaction.repository
 
+import id.dhuwit.core.transaction.model.GetTransactionType
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.state.State
 import javax.inject.Inject
@@ -8,8 +9,8 @@ class TransactionRepository @Inject constructor(
     private val local: TransactionDataSource
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(): State<List<Transaction>> {
-        return local.getTransactions()
+    override suspend fun getTransactions(getTransactionType: GetTransactionType): State<List<Transaction>> {
+        return local.getTransactions(getTransactionType)
     }
 
     override suspend fun getTransaction(id: Long): State<Transaction> {

@@ -7,13 +7,18 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
+import id.dhuwit.core.transaction.model.GetTransactionType
+import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountMainViewModel @Inject constructor(private val accountRepository: AccountDataSource) :
+class AccountMainViewModel @Inject constructor(
+    private val accountRepository: AccountDataSource,
+    private val transactionRepository: TransactionDataSource
+) :
     ViewModel() {
 
     private val _viewState = MutableLiveData<ViewState>()
@@ -56,7 +61,23 @@ class AccountMainViewModel @Inject constructor(private val accountRepository: Ac
 
     fun getDetailSelectedAccount(position: Int) {
         setSelectedAccountPosition(position)
-        // Do something
+        val accountId = accounts?.get(selectedAccountPosition)?.id
+        getTransactions(accountId)
+    }
+
+    private fun getTransactions(accountId: Long?) {
+        viewModelScope.launch {
+            when (val result =
+                transactionRepository.getTransactions(GetTransactionType.ByAccountId(accountId))
+            ) {
+                is State.Success -> {}
+                is State.Error -> {
+                    updateViewState(
+                        ViewState.Error(result.message)
+                    )
+                }
+            }
+        }
     }
 
     fun onClickUpdateAccount() {

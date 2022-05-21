@@ -39,6 +39,7 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":cores:core-account")
+    implementation project(":cores:core-transaction")
     implementation project(":state")
     implementation project(":storage")
     implementation project(":uikit")

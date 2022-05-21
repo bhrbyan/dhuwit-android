@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient_minor">
@@ -48,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:maxLines="1"
-                android:text="Rp1.500.000"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="16sp"
@@ -59,7 +59,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/image_income"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Rp1.500.000" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_income"
@@ -118,7 +119,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:maxLines="1"
-                android:text="Rp1.500.000"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="16sp"
@@ -129,7 +129,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/image_expense"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Rp1.500.000" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_expense"
