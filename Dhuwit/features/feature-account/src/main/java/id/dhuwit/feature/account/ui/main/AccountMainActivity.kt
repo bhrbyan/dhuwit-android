@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.account.R
@@ -54,6 +55,8 @@ class AccountMainActivity : BaseActivity() {
         setUpToolbar()
         setUpViewPagerAdapter()
         setUpEmptyState()
+
+        viewModel.setDefaultPeriodDate()
     }
 
     override fun listener() {
@@ -72,11 +75,22 @@ class AccountMainActivity : BaseActivity() {
         bindingToolbar.imageActionLeft.setOnClickListener {
             viewModel.onClickUpdateAccount()
         }
+
+        binding.imageNext.setOnClickListener {
+            viewModel.onNextPeriodDate()
+        }
+
+        binding.imagePrevious.setOnClickListener {
+            viewModel.onPreviousPeriodDate()
+        }
     }
 
     override fun observer() {
         viewModel.viewState.observe(this) { viewState ->
             when (viewState) {
+                is AccountMainViewState.SetPeriodDate -> {
+                    binding.textPeriodDate.text = viewState.periodDate
+                }
                 is AccountMainViewState.GetAccounts -> {
                     if (viewState.accounts.isNullOrEmpty()) {
                         showEmptyState()
@@ -87,6 +101,12 @@ class AccountMainActivity : BaseActivity() {
                 }
                 is AccountMainViewState.UpdateAccount -> {
                     openAccountFormPage(viewState.accoundId)
+                }
+                is AccountMainViewState.GetTransactions -> {
+                    binding.textIncomeAmount.text =
+                        viewState.incomeAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+                    binding.textExpenseAmount.text =
+                        viewState.expenseAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
                 }
                 is ViewState.Error -> showError()
             }

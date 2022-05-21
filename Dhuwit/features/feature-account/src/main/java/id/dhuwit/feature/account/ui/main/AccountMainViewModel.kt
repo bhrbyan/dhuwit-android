@@ -7,7 +7,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
+import id.dhuwit.core.helper.DateHelper
+import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.GetTransactionType
+import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
@@ -18,14 +22,16 @@ import javax.inject.Inject
 class AccountMainViewModel @Inject constructor(
     private val accountRepository: AccountDataSource,
     private val transactionRepository: TransactionDataSource
-) :
-    ViewModel() {
+) : ViewModel() {
+
+    private var periodMonth: Int = CURRENT_MONTH
+    private var periodDate: String? = ""
 
     private val _viewState = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _viewState
 
     private var accounts: List<Account>? = null
-    private var selectedAccountPosition: Int = -1
+    private var account: Account? = null
 
     init {
         getAccounts()
@@ -55,22 +61,34 @@ class AccountMainViewModel @Inject constructor(
         }
     }
 
-    private fun setSelectedAccountPosition(position: Int) {
-        selectedAccountPosition = position
+    private fun setSelectedAccount(position: Int) {
+        account = accounts?.get(position)
     }
 
     fun getDetailSelectedAccount(position: Int) {
-        setSelectedAccountPosition(position)
-        val accountId = accounts?.get(selectedAccountPosition)?.id
-        getTransactions(accountId)
+        setSelectedAccount(position)
+        getTransactions()
     }
 
-    private fun getTransactions(accountId: Long?) {
+    private fun getTransactions() {
         viewModelScope.launch {
             when (val result =
-                transactionRepository.getTransactions(GetTransactionType.ByAccountId(accountId))
+                transactionRepository.getTransactions(GetTransactionType.ByAccountId(account?.id))
             ) {
-                is State.Success -> {}
+                is State.Success -> {
+                    val transactions = result.data
+                        ?.filter { isTransactionWithinPeriodDate(it) }
+                        ?.sortedByDescending { it.date }
+
+                    val incomeAmount = getTransactionAmount(transactions, TransactionType.Income)
+                    val expenseAmount = getTransactionAmount(transactions, TransactionType.Expense)
+
+                    updateViewState(
+                        AccountMainViewState.GetTransactions(
+                            incomeAmount, expenseAmount
+                        )
+                    )
+                }
                 is State.Error -> {
                     updateViewState(
                         ViewState.Error(result.message)
@@ -83,9 +101,54 @@ class AccountMainViewModel @Inject constructor(
     fun onClickUpdateAccount() {
         updateViewState(
             AccountMainViewState.UpdateAccount(
-                accounts?.get(selectedAccountPosition)?.id
+                account?.id
             )
         )
+    }
+
+    fun setDefaultPeriodDate() {
+        setPeriodDate(periodMonth)
+    }
+
+    fun onNextPeriodDate() {
+        setPeriodDate(++periodMonth)
+        getTransactions()
+    }
+
+    fun onPreviousPeriodDate() {
+        setPeriodDate(--periodMonth)
+        getTransactions()
+    }
+
+    private fun setPeriodDate(periodMonth: Int) {
+        periodDate = DateHelper.getPeriodDate(periodMonth, DateHelper.PATTERN_DATE_PERIOD)
+        updateViewState(
+            AccountMainViewState.SetPeriodDate(periodDate)
+        )
+    }
+
+    private fun getTransactionAmount(
+        transactions: List<Transaction>?,
+        transactionType: TransactionType
+    ): Double? {
+        return when (transactionType) {
+            is TransactionType.Income -> transactions?.filter { it.type is TransactionType.Income }
+            is TransactionType.Expense -> transactions?.filter { it.type is TransactionType.Expense }
+        }?.sumOf { it.amount }
+    }
+
+    private fun isTransactionWithinPeriodDate(transaction: Transaction): Boolean {
+        return DateHelper.isTransactionDateWithinRangePeriodDate(
+            transactionDate = transaction.date.convertPattern(
+                DateHelper.PATTERN_DATE_DATABASE,
+                DateHelper.PATTERN_DATE_PERIOD
+            ),
+            periodDate = periodDate ?: ""
+        )
+    }
+
+    companion object {
+        private const val CURRENT_MONTH: Int = 0
     }
 
 }
