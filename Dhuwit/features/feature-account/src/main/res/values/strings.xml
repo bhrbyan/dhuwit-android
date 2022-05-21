@@ -4,6 +4,7 @@
     <string name="account_main_toolbar_title">Accounts</string>
     <string name="account_main_empty_state_title">Account not found</string>
     <string name="account_main_empty_state_description">You don\'t have an account yet, let\'s create one now!</string>
+    <string name="account_main_account_name">%1$s\'s Balance</string>
 
     <!-- Form -->
     <string name="account_form_update_toolbar_title">Update Account</string>
