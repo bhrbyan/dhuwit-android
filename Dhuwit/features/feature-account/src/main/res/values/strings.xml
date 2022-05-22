@@ -10,6 +10,7 @@
     <string name="account_main_transaction_header_total_amount_negative_format">-%1$s</string>
     <string name="account_main_transactions_item_expense">-%1$s</string>
     <string name="account_main_transactions_item_income">+%1$s</string>
+    <string name="account_main_transactions_title">Transactions</string>
 
     <!-- Form -->
     <string name="account_form_update_toolbar_title">Update Account</string>

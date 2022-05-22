@@ -182,70 +182,56 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_period_date"
-                    style="@style/Uikit.Style.CardView.All"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_transaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                    android:text="@string/account_main_transactions_title"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_period_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_period_date" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_period_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                    android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_xsmall"
+                    android:gravity="center"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_previous"
+                    app:layout_constraintEnd_toStartOf="@+id/image_previous"
+                    app:layout_constraintTop_toTopOf="@+id/image_previous"
+                    tools:text="December" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="@dimen/uikit_margin_padding_size_xsmall"
+                    app:layout_constraintEnd_toStartOf="@+id/image_next"
+                    app:layout_constraintTop_toBottomOf="@+id/card_expense"
+                    app:srcCompat="@drawable/ic_arrow_left" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                     android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
-                    app:cardElevation="@dimen/cardview_default_elevation"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="@dimen/uikit_margin_padding_size_xsmall"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_income">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_period_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="false"
-                        android:focusable="true"
-                        android:padding="@dimen/uikit_margin_padding_size_xsmall">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/text_period_date"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_xsmall"
-                            android:gravity="center"
-                            android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/image_next"
-                            app:layout_constraintStart_toEndOf="@+id/image_previous"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="December" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/image_previous"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="@dimen/uikit_margin_padding_size_xsmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_arrow_left" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/image_next"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="@dimen/uikit_margin_padding_size_xsmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_arrow_right" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+                    app:layout_constraintTop_toBottomOf="@+id/card_expense"
+                    app:srcCompat="@drawable/ic_arrow_right" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_transactions"
@@ -253,10 +239,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
                     android:paddingBottom="80dp"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_period_date" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_transaction" />
 
                 <include
                     android:id="@+id/layout_empty_state"
@@ -267,7 +252,7 @@
                     android:layout_marginTop="@dimen/uikit_margin_padding_size_xxlarge"
                     android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_period_date" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_transaction" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
