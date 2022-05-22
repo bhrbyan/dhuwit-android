@@ -33,10 +33,6 @@ class AccountMainViewModel @Inject constructor(
     private var accounts: List<Account>? = null
     private var account: Account? = null
 
-    init {
-        getAccounts()
-    }
-
     private fun updateViewState(viewState: ViewState) {
         _viewState.value = viewState
     }

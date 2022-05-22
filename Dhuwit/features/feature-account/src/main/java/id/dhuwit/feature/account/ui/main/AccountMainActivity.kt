@@ -75,6 +75,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
         setUpAdapterHeaderTransaction()
 
         viewModel.setDefaultPeriodDate()
+        viewModel.getAccounts()
     }
 
     override fun listener() {
