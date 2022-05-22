@@ -16,6 +16,8 @@ class OnBoardingAccountViewHolder(private val binding: OnBoardingAccountItemBind
 
         when (account.name) {
             context.getString(R.string.on_boarding_default_account_checking_title) -> {
+                binding.textDescription.text =
+                    context.getString(R.string.on_boarding_default_account_checking_description)
                 binding.layoutContent.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
@@ -31,6 +33,8 @@ class OnBoardingAccountViewHolder(private val binding: OnBoardingAccountItemBind
                 )
             }
             context.getString(R.string.on_boarding_default_account_credit_card_title) -> {
+                binding.textDescription.text =
+                    context.getString(R.string.on_boarding_default_account_credit_card_description)
                 binding.layoutContent.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
@@ -45,6 +49,8 @@ class OnBoardingAccountViewHolder(private val binding: OnBoardingAccountItemBind
                 )
             }
             context.getString(R.string.on_boarding_default_account_cash_title) -> {
+                binding.textDescription.text =
+                    context.getString(R.string.on_boarding_default_account_cash_description)
                 binding.layoutContent.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
@@ -59,6 +65,8 @@ class OnBoardingAccountViewHolder(private val binding: OnBoardingAccountItemBind
                 )
             }
             context.getString(R.string.on_boarding_default_account_other_title) -> {
+                binding.textDescription.text =
+                    context.getString(R.string.on_boarding_default_account_other_description)
                 binding.layoutContent.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
