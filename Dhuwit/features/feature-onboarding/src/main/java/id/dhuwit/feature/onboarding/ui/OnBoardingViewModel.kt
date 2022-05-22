@@ -1,4 +1,4 @@
-package id.dhuwit.feature.onboarding
+package id.dhuwit.feature.onboarding.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,9 +19,6 @@ class OnBoardingViewModel @Inject constructor(
     private val storage: Storage
 ) : ViewModel() {
 
-    private var name: String = ""
-    private var balance: Double = 0.0
-
     private var _viewState = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _viewState
 
@@ -29,26 +26,11 @@ class OnBoardingViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
-    fun setAccountName(name: String) {
-        this.name = name
-    }
-
-    fun setAccountBalance(balance: Double) {
-        this.balance = balance
-    }
-
-    fun checkInputField() {
-        updateViewState(
-            OnBoardingViewState.ValidationRequirement(
-                name.isEmpty() && balance == 0.0
-            )
-        )
-    }
-
-    fun createAccount() {
+    fun createAccount(account: Account) {
         viewModelScope.launch {
-            when (val result = accountRepository.createAccount(Account(name, balance, true))) {
+            when (val result = accountRepository.createAccount(account)) {
                 is State.Success -> {
+                    updateStatusFirstTimeUser()
                     updateViewState(OnBoardingViewState.SuccessCreateAccount)
                 }
                 is State.Error -> {
@@ -60,7 +42,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun updateStatusFirstTimeUser() {
+    private fun updateStatusFirstTimeUser() {
         storage.setFirstTimeUser(false)
     }
 

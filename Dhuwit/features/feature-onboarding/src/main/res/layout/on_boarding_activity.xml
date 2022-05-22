@@ -4,116 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/uikit_margin_padding_size_medium" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/uikit_margin_padding_size_medium" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
         android:text="@string/on_boarding_title"
-        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
+        android:textAppearance="@style/Uikit.Style.TextAppearance.Headline4"
+        android:textColor="@color/colorOnMajor"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
         android:text="@string/on_boarding_description"
         android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_account"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginTop="@dimen/uikit_margin_padding_size_medium"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        app:layout_constraintBottom_toTopOf="@+id/button_create"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/text_description">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_account_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/on_boarding_account_title"
-                android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_account_name"
-                style="@style/Uikit.Style.Input.Layout.Outline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
-                android:hint="@string/on_boarding_account_hint_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_account_title">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_text_account_name"
-                    style="@style/Uikit.Style.Input.Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_account_balance"
-                style="@style/Uikit.Style.Input.Layout.Outline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
-                android:hint="@string/on_boarding_account_hint_balance"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_account_name">
-
-                <me.abhinay.input.CurrencyEditText
-                    android:id="@+id/input_text_account_balance"
-                    style="@style/Uikit.Style.Input.Decimal"
-                    android:maxLength="13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_create"
-        style="@style/Uikit.Style.Button.Fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        android:text="@string/general_create"
+        android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/uikit_margin_padding_size_xsmall"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

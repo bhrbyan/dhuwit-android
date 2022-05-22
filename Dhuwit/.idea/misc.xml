@@ -39,8 +39,9 @@
         <entry key="features/feature-note/src/main/res/layout-sw600dp/note_activity.xml" value="0.37333333333333335" />
         <entry key="features/feature-note/src/main/res/layout/note_activity.xml" value="0.33155555555555555" />
         <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
-        <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
-        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.1531677825296113" />
+        <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.21" />
+        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_account_item.xml" value="0.2441214194100043" />
+        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.25" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
@@ -48,9 +49,14 @@
         <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />
         <entry key="uikit/src/main/res/drawable/background_border_primary_account.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/background_button_fill_disabled.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/background_button_fill_enable.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_divider.xml" value="0.2165" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_blue.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_gradient_minor.xml" value="0.2665" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_pink.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_gradient_primary_account.xml" value="0.2265" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_yellow.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_launcher_screen.xml" value="0.3453333333333333" />
         <entry key="uikit/src/main/res/drawable/ic_add_account.xml" value="0.2665" />
         <entry key="uikit/src/main/res/drawable/ic_chart_down_red.xml" value="0.2265" />
@@ -60,6 +66,8 @@
         <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/ic_setting_black.xml" value="0.2665" />
         <entry key="uikit/src/main/res/drawable/ic_star.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/ic_wallet.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/selector_button_fill.xml" value="0.2415" />
         <entry key="uikit/src/main/res/layout/empty_state.xml" value="0.3189397178281317" />
         <entry key="uikit/src/main/res/layout/layout_toolbar.xml" value="0.3189397178281317" />
         <entry key="uikit/src/main/res/layout/toolbar.xml" value="0.3189397178281317" />
