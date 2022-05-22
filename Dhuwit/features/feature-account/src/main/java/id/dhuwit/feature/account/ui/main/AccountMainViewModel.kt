@@ -65,12 +65,12 @@ class AccountMainViewModel @Inject constructor(
         account = accounts?.get(position)
     }
 
-    fun getDetailSelectedAccount(position: Int) {
+    fun getTransactionsSelectedAccount(position: Int) {
         setSelectedAccount(position)
         getTransactions()
     }
 
-    private fun getTransactions() {
+    fun getTransactions() {
         viewModelScope.launch {
             when (val result =
                 transactionRepository.getTransactions(TransactionGetType.ByAccountId(account?.id))

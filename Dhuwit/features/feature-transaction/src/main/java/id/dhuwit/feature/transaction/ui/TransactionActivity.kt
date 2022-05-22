@@ -17,8 +17,6 @@ import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.feature.account.AccountConstants.KEY_ACCOUNT_ID
-import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
@@ -47,9 +45,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     @Inject
     lateinit var noteRouter: NoteRouter
 
-    @Inject
-    lateinit var accountRouter: AccountRouter
-
     private val categoryResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -69,15 +64,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         }
     }
 
-    private val accountResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK && result.data != null) {
-            val accountId = result.data?.getLongExtra(KEY_ACCOUNT_ID, 1) ?: 1
-            viewModel.updateAccount(accountId)
-        }
-
-    }
+//    private val accountResult = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { result ->
+//        if (result.resultCode == RESULT_OK && result.data != null) {
+//            val accountId = result.data?.getLongExtra(KEY_ACCOUNT_ID, 1) ?: 1
+//            viewModel.updateAccount(accountId)
+//        }
+//
+//    }
 
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
@@ -375,9 +370,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun openAccountPage() {
-        accountResult.launch(
-            accountRouter.openAccountSelectionPage(this)
-        )
+//        accountResult.launch(
+//            accountRouter.openAccountSelectionPage(this)
+//        )
     }
 
     companion object {

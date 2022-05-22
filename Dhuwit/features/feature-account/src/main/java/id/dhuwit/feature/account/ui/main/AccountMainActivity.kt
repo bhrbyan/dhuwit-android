@@ -19,6 +19,7 @@ import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.header.AccountMainTransactionHeaderAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
+import id.dhuwit.feature.transaction.router.TransactionRouter
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.EmptyStateBinding
@@ -44,12 +45,23 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
     @Inject
     lateinit var accountRouter: AccountRouter
 
+    @Inject
+    lateinit var transactionRouter: TransactionRouter
+
     private val createAccountResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 viewModel.getAccounts()
             }
         }
+
+    private val addTransactionResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            viewModel.getTransactions()
+        }
+    }
 
     override fun init() {
         binding = AccountMainActivityBinding.inflate(layoutInflater)
@@ -68,7 +80,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
     override fun listener() {
         viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                viewModel.getDetailSelectedAccount(position)
+                viewModel.getTransactionsSelectedAccount(position)
             }
         }
         binding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
@@ -88,6 +100,10 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
 
         binding.imagePrevious.setOnClickListener {
             viewModel.onPreviousPeriodDate()
+        }
+
+        binding.buttonAddTransaction.setOnClickListener {
+            openTransactionPage(null)
         }
     }
 
@@ -188,7 +204,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
     }
 
     override fun onClickTransaction(transaction: Transaction?) {
-        // TODO: Do Something
+        openTransactionPage(transaction?.id)
     }
 
     private fun setUpEmptyState() {
@@ -217,6 +233,10 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
         createAccountResult.launch(
             accountRouter.openAccountFormPage(this, accountId)
         )
+    }
+
+    private fun openTransactionPage(transactionId: Long?) {
+        addTransactionResult.launch(transactionRouter.openTransactionPage(this, transactionId))
     }
 
     private fun showError() {

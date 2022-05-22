@@ -41,6 +41,7 @@ dependencies {
     implementation project(":cores:core-account")
     implementation project(":cores:core-transaction")
     implementation project(":cores:core-category")
+    implementation project(":features:feature-transaction")
     implementation project(":state")
     implementation project(":storage")
     implementation project(":uikit")
