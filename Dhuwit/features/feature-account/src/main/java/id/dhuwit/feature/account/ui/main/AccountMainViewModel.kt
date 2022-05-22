@@ -9,8 +9,8 @@ import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.convertPattern
-import id.dhuwit.core.transaction.model.GetTransactionType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.state.State
@@ -73,7 +73,7 @@ class AccountMainViewModel @Inject constructor(
     private fun getTransactions() {
         viewModelScope.launch {
             when (val result =
-                transactionRepository.getTransactions(GetTransactionType.ByAccountId(account?.id))
+                transactionRepository.getTransactions(TransactionGetType.ByAccountId(account?.id))
             ) {
                 is State.Success -> {
                     val transactions = result.data
@@ -85,7 +85,7 @@ class AccountMainViewModel @Inject constructor(
 
                     updateViewState(
                         AccountMainViewState.GetTransactions(
-                            incomeAmount, expenseAmount
+                            incomeAmount, expenseAmount, transactions
                         )
                     )
                 }

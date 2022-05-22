@@ -1,6 +1,7 @@
 package id.dhuwit.feature.account.ui.main
 
 import id.dhuwit.core.account.model.Account
+import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.state.ViewState
 
 sealed class AccountMainViewState : ViewState.Feature() {
@@ -11,7 +12,11 @@ sealed class AccountMainViewState : ViewState.Feature() {
 
     data class UpdateAccount(val accoundId: Long?) : AccountMainViewState()
 
-    data class GetTransactions(val incomeAmount: Double?, val expenseAmount: Double?) :
+    data class GetTransactions(
+        val incomeAmount: Double?,
+        val expenseAmount: Double?,
+        val transactions: List<Transaction>?
+    ) :
         AccountMainViewState()
 
 }

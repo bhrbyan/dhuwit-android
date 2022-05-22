@@ -4,6 +4,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,10 +12,13 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.extension.gone
 import id.dhuwit.core.extension.visible
+import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
+import id.dhuwit.feature.account.ui.main.adapter.transaction.header.AccountMainTransactionHeaderAdapter
+import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.EmptyStateBinding
@@ -23,13 +27,14 @@ import id.dhuwit.uikit.divider.DividerMarginItemDecorationViewPager
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountMainActivity : BaseActivity() {
+class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
 
     private lateinit var binding: AccountMainActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding
     private lateinit var bindingEmptyState: EmptyStateBinding
     private lateinit var viewPagerCallback: ViewPager2.OnPageChangeCallback
     private lateinit var viewPagerAdapter: AccountMainAdapter
+    private lateinit var adapterTransactionHeader: AccountMainTransactionHeaderAdapter
 
     private val viewModel: AccountMainViewModel by viewModels()
 
@@ -55,6 +60,7 @@ class AccountMainActivity : BaseActivity() {
         setUpToolbar()
         setUpViewPagerAdapter()
         setUpEmptyState()
+        setUpAdapterHeaderTransaction()
 
         viewModel.setDefaultPeriodDate()
     }
@@ -92,12 +98,7 @@ class AccountMainActivity : BaseActivity() {
                     binding.textPeriodDate.text = viewState.periodDate
                 }
                 is AccountMainViewState.GetAccounts -> {
-                    if (viewState.accounts.isNullOrEmpty()) {
-                        showEmptyState()
-                    } else {
-                        hideEmptyState()
-                        viewPagerAdapter.submitList(viewState.accounts)
-                    }
+                    viewPagerAdapter.submitList(viewState.accounts)
                 }
                 is AccountMainViewState.UpdateAccount -> {
                     openAccountFormPage(viewState.accoundId)
@@ -107,6 +108,13 @@ class AccountMainActivity : BaseActivity() {
                         viewState.incomeAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
                     binding.textExpenseAmount.text =
                         viewState.expenseAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+
+                    adapterTransactionHeader.updateList(viewState.transactions)
+                    if (viewState.transactions.isNullOrEmpty()) {
+                        showEmptyState()
+                    } else {
+                        hideEmptyState()
+                    }
                 }
                 is ViewState.Error -> showError()
             }
@@ -169,16 +177,25 @@ class AccountMainActivity : BaseActivity() {
         }
     }
 
+    private fun setUpAdapterHeaderTransaction() {
+        adapterTransactionHeader = AccountMainTransactionHeaderAdapter(storage).apply {
+            listener = this@AccountMainActivity
+        }
+        binding.recyclerViewTransactions.apply {
+            adapter = adapterTransactionHeader
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    override fun onClickTransaction(transaction: Transaction?) {
+        // TODO: Do Something
+    }
+
     private fun setUpEmptyState() {
         bindingEmptyState.apply {
-            textTitle.apply {
-                text = getString(R.string.account_main_empty_state_title)
-                setTextColor(ContextCompat.getColor(context, R.color.white))
-            }
-            textDescription.apply {
-                text = getString(R.string.account_main_empty_state_description)
-                setTextColor(ContextCompat.getColor(context, R.color.white))
-            }
+            textTitle.text = getString(R.string.account_main_empty_state_transactions_title)
+            textDescription.text =
+                getString(R.string.account_main_empty_state_transactions_description)
         }
     }
 

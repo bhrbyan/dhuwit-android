@@ -2,8 +2,8 @@ package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.account.database.AccountDao
 import id.dhuwit.core.transaction.database.TransactionDao
-import id.dhuwit.core.transaction.model.GetTransactionType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +16,13 @@ class TransactionLocalDataSource @Inject constructor(
     private val accountDao: AccountDao,
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(getTransactionType: GetTransactionType): State<List<Transaction>> {
+    override suspend fun getTransactions(transactionGetType: TransactionGetType): State<List<Transaction>> {
         return withContext(Dispatchers.IO) {
             try {
-                val transactions = when (getTransactionType) {
-                    is GetTransactionType.None -> transactionDao.getTransactions()
-                    is GetTransactionType.ByAccountId -> transactionDao.getTransactionsByAccountId(
-                        getTransactionType.accountId
+                val transactions = when (transactionGetType) {
+                    is TransactionGetType.None -> transactionDao.getTransactions()
+                    is TransactionGetType.ByAccountId -> transactionDao.getTransactionsByAccountId(
+                        transactionGetType.accountId
                     )
                 }.map {
                     it.toModel()

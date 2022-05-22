@@ -8,8 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_PERIOD
 import id.dhuwit.core.helper.DateHelper.convertPattern
-import id.dhuwit.core.transaction.model.GetTransactionType
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.transaction.model.TransactionGetType
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.dashboard.model.Dashboard
@@ -60,7 +60,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private suspend fun getTransactions(): State<List<Transaction>> =
-        transactionRepository.getTransactions(GetTransactionType.None)
+        transactionRepository.getTransactions(TransactionGetType.None)
 
     private fun setUpDetails(transactions: List<Transaction>?) {
         if (transactions != null) {

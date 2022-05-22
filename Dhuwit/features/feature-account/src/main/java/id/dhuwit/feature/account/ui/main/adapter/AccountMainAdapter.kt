@@ -11,11 +11,11 @@ import id.dhuwit.storage.Storage
 class AccountMainAdapter(private val storage: Storage) :
     ListAdapter<Account, AccountMainViewHolder>(object : DiffUtil.ItemCallback<Account>() {
         override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }) {
 
