@@ -10,7 +10,9 @@ import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.core.extension.*
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.extension.gone
+import id.dhuwit.core.extension.visible
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
@@ -28,12 +30,15 @@ import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListene
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
+import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener {
 
     private lateinit var binding: TransactionActivityBinding
+    private lateinit var bindingToolbar: ToolbarBinding
+
     private val viewModel: TransactionViewModel by viewModels()
 
     @Inject
@@ -76,6 +81,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
+        binding.layoutToolbar?.let { toolbar ->
+            bindingToolbar = toolbar
+        }
         setContentView(binding.root)
 
         showLoadingGetTransaction()
@@ -219,7 +227,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                     openCategoryPage(it.categoryType)
                 }
                 is TransactionViewState.SuccessSaveTransaction -> {
-                    hideLoadingSaveTransaction()
                     setResult(RESULT_OK)
                     finish()
                 }
@@ -316,13 +323,16 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun setUpToolbar(title: String) {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
+        bindingToolbar.apply {
+            textTitle.text = title
+            imageActionLeft.apply {
+                setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+                setOnClickListener {
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+                visible()
+            }
         }
     }
 
@@ -334,16 +344,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     private fun hideLoadingGetTransaction() {
         binding.progressBarGet.hide()
         binding.textAmount.visible()
-    }
-
-    private fun showLoadingSaveTransaction() {
-        binding.progressBarSave.show()
-        binding.buttonSave.disabled()
-    }
-
-    private fun hideLoadingSaveTransaction() {
-        binding.progressBarSave.hide()
-        binding.buttonSave.enabled()
     }
 
     private fun openCategoryPage(categoryType: CategoryType?) {
