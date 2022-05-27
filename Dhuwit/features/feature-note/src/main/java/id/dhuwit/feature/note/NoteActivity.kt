@@ -1,17 +1,22 @@
 package id.dhuwit.feature.note
 
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.note.NoteConstants.KEY_INPUT_NOTE
 import id.dhuwit.feature.note.NoteConstants.KEY_NOTE
 import id.dhuwit.feature.note.databinding.NoteActivityBinding
+import id.dhuwit.uikit.databinding.ToolbarBinding
 
 class NoteActivity : BaseActivity() {
 
     private lateinit var binding: NoteActivityBinding
+    private lateinit var bindingToolbar: ToolbarBinding
 
     override fun init() {
         binding = NoteActivityBinding.inflate(layoutInflater)
+        bindingToolbar = binding.layoutToolbar
         setContentView(binding.root)
 
         setUpToolbar()
@@ -36,14 +41,16 @@ class NoteActivity : BaseActivity() {
     }
 
     private fun setUpToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = getString(R.string.note_title)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        binding.toolbar.setNavigationOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+        bindingToolbar.apply {
+            textTitle.text = getString(R.string.note_title)
+            imageActionLeft.apply {
+                setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+                setOnClickListener {
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+                visible()
+            }
         }
     }
 
