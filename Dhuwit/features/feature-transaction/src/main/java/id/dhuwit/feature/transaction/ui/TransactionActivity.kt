@@ -368,6 +368,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            closeCalculator()
+        } else {
+            setResult(RESULT_CANCELED)
+            finish()
+        }
+    }
+
     companion object {
         private const val COUNT_TODAY: Int = 0
         private const val COUNT_TOMORROW: Int = 1
