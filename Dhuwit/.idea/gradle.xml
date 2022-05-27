@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/cores/core-transaction" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/feature-account" />
+            <option value="$PROJECT_DIR$/features/feature-calculator" />
             <option value="$PROJECT_DIR$/features/feature-category" />
             <option value="$PROJECT_DIR$/features/feature-dashboard" />
             <option value="$PROJECT_DIR$/features/feature-note" />

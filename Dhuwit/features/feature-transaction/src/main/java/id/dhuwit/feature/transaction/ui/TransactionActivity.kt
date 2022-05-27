@@ -2,7 +2,9 @@ package id.dhuwit.feature.transaction.ui
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,9 @@ import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.transaction.model.TransactionType
+import id.dhuwit.feature.calculator.databinding.CalculatorBottomSheetBinding
+import id.dhuwit.feature.calculator.router.CalculatorRouter
+import id.dhuwit.feature.calculator.ui.CalculatorListener
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
@@ -34,10 +39,13 @@ import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener {
+class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener,
+    CalculatorListener {
 
     private lateinit var binding: TransactionActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding
+    private lateinit var bindingCalculator: CalculatorBottomSheetBinding
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     private val viewModel: TransactionViewModel by viewModels()
 
@@ -49,6 +57,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     @Inject
     lateinit var noteRouter: NoteRouter
+
+    @Inject
+    lateinit var calculatorRouter: CalculatorRouter
 
     private val categoryResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -84,57 +95,17 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         binding.layoutToolbar?.let { toolbar ->
             bindingToolbar = toolbar
         }
+        binding.layoutCalculator?.let { calculator ->
+            bindingCalculator = calculator
+        }
         setContentView(binding.root)
 
         showLoadingGetTransaction()
+        setUpBottomSheet()
     }
 
     override fun listener() {
         with(binding) {
-            buttonZero.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_zero))
-            }
-
-            buttonOne.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_one))
-            }
-
-            buttonTwo.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_two))
-            }
-
-            buttonThree.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_three))
-            }
-
-            buttonFour.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_four))
-            }
-
-            buttonFive.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_five))
-            }
-
-            buttonSix.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_six))
-            }
-
-            buttonSeven.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_seven))
-            }
-
-            buttonEight.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_eight))
-            }
-
-            buttonNine.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_nine))
-            }
-
-            buttonClear.setOnClickListener {
-                viewModel.onClearCounter()
-            }
-
             layoutButtonToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->
                 if (isChecked) {
                     when (group.checkedButtonId) {
@@ -177,6 +148,10 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
             buttonAccount.setOnClickListener {
                 openAccountPage()
+            }
+
+            textAmount.setOnClickListener {
+                showCalculator()
             }
         }
     }
@@ -375,8 +350,41 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 //        )
     }
 
+    private fun setUpBottomSheet() {
+        bottomSheetBehavior =
+            BottomSheetBehavior.from(bindingCalculator.layoutBottomSheetRoot).apply {
+                isHideable = true
+            }
+
+        // Default State
+        showCalculator()
+
+        supportFragmentManager.beginTransaction()
+            .replace(bindingCalculator.frameLayout.id, calculatorRouter.getCalculatorFragment())
+            .commit()
+    }
+
+    override fun onInputNumber(text: String) {
+        viewModel.setCounter(text)
+    }
+
+    override fun onClear() {
+        viewModel.onClearCounter()
+    }
+
+    override fun onClose() {
+        closeCalculator()
+    }
+
+    private fun showCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun closeCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
     companion object {
-        private const val DEFAULT_TRANSACTION_ID: Long = -1
         private const val COUNT_TODAY: Int = 0
         private const val COUNT_TOMORROW: Int = 1
         private const val COUNT_YESTERDAY: Int = -1

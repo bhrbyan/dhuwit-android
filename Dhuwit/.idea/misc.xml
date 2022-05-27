@@ -28,6 +28,8 @@
         <entry key="features/feature-account/src/main/res/layout/account_main_transaction_item.xml" value="0.30141085934159895" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_activity.xml" value="0.33603603603603605" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_item.xml" value="0.33603603603603605" />
+        <entry key="features/feature-calculator/src/main/res/layout/calculator_bottom_sheet.xml" value="0.3189397178281317" />
+        <entry key="features/feature-calculator/src/main/res/layout/calculator_fragment.xml" value="0.3189397178281317" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_activity.xml" value="0.20833333333333334" />
@@ -54,6 +56,7 @@
         <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />
         <entry key="uikit/src/main/res/drawable/background_border_primary_account.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/background_bottom_sheet.xml" value="0.198" />
         <entry key="uikit/src/main/res/drawable/background_button_fill_disabled.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_button_fill_enable.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_divider.xml" value="0.2165" />
@@ -64,6 +67,9 @@
         <entry key="uikit/src/main/res/drawable/background_gradient_yellow.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_launcher_screen.xml" value="0.3453333333333333" />
         <entry key="uikit/src/main/res/drawable/ic_add_account.xml" value="0.2665" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_double_up.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_down.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_right.xml" value="0.198" />
         <entry key="uikit/src/main/res/drawable/ic_chart_down_red.xml" value="0.2265" />
         <entry key="uikit/src/main/res/drawable/ic_chart_up_green.xml" value="0.2265" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
