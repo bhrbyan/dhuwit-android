@@ -1,4 +1,4 @@
-package id.dhuwit.feature.account.ui.selection
+package id.dhuwit.feature.transaction.ui.account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountSelectionViewModel @Inject constructor(
+class TransactionAccountViewModel @Inject constructor(
     private val accountRepository: AccountDataSource
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class AccountSelectionViewModel @Inject constructor(
             when (val result = accountRepository.getAccounts()) {
                 is State.Success -> {
                     updateViewState(
-                        AccountSelectionViewState.GetAccounts(result.data)
+                        TransactionAccountViewState.GetAccounts(result.data)
                     )
                 }
                 is State.Error -> {

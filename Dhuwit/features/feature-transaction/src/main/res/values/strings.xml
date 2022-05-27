@@ -43,4 +43,7 @@
     <string name="transaction_delete_button_positive">Delete</string>
     <string name="transaction_delete_button_negative">Cancel</string>
 
+    <!-- Selection -->
+    <string name="transaction_account_toolbar_title">Select Account</string>
+
 </resources>

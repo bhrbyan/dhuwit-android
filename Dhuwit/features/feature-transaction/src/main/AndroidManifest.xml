@@ -4,6 +4,7 @@
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
         <activity android:name=".ui.TransactionActivity" />
+        <activity android:name=".ui.account.TransactionAccountActivity" />
     </application>
 
 </manifest>

@@ -1,9 +1,9 @@
-package id.dhuwit.feature.account.ui.selection.adapter
+package id.dhuwit.feature.transaction.ui.account.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import id.dhuwit.core.account.model.Account
 
-class AccountSelectionDiffUtil : DiffUtil.ItemCallback<Account>() {
+class TransactionAccountDiffUtil : DiffUtil.ItemCallback<Account>() {
 
     override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
         return oldItem.id == newItem.id

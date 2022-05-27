@@ -49,9 +49,13 @@
         <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.21" />
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_account_item.xml" value="0.2441214194100043" />
         <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.25" />
+        <entry key="features/feature-transaction/src/main/res/layout-land/transaction_account_activity.xml" value="0.33304831124412143" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.12" />
+        <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_account_activity.xml" value="0.18359375" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_account_activity.xml" value="0.30141085934159895" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_account_item.xml" value="0.30141085934159895" />
         <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.27158853655400395" />
         <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />

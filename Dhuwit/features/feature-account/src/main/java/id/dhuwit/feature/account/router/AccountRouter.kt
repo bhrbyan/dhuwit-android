@@ -6,5 +6,4 @@ import android.content.Intent
 interface AccountRouter {
     fun openAccountMainPage(context: Context): Intent
     fun openAccountFormPage(context: Context, accountId: Long?): Intent
-    fun openAccountSelectionPage(context: Context): Intent
 }

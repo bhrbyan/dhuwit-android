@@ -1,20 +1,23 @@
-package id.dhuwit.feature.account.ui.selection.adapter
+package id.dhuwit.feature.transaction.ui.account.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.feature.account.databinding.AccountSelectionItemBinding
+import id.dhuwit.feature.transaction.databinding.TransactionAccountItemBinding
 
-class AccountSelectionAdapter :
-    ListAdapter<Account, AccountSelectionViewHolder>(AccountSelectionDiffUtil()) {
+class TransactionAccountAdapter :
+    ListAdapter<Account, TransactionAccountViewHolder>(TransactionAccountDiffUtil()) {
 
-    var listener: AccountSelectionListener? = null
+    var listener: TransactionAccountListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountSelectionViewHolder {
-        return AccountSelectionViewHolder(
-            AccountSelectionItemBinding.inflate(
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TransactionAccountViewHolder {
+        return TransactionAccountViewHolder(
+            TransactionAccountItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -28,7 +31,7 @@ class AccountSelectionAdapter :
         }
     }
 
-    override fun onBindViewHolder(holder: AccountSelectionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionAccountViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 }

@@ -1,10 +1,10 @@
-package id.dhuwit.feature.account.ui.selection.adapter
+package id.dhuwit.feature.transaction.ui.account.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.feature.account.databinding.AccountSelectionItemBinding
+import id.dhuwit.feature.transaction.databinding.TransactionAccountItemBinding
 
-class AccountSelectionViewHolder(private val binding: AccountSelectionItemBinding) :
+class TransactionAccountViewHolder(private val binding: TransactionAccountItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(account: Account) {

@@ -1,4 +1,4 @@
-package id.dhuwit.feature.account.ui.selection
+package id.dhuwit.feature.transaction.ui.account
 
 import android.content.Intent
 import androidx.activity.viewModels
@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.feature.account.AccountConstants
-import id.dhuwit.feature.account.R
-import id.dhuwit.feature.account.databinding.AccountSelectionActivityBinding
-import id.dhuwit.feature.account.ui.selection.adapter.AccountSelectionAdapter
-import id.dhuwit.feature.account.ui.selection.adapter.AccountSelectionListener
+import id.dhuwit.feature.transaction.R
+import id.dhuwit.feature.transaction.databinding.TransactionAccountActivityBinding
+import id.dhuwit.feature.transaction.ui.TransactionConstants
+import id.dhuwit.feature.transaction.ui.account.adapter.TransactionAccountAdapter
+import id.dhuwit.feature.transaction.ui.account.adapter.TransactionAccountListener
 import id.dhuwit.state.ViewState
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 
 @AndroidEntryPoint
-class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
+class TransactionAccountActivity : BaseActivity(), TransactionAccountListener {
 
-    private lateinit var binding: AccountSelectionActivityBinding
-    private lateinit var adapterAccountSelection: AccountSelectionAdapter
+    private lateinit var binding: TransactionAccountActivityBinding
+    private lateinit var adapterAccount: TransactionAccountAdapter
 
-    private val viewModel: AccountSelectionViewModel by viewModels()
+    private val viewModel: TransactionAccountViewModel by viewModels()
 
     override fun init() {
-        binding = AccountSelectionActivityBinding.inflate(layoutInflater)
+        binding = TransactionAccountActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpToolbar()
@@ -38,8 +38,8 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
     override fun observer() {
         viewModel.viewState.observe(this) {
             when (it) {
-                is AccountSelectionViewState.GetAccounts -> {
-                    adapterAccountSelection.submitList(it.accounts)
+                is TransactionAccountViewState.GetAccounts -> {
+                    adapterAccount.submitList(it.accounts)
                 }
                 is ViewState.Error -> {
                     showError()
@@ -50,7 +50,7 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
 
     private fun setUpToolbar() {
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = getString(R.string.account_selection_toolbar_title)
+        supportActionBar?.title = getString(R.string.transaction_account_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -61,12 +61,12 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
     }
 
     private fun setUpAdapter() {
-        adapterAccountSelection = AccountSelectionAdapter().apply {
-            listener = this@AccountSelectionActivity
+        adapterAccount = TransactionAccountAdapter().apply {
+            listener = this@TransactionAccountActivity
         }
 
         binding.recyclerView.apply {
-            adapter = adapterAccountSelection
+            adapter = adapterAccount
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 DividerMarginItemDecoration(
@@ -80,7 +80,7 @@ class AccountSelectionActivity : BaseActivity(), AccountSelectionListener {
 
     override fun onClickAccount(accountId: Long?) {
         setResult(RESULT_OK, Intent().apply {
-            putExtra(AccountConstants.KEY_ACCOUNT_ID, accountId)
+            putExtra(TransactionConstants.KEY_ACCOUNT_ID, accountId)
         })
         finish()
     }

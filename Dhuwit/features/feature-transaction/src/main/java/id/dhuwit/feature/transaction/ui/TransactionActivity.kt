@@ -1,5 +1,6 @@
 package id.dhuwit.feature.transaction.ui
 
+import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +34,7 @@ import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionActivityBinding
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListener
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
+import id.dhuwit.feature.transaction.ui.account.TransactionAccountActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.ToolbarBinding
@@ -80,15 +82,14 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         }
     }
 
-//    private val accountResult = registerForActivityResult(
-//        ActivityResultContracts.StartActivityForResult()
-//    ) { result ->
-//        if (result.resultCode == RESULT_OK && result.data != null) {
-//            val accountId = result.data?.getLongExtra(KEY_ACCOUNT_ID, 1) ?: 1
-//            viewModel.updateAccount(accountId)
-//        }
-//
-//    }
+    private val accountResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val accountId = result.data?.getLongExtra(TransactionConstants.KEY_ACCOUNT_ID, 1) ?: 1
+            viewModel.updateAccount(accountId)
+        }
+    }
 
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
@@ -332,9 +333,9 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun openAccountPage() {
-//        accountResult.launch(
-//            accountRouter.openAccountSelectionPage(this)
-//        )
+        accountResult.launch(
+            Intent(this, TransactionAccountActivity::class.java)
+        )
     }
 
     private fun setUpBottomSheet() {
