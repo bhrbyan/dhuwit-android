@@ -93,12 +93,8 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
-        binding.layoutToolbar?.let { toolbar ->
-            bindingToolbar = toolbar
-        }
-        binding.layoutCalculator?.let { calculator ->
-            bindingCalculator = calculator
-        }
+        bindingToolbar = binding.layoutToolbar
+        bindingCalculator = binding.layoutCalculator
         setContentView(binding.root)
 
         setUpBottomSheet()
