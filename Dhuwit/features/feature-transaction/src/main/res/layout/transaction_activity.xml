@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <!-- Data -->
 
@@ -69,6 +69,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/layout_button_save"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -306,10 +307,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
                 android:background="@drawable/background_border_calculator"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_date">
