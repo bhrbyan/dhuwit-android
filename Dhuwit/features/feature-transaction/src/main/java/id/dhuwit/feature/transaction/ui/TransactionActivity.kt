@@ -100,7 +100,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         }
         setContentView(binding.root)
 
-        showLoadingGetTransaction()
         setUpBottomSheet()
     }
 
@@ -174,8 +173,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                     setTextNote(it.note)
                     setTextAccount(it.account)
                     setTextCategory(it.category)
-
-                    hideLoadingGetTransaction()
                 }
                 is TransactionViewState.UpdateAmount -> {
                     setTextAmount(it.amount)
@@ -309,16 +306,6 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                 visible()
             }
         }
-    }
-
-    private fun showLoadingGetTransaction() {
-        binding.progressBarGet.show()
-        binding.textAmount.gone()
-    }
-
-    private fun hideLoadingGetTransaction() {
-        binding.progressBarGet.hide()
-        binding.textAmount.visible()
     }
 
     private fun openCategoryPage(categoryType: CategoryType?) {

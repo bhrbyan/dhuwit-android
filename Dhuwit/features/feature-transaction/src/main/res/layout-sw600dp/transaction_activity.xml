@@ -5,16 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="8dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        tools:title="Dhuwit" />
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/toolbar" />
+
+    <!-- Detail -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
@@ -30,15 +25,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_mid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <!-- Detail -->
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_amount"
         android:layout_width="0dp"
@@ -51,443 +37,377 @@
         app:autoSizeMinTextSize="@dimen/uikit_text_size_micro"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_mid"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_amount"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
         tools:text="Rp2.000.000" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_bar_get"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:indeterminate="true"
-        app:indicatorColor="@color/colorMinor"
-        app:layout_constraintBottom_toBottomOf="@+id/text_amount"
-        app:layout_constraintEnd_toEndOf="@+id/text_amount"
-        app:layout_constraintStart_toStartOf="@+id/text_amount"
-        app:layout_constraintTop_toTopOf="@+id/text_amount"
-        tools:visibility="visible" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
     <!-- Data -->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_account"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintBottom_toTopOf="@+id/button_category"
-        app:layout_constraintEnd_toStartOf="@+id/button_date"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toTopOf="@+id/guideline_mid">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_account_caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_account"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-            app:layout_constraintBottom_toTopOf="@+id/text_account"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_account"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_account_caption"
-            tools:text="@string/transaction_caption_account" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_date"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintBottom_toBottomOf="@+id/button_account"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toEndOf="@+id/button_account"
-        app:layout_constraintTop_toTopOf="@+id/button_account">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_date_caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_date"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-            app:layout_constraintBottom_toTopOf="@+id/text_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="end"
-            android:maxLines="1"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_date_caption"
-            tools:text="Friday, 27 December 2021" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintBottom_toTopOf="@+id/layout_button_toggle"
-        app:layout_constraintEnd_toStartOf="@+id/button_note"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/button_account">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_category_caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_category"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-            app:layout_constraintBottom_toTopOf="@+id/text_category"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_category"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_category_caption" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_note"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/uikit_margin_padding_size_xsmall"
-        app:layout_constraintBottom_toBottomOf="@+id/button_category"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-        app:layout_constraintStart_toEndOf="@+id/button_category"
-        app:layout_constraintTop_toTopOf="@+id/button_category">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_note_caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_note"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
-            app:layout_constraintBottom_toTopOf="@+id/text_note"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_note"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="end"
-            android:maxLines="1"
-            android:text="@string/transaction_caption_note"
-            android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_note_caption" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/layout_button_toggle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:theme="@style/Uikit.Theme.Dhuwit.Button.Toggle"
-        android:weightSum="2"
-        app:checkedButton="@+id/button_toggle_expense"
-        app:layout_constraintBottom_toTopOf="@+id/button_nine"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/layout_button_save"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/button_category"
-        app:singleSelection="true">
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="@+id/guideline_amount">
 
-        <Button
-            android:id="@+id/button_toggle_expense"
-            style="@style/Uikit.Style.Button.Toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/transaction_toggle_expense" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/button_toggle_income"
-            style="@style/Uikit.Style.Button.Toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/transaction_toggle_income" />
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/layout_button_toggle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/Uikit.Theme.Dhuwit.Button.Toggle"
+                android:weightSum="2"
+                app:checkedButton="@+id/button_toggle_expense"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true">
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+                <Button
+                    android:id="@+id/button_toggle_expense"
+                    style="@style/Uikit.Style.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/transaction_toggle_expense" />
 
-    <!-- Calculator -->
+                <Button
+                    android:id="@+id/button_toggle_income"
+                    style="@style/Uikit.Style.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/transaction_toggle_income" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_seven"
-        style="@style/Uikit.Style.Button.Borderless"
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xsmall"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
+                android:background="@drawable/background_border_calculator"
+                android:padding="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_account" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_account_caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/transaction_caption_account"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_account"
+                    app:layout_constraintStart_toEndOf="@+id/image_account"
+                    app:layout_constraintTop_toTopOf="@+id/image_account" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_account"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/image_account_arrow"
+                    app:layout_constraintStart_toEndOf="@id/text_account_caption"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/transaction_caption_account" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_account_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:background="@drawable/background_border_calculator"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_account">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_category" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_category_caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/transaction_caption_category"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_category"
+                    app:layout_constraintStart_toEndOf="@+id/image_category"
+                    app:layout_constraintTop_toTopOf="@+id/image_category" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/image_category_arrow"
+                    app:layout_constraintStart_toEndOf="@id/text_category_caption"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/transaction_caption_category" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_category_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
+                android:background="@drawable/background_border_calculator"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_category">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_date_caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/transaction_caption_date"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_date"
+                    app:layout_constraintStart_toEndOf="@+id/image_date"
+                    app:layout_constraintTop_toTopOf="@+id/image_date" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/image_date_arrow"
+                    app:layout_constraintStart_toEndOf="@id/text_date_caption"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/transaction_caption_date" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_date_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
+                android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
+                android:background="@drawable/background_border_calculator"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/uikit_margin_padding_size_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_date">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_note" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_note_caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/transaction_caption_note"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_note"
+                    app:layout_constraintStart_toEndOf="@+id/image_note"
+                    app:layout_constraintTop_toTopOf="@+id/image_note" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_note"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/Uikit.Style.TextAppearance.Body2"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/image_note_arrow"
+                    app:layout_constraintStart_toEndOf="@id/text_note_caption"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/transaction_caption_note" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_note_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_calculator"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_seven"
-        app:layout_constraintBottom_toTopOf="@+id/button_four"
-        app:layout_constraintEnd_toStartOf="@+id/button_eight"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintBottom_toTopOf="@id/layout_button_save"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_eight"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_eight"
-        app:layout_constraintBottom_toTopOf="@+id/button_five"
-        app:layout_constraintEnd_toStartOf="@+id/button_nine"
-        app:layout_constraintStart_toEndOf="@+id/button_seven"
-        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
-        app:layout_constraintVertical_chainStyle="packed" />
+        <include
+            android:id="@+id/layout_calculator"
+            layout="@layout/calculator_bottom_sheet" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_nine"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_nine"
-        app:layout_constraintBottom_toTopOf="@+id/button_six"
-        app:layout_constraintEnd_toStartOf="@id/layout_button_save"
-        app:layout_constraintStart_toEndOf="@+id/button_eight"
-        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_four"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_four"
-        app:layout_constraintBottom_toTopOf="@+id/button_one"
-        app:layout_constraintEnd_toStartOf="@+id/button_five"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/button_seven" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_five"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_five"
-        app:layout_constraintBottom_toTopOf="@+id/button_two"
-        app:layout_constraintEnd_toStartOf="@+id/button_six"
-        app:layout_constraintStart_toEndOf="@+id/button_four"
-        app:layout_constraintTop_toBottomOf="@+id/button_eight" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_six"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_six"
-        app:layout_constraintBottom_toTopOf="@+id/button_three"
-        app:layout_constraintEnd_toStartOf="@+id/layout_button_save"
-        app:layout_constraintStart_toEndOf="@+id/button_five"
-        app:layout_constraintTop_toBottomOf="@+id/button_nine" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_one"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_one"
-        app:layout_constraintBottom_toTopOf="@+id/button_zero"
-        app:layout_constraintEnd_toStartOf="@+id/button_two"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/button_four" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_two"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_two"
-        app:layout_constraintBottom_toTopOf="@+id/button_zero"
-        app:layout_constraintEnd_toStartOf="@+id/button_three"
-        app:layout_constraintStart_toEndOf="@+id/button_one"
-        app:layout_constraintTop_toBottomOf="@+id/button_five" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_three"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_xxsmall"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_three"
-        app:layout_constraintBottom_toTopOf="@+id/button_clear"
-        app:layout_constraintEnd_toStartOf="@+id/layout_button_save"
-        app:layout_constraintStart_toEndOf="@+id/button_two"
-        app:layout_constraintTop_toBottomOf="@+id/button_six" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_zero"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_zero"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button_two"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/button_two" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_clear"
-        style="@style/Uikit.Style.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/uikit_margin_padding_size_xsmall"
-        android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginEnd="@dimen/uikit_margin_padding_size_xxsmall"
-        android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
-        android:background="@drawable/background_border_calculator"
-        android:text="@string/transaction_calculator_clear"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layout_button_save"
-        app:layout_constraintStart_toEndOf="@+id/button_zero"
-        app:layout_constraintTop_toBottomOf="@+id/button_three" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_button_save"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/uikit_margin_padding_size_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintStart_toEndOf="@+id/button_nine"
-        app:layout_constraintTop_toBottomOf="@+id/layout_button_toggle">
+        app:layout_constraintStart_toStartOf="@id/guideline_start">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/button_delete"
             style="@style/Uikit.Style.Button.Borderless"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
-            android:layout_marginBottom="@dimen/uikit_margin_padding_size_xsmall"
+            android:layout_marginEnd="@dimen/uikit_margin_padding_size_medium"
             android:background="@drawable/background_border_calculator"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/button_save"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/button_save"
+            app:layout_constraintEnd_toStartOf="@+id/button_save"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_save"
             app:srcCompat="@drawable/ic_delete"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_save"
             style="@style/Uikit.Style.Button.Fill"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/uikit_margin_padding_size_xxsmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/general_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_delete"
+            app:layout_constraintStart_toEndOf="@+id/button_delete"
             app:srcCompat="@drawable/ic_done" />
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progress_bar_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:indicatorColor="@color/colorMinor"
-            app:layout_constraintBottom_toBottomOf="@+id/button_save"
-            app:layout_constraintEnd_toEndOf="@+id/button_save"
-            app:layout_constraintStart_toStartOf="@+id/button_save"
-            app:layout_constraintTop_toTopOf="@+id/button_save"
-            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
