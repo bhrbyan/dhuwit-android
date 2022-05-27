@@ -3,7 +3,6 @@
     package="id.dhuwit.feature.dashboard">
 
     <application android:theme="@style/Uikit.Theme.Dhuwit">
-        <activity android:name=".DashboardActivity" />
     </application>
 
 </manifest>

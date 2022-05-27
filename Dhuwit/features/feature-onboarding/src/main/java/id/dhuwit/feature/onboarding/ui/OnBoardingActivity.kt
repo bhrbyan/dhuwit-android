@@ -47,7 +47,7 @@ class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
             viewState.observe(this@OnBoardingActivity) {
                 when (it) {
                     is OnBoardingViewState.SuccessCreateAccount -> {
-                        openDashboardPage()
+                        openAccountMaindPage()
                     }
                     is ViewState.Error -> {
                         showError()
@@ -107,7 +107,7 @@ class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
         ).show()
     }
 
-    private fun openDashboardPage() {
+    private fun openAccountMaindPage() {
         startActivity(accountRouter.openAccountMainPage(this))
         finish()
     }

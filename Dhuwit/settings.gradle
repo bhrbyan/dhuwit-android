@@ -15,7 +15,6 @@ include ':cores:core-transaction'
 /* Feature*/
 include ':features:feature-account'
 include ':features:feature-category'
-include ':features:feature-dashboard'
 include ':features:feature-note'
 include ':features:feature-onboarding'
 include ':features:feature-transaction'

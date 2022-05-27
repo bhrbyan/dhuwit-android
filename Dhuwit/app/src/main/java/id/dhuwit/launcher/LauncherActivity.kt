@@ -51,7 +51,7 @@ class LauncherActivity : BaseActivity() {
 
             viewModel.storeDefaultData(currencies, categories)
         } else {
-            openDashboardPage()
+            openAccountMainPage()
         }
     }
 
@@ -60,7 +60,7 @@ class LauncherActivity : BaseActivity() {
         finish()
     }
 
-    private fun openDashboardPage() {
+    private fun openAccountMainPage() {
         startActivity(accountRouter.openAccountMainPage(this))
         finish()
     }
