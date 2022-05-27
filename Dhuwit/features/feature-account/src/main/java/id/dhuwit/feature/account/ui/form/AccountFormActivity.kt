@@ -1,6 +1,7 @@
 package id.dhuwit.feature.account.ui.form
 
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,20 +12,23 @@ import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountFormActivityBinding
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
+import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFormActivity : BaseActivity() {
 
-    private val viewModel: AccountFormViewModel by viewModels()
-
     private lateinit var binding: AccountFormActivityBinding
+    private lateinit var bindingToolbar: ToolbarBinding
+
+    private val viewModel: AccountFormViewModel by viewModels()
 
     @Inject
     lateinit var storage: Storage
 
     override fun init() {
         binding = AccountFormActivityBinding.inflate(layoutInflater)
+        bindingToolbar = binding.layoutToolbar
         setContentView(binding.root)
 
         setUpToolbar()
@@ -96,17 +100,19 @@ class AccountFormActivity : BaseActivity() {
     }
 
     private fun setUpToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
+        bindingToolbar.apply {
+            imageActionLeft.apply {
+                setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+                setOnClickListener {
+                    finish()
+                }
+                visible()
+            }
         }
     }
 
     private fun setUpViewCreateAccount() {
-        supportActionBar?.title = getString(R.string.account_form_create_toolbar_title)
+        bindingToolbar.textTitle.text = getString(R.string.account_form_create_toolbar_title)
         with(binding) {
             buttonSave.visible()
             switchPrimaryAccount.isChecked = false
@@ -114,7 +120,7 @@ class AccountFormActivity : BaseActivity() {
     }
 
     private fun setUpViewUpdateAccount(data: Account?, accountsMoreThanOne: Boolean) {
-        supportActionBar?.title = getString(R.string.account_form_update_toolbar_title)
+        bindingToolbar.textTitle.text = getString(R.string.account_form_update_toolbar_title)
         with(binding) {
             buttonUpdate.visible()
             if (accountsMoreThanOne) {
