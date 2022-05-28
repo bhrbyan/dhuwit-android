@@ -6,16 +6,28 @@ import android.view.View
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 
-class DividerMarginItemDecorationViewPager(context: Context, @DimenRes horizontalMarginInDp: Int) :
+class DividerMarginItemDecorationViewPager(
+    context: Context,
+    @DimenRes marginInDp: Int,
+    private val isLandscape: Boolean
+) :
     RecyclerView.ItemDecoration() {
 
-    private val horizontalMarginInPx: Int =
-        context.resources.getDimension(horizontalMarginInDp).toInt()
+    private val marginInPx: Int =
+        context.resources.getDimension(marginInDp).toInt()
 
     override fun getItemOffsets(
-        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
     ) {
-        outRect.right = horizontalMarginInPx
-        outRect.left = horizontalMarginInPx
+        if (isLandscape) {
+            outRect.top = marginInPx
+            outRect.bottom = marginInPx
+        } else {
+            outRect.right = marginInPx
+            outRect.left = marginInPx
+        }
     }
 }

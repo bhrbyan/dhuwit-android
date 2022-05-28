@@ -238,7 +238,7 @@
                 android:id="@+id/button_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/uikit_margin_padding_size_xxsmall"
+                android:layout_marginTop="@dimen/uikit_margin_padding_size_small"
                 android:background="@drawable/background_border_calculator"
                 android:clickable="true"
                 android:focusable="true"

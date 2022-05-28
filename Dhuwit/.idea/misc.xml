@@ -7,9 +7,13 @@
         <entry key="features/feature-account/src/main/res/layout-land/account_activity.xml" value="0.2515625" />
         <entry key="features/feature-account/src/main/res/layout-land/account_form_activity.xml" value="0.1876870457460453" />
         <entry key="features/feature-account/src/main/res/layout-land/account_main_activity.xml" value="0.2" />
+        <entry key="features/feature-account/src/main/res/layout-land/account_main_item.xml" value="0.17657118426678067" />
         <entry key="features/feature-account/src/main/res/layout-land/account_main_transaction_header.xml" value="0.3039760581445062" />
         <entry key="features/feature-account/src/main/res/layout-land/account_selection_activity.xml" value="0.2018018018018018" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_list_item.xml" value="0.47291666666666665" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_activity.xml" value="0.10755208333333334" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_item.xml" value="0.10755208333333334" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_transaction_header.xml" value="0.1" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_activity.xml" value="0.3885416666666667" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_form_activity.xml" value="0.19427083333333334" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_list_item.xml" value="0.3885416666666667" />

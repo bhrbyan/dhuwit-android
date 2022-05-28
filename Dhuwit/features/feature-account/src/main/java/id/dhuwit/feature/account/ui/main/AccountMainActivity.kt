@@ -1,5 +1,6 @@
 package id.dhuwit.feature.account.ui.main
 
+import android.content.res.Configuration
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -162,35 +163,69 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
 
     private fun setUpViewPagerAdapter() {
         viewPagerAdapter = AccountMainAdapter(storage)
+
         binding.viewPager.apply {
             adapter = viewPagerAdapter
-
             offscreenPageLimit = 1
 
-            // Add a PageTransformer that translates the next and previous items horizontally
-            // towards the center of the screen, which makes them visible
-            val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_item_visible)
-            val currentItemHorizontalMarginPx =
-                resources.getDimension(R.dimen.view_pager_current_item_horizontal_margin)
-            val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-            val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
-                page.translationX = -pageTranslationX * position
+            val layoutOrientation: Int = resources.configuration.orientation
+            if (layoutOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-                // Next line scales the item's height. You can remove it if you don't want this effect
-                // page.scaleY = 1 - (0.25f * abs(position))
+                // Add a PageTransformer that translates the next and previous items horizontally
+                // towards the center of the screen, which makes them visible
+                val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_item_visible)
+                val currentItemHorizontalMarginPx =
+                    resources.getDimension(R.dimen.view_pager_current_item_horizontal_margin)
+                val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+                val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+                    page.translationX = -pageTranslationX * position
 
-                // If you want a fading effect uncomment the next line:
-                // page.alpha = 0.25f + (1 - abs(position))
+                    // Next line scales the item's height. You can remove it if you don't want this effect
+                    // page.scaleY = 1 - (0.25f * abs(position))
+
+                    // If you want a fading effect uncomment the next line:
+                    // page.alpha = 0.25f + (1 - abs(position))
+                }
+                setPageTransformer(pageTransformer)
+
+                // The ItemDecoration gives the current (centered) item horizontal margin so that
+                // it doesn't occupy the whole screen width. Without it the items overlap
+                val itemDecoration = DividerMarginItemDecorationViewPager(
+                    context,
+                    R.dimen.view_pager_current_item_horizontal_margin,
+                    false
+                )
+                addItemDecoration(itemDecoration)
+            } else {
+                orientation = ViewPager2.ORIENTATION_VERTICAL
+
+                // Add a PageTransformer that translates the next and previous items vertically
+                // towards the center of the screen, which makes them visible
+                val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_item_visible)
+                val currentItemVerticalMarginPx =
+                    resources.getDimension(R.dimen.view_pager_current_item_vertical_margin)
+                val pageTranslationY = nextItemVisiblePx + currentItemVerticalMarginPx
+                val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+                    page.translationY = -pageTranslationY * position
+
+                    // Next line scales the item's height. You can remove it if you don't want this effect
+                    // page.scaleY = 1 - (0.25f * abs(position))
+
+                    // If you want a fading effect uncomment the next line:
+                    // page.alpha = 0.25f + (1 - abs(position))
+                }
+                setPageTransformer(pageTransformer)
+
+                // The ItemDecoration gives the current (centered) item horizontal margin so that
+                // it doesn't occupy the whole screen width. Without it the items overlap
+                val itemDecoration = DividerMarginItemDecorationViewPager(
+                    context,
+                    R.dimen.view_pager_current_item_horizontal_margin,
+                    true
+                )
+                addItemDecoration(itemDecoration)
             }
-            setPageTransformer(pageTransformer)
-
-            // The ItemDecoration gives the current (centered) item horizontal margin so that
-            // it doesn't occupy the whole screen width. Without it the items overlap
-            val itemDecoration = DividerMarginItemDecorationViewPager(
-                context,
-                R.dimen.view_pager_current_item_horizontal_margin
-            )
-            addItemDecoration(itemDecoration)
         }
     }
 
