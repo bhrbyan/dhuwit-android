@@ -15,6 +15,7 @@ import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.transaction.router.TransactionRouterImpl
+import id.dhuwit.feature.transaction.ui.TransactionConstants.DEFAULT_TRANSACTION_ID
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
@@ -34,17 +35,32 @@ class TransactionViewModel @Inject constructor(
 
     private var counterAmount: String = DEFAULT_AMOUNT.convertDoubleToString()
 
-    private var amount: Double? = null
-    private var date: String? = null
-    private var type: TransactionType? = null
-    private var note: String? = null
     private var accounts: List<Account>? = null
-    private var account: Account? = null
-    private var category: Category? = null
     private var transaction: Transaction? = null
 
     private var _viewState = MutableLiveData<ViewState>()
     var viewState: LiveData<ViewState> = _viewState
+
+    private var _amount = MutableLiveData<Double?>()
+    var amount: LiveData<Double?> = _amount
+
+    private var _type = MutableLiveData<TransactionType?>()
+    var type: LiveData<TransactionType?> = _type
+
+    private var _account = MutableLiveData<Account?>()
+    var account: LiveData<Account?> = _account
+
+    private var _category = MutableLiveData<Category?>()
+    var category: LiveData<Category?> = _category
+
+    private var _date = MutableLiveData<String?>()
+    var date: LiveData<String?> = _date
+
+    private var _note = MutableLiveData<String?>()
+    var note: LiveData<String?> = _note
+
+    private var _navigationViewState = MutableLiveData<ViewState>()
+    var navigationViewState: LiveData<ViewState> = _navigationViewState
 
     init {
         setUpTransaction(transactionId)
@@ -54,12 +70,14 @@ class TransactionViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
+    private fun updateNavigationViewState(navigationViewState: ViewState) {
+        _navigationViewState.value = navigationViewState
+    }
+
     private fun setUpTransaction(transactionId: Long) {
         viewModelScope.launch {
             if (isCreateTransaction()) {
-                updateViewState(TransactionViewState.SetUpViewNewTransaction)
-
-                setCounter(counterAmount, false)
+                setCounter(counterAmount)
                 setDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
                 setType(TransactionType.Expense)
                 setNote(null)
@@ -84,23 +102,10 @@ class TransactionViewModel @Inject constructor(
                         updateViewState(ViewState.Error(result.message))
                     }
                 }
-
-                updateViewState(
-                    TransactionViewState.SetUpTransaction(
-                        amount = amount,
-                        date = date,
-                        type = type,
-                        note = note,
-                        account = account,
-                        category = category
-                    )
-                )
             } else {
-                updateViewState(TransactionViewState.SetUpViewUpdateTransaction)
-
                 transaction = transactionRepository.getTransaction(transactionId).data
 
-                setCounter(transaction?.amount?.convertDoubleToString(), false)
+                setCounter(transaction?.amount?.convertDoubleToString())
                 setDate(transaction?.date)
                 setType(transaction?.type)
                 setNote(transaction?.note)
@@ -129,17 +134,6 @@ class TransactionViewModel @Inject constructor(
                         updateViewState(ViewState.Error(result.message))
                     }
                 }
-
-                updateViewState(
-                    TransactionViewState.SetUpTransaction(
-                        amount = amount,
-                        date = date,
-                        type = type,
-                        note = note,
-                        account = account,
-                        category = category
-                    )
-                )
             }
         }
     }
@@ -149,27 +143,27 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun setAmount(amount: Double?) {
-        this.amount = amount
+        _amount.value = amount
     }
 
     private fun setDate(date: String?) {
-        this.date = date
+        _date.value = date
     }
 
     fun setType(type: TransactionType?) {
-        this.type = type
+        _type.value = type
     }
 
     private fun setNote(note: String?) {
-        this.note = note
+        _note.value = note
     }
 
     private fun setAccount(account: Account?) {
-        this.account = account
+        _account.value = account
     }
 
     private fun setCategory(category: Category?) {
-        this.category = category
+        _category.value = category
     }
 
     private fun getCategoryType(transactionType: TransactionType?): CategoryType {
@@ -180,7 +174,7 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    fun setCounter(counter: String?, sourceFromKeyboard: Boolean = true) {
+    fun setCounter(counter: String?) {
         var fullCounter: String = counterAmount
         fullCounter += counter
 
@@ -191,10 +185,6 @@ class TransactionViewModel @Inject constructor(
         if (isCounterLengthLessThanEqualHundredBillion(fullCounter)) {
             counterAmount = fullCounter
             setAmount(counterAmount.toDouble())
-
-            if (sourceFromKeyboard) {
-                updateViewState(TransactionViewState.UpdateAmount(amount))
-            }
         }
     }
 
@@ -225,7 +215,6 @@ class TransactionViewModel @Inject constructor(
         }
 
         setAmount(finalAmount)
-        updateViewState(TransactionViewState.UpdateAmount(amount))
     }
 
     /* There are 2 reason why need to fetch categories from db
@@ -243,7 +232,6 @@ class TransactionViewModel @Inject constructor(
                     }
 
                     setCategory(category)
-                    updateViewState(TransactionViewState.UpdateCategory(category))
                 }
                 is State.Error -> {
                     updateViewState(ViewState.Error(result.message))
@@ -254,17 +242,14 @@ class TransactionViewModel @Inject constructor(
 
     fun updateDate(date: String?) {
         setDate(date)
-        updateViewState(TransactionViewState.UpdateDate(date))
     }
 
     fun updateNote(note: String?) {
         setNote(note)
-        updateViewState(TransactionViewState.UpdateNote(note))
     }
 
     fun updateAccount(accountId: Long) {
         setAccount(accounts?.find { it.id == accountId })
-        updateViewState(TransactionViewState.UpdateAccount(account))
     }
 
     fun processTransaction() {
@@ -312,24 +297,24 @@ class TransactionViewModel @Inject constructor(
     private fun mapTransaction(): Transaction {
         return if (isCreateTransaction()) {
             Transaction(
-                type = type ?: TransactionType.Expense,
-                amount = amount ?: DEFAULT_AMOUNT,
-                note = note,
-                date = date ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                type = type.value ?: TransactionType.Expense,
+                amount = amount.value ?: DEFAULT_AMOUNT,
+                note = note.value,
+                date = date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = category,
-                accountId = account?.id ?: 1
+                category = category.value,
+                accountId = account.value?.id ?: 1
             )
         } else {
             Transaction(
                 id = transactionId,
-                type = type ?: TransactionType.Expense,
-                amount = amount ?: DEFAULT_AMOUNT,
-                note = note,
-                date = date ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                type = type.value ?: TransactionType.Expense,
+                amount = amount.value ?: DEFAULT_AMOUNT,
+                note = note.value,
+                date = date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
                 createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                category = category,
-                accountId = account?.id ?: 1
+                category = category.value,
+                accountId = account.value?.id ?: 1
             )
         }
     }
@@ -349,30 +334,30 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    fun onOpenDatePicker() {
-        updateViewState(
-            TransactionViewState.OpenDatePicker(
-                date?.convertToMillis(
+    fun onOpenDatePicker(isOpen: Boolean?) {
+        updateNavigationViewState(
+            TransactionNavigationViewState.OpenDatePicker(
+                date.value?.convertToMillis(
                     PATTERN_DATE_DATABASE
-                )
+                ),
+                isOpen
             )
         )
     }
 
-    fun onOpenNotePage() {
-        updateViewState(
-            TransactionViewState.OpenNotePage(note)
+    fun onOpenNotePage(isOpen: Boolean?) {
+        updateNavigationViewState(
+            TransactionNavigationViewState.OpenNotePage(note.value, isOpen)
         )
     }
 
-    fun onOpenCategory() {
-        updateViewState(
-            TransactionViewState.OpenCategoryPage(getCategoryType(type))
+    fun onOpenCategory(isOpen: Boolean?) {
+        updateNavigationViewState(
+            TransactionNavigationViewState.OpenCategoryPage(getCategoryType(type.value), isOpen)
         )
     }
 
     companion object {
-        private const val DEFAULT_TRANSACTION_ID: Long = -1
         private const val DEFAULT_AMOUNT: Double = 0.0
     }
 
