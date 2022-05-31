@@ -10,7 +10,7 @@ sealed class AccountMainViewState : ViewState.Feature() {
 
     data class GetAccounts(val accounts: List<Account>?) : AccountMainViewState()
 
-    data class UpdateAccount(val accoundId: Long?) : AccountMainViewState()
+    data class UpdateAccount(val accountId: Long?) : AccountMainViewState()
 
     data class GetTransactions(
         val incomeAmount: Double?,
@@ -18,5 +18,7 @@ sealed class AccountMainViewState : ViewState.Feature() {
         val transactions: List<Transaction>?
     ) :
         AccountMainViewState()
+
+    data class CreateTransaction(val accountId: Long?) : AccountMainViewState()
 
 }

@@ -15,6 +15,7 @@ import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.transaction.router.TransactionRouterImpl
+import id.dhuwit.feature.transaction.ui.TransactionConstants.DEFAULT_ACCOUNT_ID
 import id.dhuwit.feature.transaction.ui.TransactionConstants.DEFAULT_TRANSACTION_ID
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
@@ -32,6 +33,9 @@ class TransactionViewModel @Inject constructor(
     private var transactionId: Long =
         savedStateHandle.get<Long>(TransactionRouterImpl.KEY_TRANSACTION_ID)
             ?: DEFAULT_TRANSACTION_ID
+
+    private val accountId: Long = savedStateHandle.get<Long>(TransactionRouterImpl.KEY_ACCOUNT_ID)
+        ?: DEFAULT_ACCOUNT_ID
 
     private var counterAmount: String = DEFAULT_AMOUNT.convertDoubleToString()
 
@@ -86,7 +90,7 @@ class TransactionViewModel @Inject constructor(
                     is State.Success -> {
                         accounts = result.data
                         setAccount(
-                            accounts?.find { it.isPrimary } ?: accounts?.first()
+                            accounts?.find { it.isPrimary } ?: accounts?.find { it.id == accountId }
                         )
                     }
                     is State.Error -> {

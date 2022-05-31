@@ -143,6 +143,12 @@ class AccountMainViewModel @Inject constructor(
         )
     }
 
+    fun onCreateTransaction() {
+        updateViewState(
+            AccountMainViewState.CreateTransaction(account?.id)
+        )
+    }
+
     companion object {
         private const val CURRENT_MONTH: Int = 0
     }

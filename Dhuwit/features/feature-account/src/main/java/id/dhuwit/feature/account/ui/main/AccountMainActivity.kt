@@ -105,7 +105,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
         }
 
         binding.buttonAddTransaction.setOnClickListener {
-            openTransactionPage(null)
+            viewModel.onCreateTransaction()
         }
     }
 
@@ -119,7 +119,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
                     viewPagerAdapter.submitList(viewState.accounts)
                 }
                 is AccountMainViewState.UpdateAccount -> {
-                    openAccountFormPage(viewState.accoundId)
+                    openAccountFormPage(viewState.accountId)
                 }
                 is AccountMainViewState.GetTransactions -> {
                     binding.textIncomeAmount.text =
@@ -133,6 +133,9 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
                     } else {
                         hideEmptyState()
                     }
+                }
+                is AccountMainViewState.CreateTransaction -> {
+                    openTransactionPage(null, viewState.accountId)
                 }
                 is ViewState.Error -> showError()
             }
@@ -240,7 +243,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
     }
 
     override fun onClickTransaction(transaction: Transaction?) {
-        openTransactionPage(transaction?.id)
+        openTransactionPage(transaction?.id, null)
     }
 
     private fun setUpEmptyState() {
@@ -271,8 +274,14 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
         )
     }
 
-    private fun openTransactionPage(transactionId: Long?) {
-        addTransactionResult.launch(transactionRouter.openTransactionPage(this, transactionId))
+    private fun openTransactionPage(transactionId: Long?, accountId: Long?) {
+        addTransactionResult.launch(
+            transactionRouter.openTransactionPage(
+                this,
+                transactionId,
+                accountId
+            )
+        )
     }
 
     private fun showError() {
