@@ -1,4 +1,4 @@
-package id.dhuwit.feature.account.ui.main.adapter
+package id.dhuwit.feature.account.ui.main.adapter.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

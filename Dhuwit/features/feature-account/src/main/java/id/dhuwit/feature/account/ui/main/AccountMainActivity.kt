@@ -17,7 +17,7 @@ import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
 import id.dhuwit.feature.account.router.AccountRouter
-import id.dhuwit.feature.account.ui.main.adapter.AccountMainAdapter
+import id.dhuwit.feature.account.ui.main.adapter.main.AccountMainAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.header.AccountMainTransactionHeaderAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
 import id.dhuwit.feature.transaction.router.TransactionRouter
