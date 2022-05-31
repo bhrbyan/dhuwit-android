@@ -1,8 +1,10 @@
 package id.dhuwit.feature.account.ui.form
 
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
@@ -10,28 +12,40 @@ import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.extension.*
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountFormActivityBinding
+import id.dhuwit.feature.calculator.databinding.CalculatorBottomSheetBinding
+import id.dhuwit.feature.calculator.router.CalculatorRouter
+import id.dhuwit.feature.calculator.ui.CalculatorListener
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFormActivity : BaseActivity() {
+class AccountFormActivity : BaseActivity(), CalculatorListener {
 
     private lateinit var binding: AccountFormActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding
+    private lateinit var bindingCalculator: CalculatorBottomSheetBinding
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     private val viewModel: AccountFormViewModel by viewModels()
 
     @Inject
     lateinit var storage: Storage
 
+    @Inject
+    lateinit var calculatorRouter: CalculatorRouter
+
     override fun init() {
         binding = AccountFormActivityBinding.inflate(layoutInflater)
         bindingToolbar = binding.layoutToolbar
+        binding.layoutCalculator?.let {
+            bindingCalculator = it
+        }
         setContentView(binding.root)
 
         setUpToolbar()
+        setUpBottomSheet()
     }
 
     override fun listener() {
@@ -42,20 +56,10 @@ class AccountFormActivity : BaseActivity() {
                 }
             }
 
-            inputTextAccountBalance.apply {
-                setCurrency(storage.getSymbolCurrency())
-                setDecimals(false)
-                setSeparator(SEPARATOR)
-                addTextChangedListener {
-                    validationRequirement()
-                }
-            }
-
             buttonSave.setOnClickListener {
                 with(binding) {
                     viewModel.createAccount(
                         name = inputTextAccountName.text.toString(),
-                        balance = inputTextAccountBalance.cleanDoubleValue,
                         isPrimary = switchPrimaryAccount.isChecked
                     )
                 }
@@ -64,13 +68,16 @@ class AccountFormActivity : BaseActivity() {
             buttonUpdate.setOnClickListener {
                 viewModel.updateAccount(
                     name = inputTextAccountName.text.toString(),
-                    balance = inputTextAccountBalance.cleanDoubleValue,
                     isPrimary = switchPrimaryAccount.isChecked
                 )
             }
 
             buttonDelete.setOnClickListener {
                 viewModel.deleteAccount()
+            }
+
+            textAmount?.setOnClickListener {
+                showCalculator()
             }
         }
     }
@@ -96,6 +103,10 @@ class AccountFormActivity : BaseActivity() {
                     }
                 }
             }
+
+            viewModel.amount.observe(this@AccountFormActivity) {
+                setTextAmount(it)
+            }
         }
     }
 
@@ -104,6 +115,7 @@ class AccountFormActivity : BaseActivity() {
             imageActionLeft.apply {
                 setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
                 setOnClickListener {
+                    setResult(RESULT_CANCELED)
                     finish()
                 }
                 visible()
@@ -130,17 +142,13 @@ class AccountFormActivity : BaseActivity() {
             }
 
             inputTextAccountName.setText(data?.name)
-            inputTextAccountBalance.setText(data?.balance?.convertDoubleToString())
             switchPrimaryAccount.isChecked = data?.isPrimary ?: false
         }
     }
 
     private fun validationRequirement() {
         with(binding) {
-            if (inputTextAccountName.text.isNullOrEmpty() ||
-                inputTextAccountBalance.text.isNullOrEmpty() ||
-                inputTextAccountBalance.cleanDoubleValue == 0.0
-            ) {
+            if (inputTextAccountName.text.isNullOrEmpty()) {
                 buttonSave.disabled()
                 buttonUpdate.disabled()
             } else {
@@ -161,6 +169,55 @@ class AccountFormActivity : BaseActivity() {
     private fun closePage() {
         setResult(RESULT_OK)
         finish()
+    }
+
+    private fun setUpBottomSheet() {
+        bottomSheetBehavior =
+            BottomSheetBehavior.from(bindingCalculator.layoutBottomSheetRoot).apply {
+                isHideable = true
+            }
+
+        // Default State
+        closeCalculator()
+
+        supportFragmentManager.beginTransaction()
+            .replace(bindingCalculator.frameLayout.id, calculatorRouter.getCalculatorFragment())
+            .commit()
+    }
+
+    override fun onInputNumber(text: String) {
+        viewModel.setCounter(text, true)
+    }
+
+    override fun onClear() {
+        viewModel.onClearCounter()
+    }
+
+    override fun onClose() {
+        closeCalculator()
+    }
+
+    private fun showCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun closeCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    private fun setTextAmount(amount: Double?) {
+        binding.textAmount?.text = amount?.convertPriceWithCurrencyFormat(
+            storage.getSymbolCurrency()
+        )
+    }
+
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            closeCalculator()
+        } else {
+            setResult(RESULT_CANCELED)
+            finish()
+        }
     }
 
     companion object {
