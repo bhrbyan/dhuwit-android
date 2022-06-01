@@ -25,12 +25,26 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="false"
             android:focusable="true"
-            android:padding="@dimen/uikit_margin_padding_size_large">
+            android:paddingVertical="@dimen/uikit_margin_padding_size_large">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_primary_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/text_account_balance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star"
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_account_balance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:maxLines="1"
                 android:textAppearance="@style/Uikit.Style.TextAppearance.Headline5"
@@ -41,7 +55,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/text_account_name"
                 app:layout_constraintEnd_toStartOf="@+id/image_icon"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_primary_account"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Rp1.500.000" />
@@ -50,6 +64,7 @@
                 android:id="@+id/text_account_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
                 android:layout_marginEnd="@dimen/uikit_margin_padding_size_xsmall"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -57,7 +72,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/image_icon"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_primary_account"
                 app:layout_constraintTop_toBottomOf="@+id/text_account_balance"
                 tools:text="Account Name" />
 
@@ -65,6 +80,7 @@
                 android:id="@+id/image_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

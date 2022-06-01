@@ -29,6 +29,18 @@
             android:focusable="true"
             android:padding="@dimen/uikit_margin_padding_size_large">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_primary_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/text_account_balance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star"
+                tools:visibility="visible" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_account_balance"
                 android:layout_width="0dp"
