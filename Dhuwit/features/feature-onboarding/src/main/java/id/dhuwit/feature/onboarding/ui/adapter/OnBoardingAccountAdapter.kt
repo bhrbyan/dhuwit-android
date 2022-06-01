@@ -6,15 +6,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.account.model.Account
+import id.dhuwit.core.account.model.AccountOnBoarding
 import id.dhuwit.feature.onboarding.databinding.OnBoardingAccountItemBinding
 
-class OnBoardingAccountAdapter : ListAdapter<Account, OnBoardingAccountViewHolder>(
-    object : DiffUtil.ItemCallback<Account>() {
-        override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
-            return oldItem.id == newItem.id
+class OnBoardingAccountAdapter : ListAdapter<AccountOnBoarding, OnBoardingAccountViewHolder>(
+    object : DiffUtil.ItemCallback<AccountOnBoarding>() {
+        override fun areItemsTheSame(
+            oldItem: AccountOnBoarding,
+            newItem: AccountOnBoarding
+        ): Boolean {
+            return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
+        override fun areContentsTheSame(
+            oldItem: AccountOnBoarding,
+            newItem: AccountOnBoarding
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -32,7 +39,14 @@ class OnBoardingAccountAdapter : ListAdapter<Account, OnBoardingAccountViewHolde
         ).apply {
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    listener?.onSelectAccount(getItem(adapterPosition))
+                    val item = getItem(adapterPosition)
+                    listener?.onSelectAccount(
+                        Account(
+                            item.name,
+                            DEFAULT_AMOUNT_ACCOUNT,
+                            true
+                        )
+                    )
                 }
             }
         }
@@ -40,5 +54,9 @@ class OnBoardingAccountAdapter : ListAdapter<Account, OnBoardingAccountViewHolde
 
     override fun onBindViewHolder(holder: OnBoardingAccountViewHolder, position: Int) {
         holder.onBind(getItem(position))
+    }
+
+    companion object {
+        private const val DEFAULT_AMOUNT_ACCOUNT: Double = 0.0
     }
 }

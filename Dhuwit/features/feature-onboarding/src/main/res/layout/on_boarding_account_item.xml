@@ -10,6 +10,7 @@
         style="@style/Uikit.Style.CardView.All"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
         android:layout_marginVertical="@dimen/uikit_margin_padding_size_xsmall"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,10 +1,12 @@
 package id.dhuwit.feature.onboarding.ui
 
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
+import id.dhuwit.core.account.model.AccountOnBoarding
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.onboarding.R
@@ -70,27 +72,31 @@ class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
         }
     }
 
-    private fun getDefaultAccounts(): List<Account> {
+    private fun getDefaultAccounts(): List<AccountOnBoarding> {
         return listOf(
-            Account(
+            AccountOnBoarding(
                 name = getString(R.string.on_boarding_default_account_checking_title),
-                balance = DEFAULT_AMOUNT_ACCOUNT,
-                isPrimary = true
+                description = getString(R.string.on_boarding_default_account_checking_description),
+                icon = ContextCompat.getDrawable(this, R.drawable.ic_wallet),
+                backgroundColor = ContextCompat.getColor(this, R.color.chantilly)
             ),
-            Account(
+            AccountOnBoarding(
                 name = getString(R.string.on_boarding_default_account_credit_card_title),
-                balance = DEFAULT_AMOUNT_ACCOUNT,
-                isPrimary = true
+                description = getString(R.string.on_boarding_default_account_credit_card_description),
+                icon = ContextCompat.getDrawable(this, R.drawable.ic_credit_card),
+                backgroundColor = ContextCompat.getColor(this, R.color.sail)
             ),
-            Account(
+            AccountOnBoarding(
                 name = getString(R.string.on_boarding_default_account_cash_title),
-                balance = DEFAULT_AMOUNT_ACCOUNT,
-                isPrimary = true
+                description = getString(R.string.on_boarding_default_account_cash_description),
+                icon = ContextCompat.getDrawable(this, R.drawable.ic_cash),
+                backgroundColor = ContextCompat.getColor(this, R.color.zanah)
             ),
-            Account(
+            AccountOnBoarding(
                 name = getString(R.string.on_boarding_default_account_other_title),
-                balance = DEFAULT_AMOUNT_ACCOUNT,
-                isPrimary = true
+                description = getString(R.string.on_boarding_default_account_other_description),
+                icon = ContextCompat.getDrawable(this, R.drawable.ic_bank),
+                backgroundColor = ContextCompat.getColor(this, R.color.buttermilk)
             )
         )
     }
@@ -110,9 +116,5 @@ class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
     private fun openAccountMaindPage() {
         startActivity(accountRouter.openAccountMainPage(this))
         finish()
-    }
-
-    companion object {
-        private const val DEFAULT_AMOUNT_ACCOUNT: Double = 0.0
     }
 }
