@@ -3,7 +3,8 @@ package id.dhuwit.core.transaction.repository
 import id.dhuwit.core.account.database.AccountDao
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.core.transaction.model.TransactionGetType
+import id.dhuwit.core.transaction.model.TransactionDeleteBy
+import id.dhuwit.core.transaction.model.TransactionGetBy
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +17,13 @@ class TransactionLocalDataSource @Inject constructor(
     private val accountDao: AccountDao,
 ) : TransactionDataSource {
 
-    override suspend fun getTransactions(transactionGetType: TransactionGetType): State<List<Transaction>> {
+    override suspend fun getTransactions(transactionGetBy: TransactionGetBy): State<List<Transaction>> {
         return withContext(Dispatchers.IO) {
             try {
-                val transactions = when (transactionGetType) {
-                    is TransactionGetType.None -> transactionDao.getTransactions()
-                    is TransactionGetType.ByAccountId -> transactionDao.getTransactionsByAccountId(
-                        transactionGetType.accountId
+                val transactions = when (transactionGetBy) {
+                    is TransactionGetBy.None -> transactionDao.getTransactions()
+                    is TransactionGetBy.ByAccountId -> transactionDao.getTransactionsByAccountId(
+                        transactionGetBy.accountId
                     )
                 }.map {
                     it.toModel()
@@ -239,37 +240,56 @@ class TransactionLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun deleteTransaction(transactionId: Long): State<Boolean> {
+    override suspend fun deleteTransaction(transactionDeleteBy: TransactionDeleteBy): State<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                // Get existing transaction
-                val transaction = transactionDao.getTransaction(transactionId)
-
-                // Get current account balance
-                val account = accountDao.getAccount(transaction.accountId)?.toModel()
-
-                if (account != null) {
-                    val accountBalance = account.balance
-
-                    // Calculate new balance
-                    val newBalance =
-                        if (TransactionType.getTransactionType(transaction.type) is TransactionType.Expense) {
-                            accountBalance + transaction.amount
-                        } else {
-                            accountBalance - transaction.amount
-                        }
-
-                    // Update account balance with new balance
-                    accountDao.updateBalance(newBalance, transaction.accountId)
+                when (transactionDeleteBy) {
+                    is TransactionDeleteBy.ByTransactionId -> {
+                        deleteByTransactionId(transactionDeleteBy.transactionId)
+                    }
+                    is TransactionDeleteBy.ByAccountId -> {
+                        deleteByAccountId(transactionDeleteBy.accountId)
+                    }
                 }
-
-                // Delete transaction
-                transactionDao.deleteTransaction(transactionId)
 
                 State.Success(true)
             } catch (e: Exception) {
                 State.Error(e.localizedMessage)
             }
         }
+    }
+
+    private suspend fun deleteByAccountId(accountId: Long?) {
+        // Get all transactions
+        val transactions = transactionDao.getTransactions()
+        repeat(transactions.size) {
+            transactionDao.deleteTransactionByAccountId(accountId)
+        }
+    }
+
+    private suspend fun deleteByTransactionId(transactionId: Long) {
+        // Get existing transaction
+        val transaction = transactionDao.getTransaction(transactionId)
+
+        // Get current account balance
+        val account = accountDao.getAccount(transaction.accountId)?.toModel()
+
+        if (account != null) {
+            val accountBalance = account.balance
+
+            // Calculate new balance
+            val newBalance =
+                if (TransactionType.getTransactionType(transaction.type) is TransactionType.Expense) {
+                    accountBalance + transaction.amount
+                } else {
+                    accountBalance - transaction.amount
+                }
+
+            // Update account balance with new balance
+            accountDao.updateBalance(newBalance, transaction.accountId)
+        }
+
+        // Delete transaction
+        transactionDao.deleteTransaction(transactionId)
     }
 }

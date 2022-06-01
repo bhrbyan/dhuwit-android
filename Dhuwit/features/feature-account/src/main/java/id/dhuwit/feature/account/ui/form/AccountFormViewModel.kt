@@ -5,6 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.extension.convertDoubleToString
+import id.dhuwit.core.transaction.model.TransactionDeleteBy
+import id.dhuwit.core.transaction.repository.TransactionDataSource
 import id.dhuwit.feature.account.router.AccountRouterImpl.KEY_ACCOUNT_ID
 import id.dhuwit.state.State
 import id.dhuwit.state.ViewState
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountFormViewModel @Inject constructor(
     private val accountRepository: AccountDataSource,
+    private val transactionRepository: TransactionDataSource,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -158,12 +161,19 @@ class AccountFormViewModel @Inject constructor(
 
     fun deleteAccount() {
         viewModelScope.launch {
-            when (val result = accountRepository.deleteAccount(account?.id)) {
-                is State.Success -> {
+            val resultDeleteAccount = accountRepository.deleteAccount(account?.id)
+            val resultDeleteTransaction = transactionRepository.deleteTransaction(
+                TransactionDeleteBy.ByAccountId(account?.id)
+            )
+            when {
+                resultDeleteAccount is State.Success && resultDeleteTransaction is State.Success -> {
                     updateViewState(AccountFormViewState.Success)
                 }
-                is State.Error -> {
-                    updateViewState(ViewState.Error(result.message))
+                resultDeleteAccount is State.Error -> {
+                    updateViewState(ViewState.Error(resultDeleteAccount.message))
+                }
+                resultDeleteTransaction is State.Error -> {
+                    updateViewState(ViewState.Error(resultDeleteTransaction.message))
                 }
             }
         }

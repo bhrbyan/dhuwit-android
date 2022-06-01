@@ -1,11 +1,12 @@
 package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.core.transaction.model.TransactionGetType
+import id.dhuwit.core.transaction.model.TransactionDeleteBy
+import id.dhuwit.core.transaction.model.TransactionGetBy
 import id.dhuwit.state.State
 
 interface TransactionDataSource {
-    suspend fun getTransactions(transactionGetType: TransactionGetType): State<List<Transaction>>
+    suspend fun getTransactions(transactionGetBy: TransactionGetBy): State<List<Transaction>>
     suspend fun getTransaction(id: Long): State<Transaction>
     suspend fun saveTransaction(transaction: Transaction): State<Boolean>
     suspend fun updateTransaction(
@@ -13,5 +14,5 @@ interface TransactionDataSource {
         existingTransaction: Transaction?
     ): State<Boolean>
 
-    suspend fun deleteTransaction(transactionId: Long): State<Boolean>
+    suspend fun deleteTransaction(transactionDeleteBy: TransactionDeleteBy): State<Boolean>
 }

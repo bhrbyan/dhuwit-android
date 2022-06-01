@@ -25,4 +25,7 @@ interface TransactionDao {
 
     @Query("DELETE FROM transaction_table WHERE id = :id")
     suspend fun deleteTransaction(id: Long)
+
+    @Query("DELETE FROM transaction_table WHERE account_id = :accountId")
+    suspend fun deleteTransactionByAccountId(accountId: Long?)
 }
