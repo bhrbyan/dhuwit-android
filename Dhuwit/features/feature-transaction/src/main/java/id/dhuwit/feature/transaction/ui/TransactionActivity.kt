@@ -1,8 +1,11 @@
 package id.dhuwit.feature.transaction.ui
 
+import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -10,15 +13,18 @@ import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.core.extension.*
+import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.extension.gone
+import id.dhuwit.core.extension.visible
 import id.dhuwit.core.helper.DateHelper
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
 import id.dhuwit.core.helper.DateHelper.convertPattern
 import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.feature.account.AccountConstants.KEY_ACCOUNT_ID
-import id.dhuwit.feature.account.router.AccountRouter
+import id.dhuwit.feature.calculator.databinding.CalculatorBottomSheetBinding
+import id.dhuwit.feature.calculator.router.CalculatorRouter
+import id.dhuwit.feature.calculator.ui.CalculatorListener
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.router.CategoryRouter
@@ -28,14 +34,23 @@ import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionActivityBinding
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteConfirmationListener
 import id.dhuwit.feature.transaction.dialog.TransactionDeleteDialogFragment
+import id.dhuwit.feature.transaction.router.TransactionRouterImpl
+import id.dhuwit.feature.transaction.ui.TransactionConstants.DEFAULT_TRANSACTION_ID
+import id.dhuwit.feature.transaction.ui.account.TransactionAccountActivity
 import id.dhuwit.state.ViewState
 import id.dhuwit.storage.Storage
+import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener {
+class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener,
+    CalculatorListener {
 
     private lateinit var binding: TransactionActivityBinding
+    private lateinit var bindingToolbar: ToolbarBinding
+    private lateinit var bindingCalculator: CalculatorBottomSheetBinding
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
     private val viewModel: TransactionViewModel by viewModels()
 
     @Inject
@@ -48,7 +63,7 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     lateinit var noteRouter: NoteRouter
 
     @Inject
-    lateinit var accountRouter: AccountRouter
+    lateinit var calculatorRouter: CalculatorRouter
 
     private val categoryResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -73,65 +88,32 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK && result.data != null) {
-            val accountId = result.data?.getLongExtra(KEY_ACCOUNT_ID, 1) ?: 1
+            val accountId = result.data?.getLongExtra(TransactionConstants.KEY_ACCOUNT_ID, 1) ?: 1
             viewModel.updateAccount(accountId)
         }
-
     }
 
     override fun init() {
         binding = TransactionActivityBinding.inflate(layoutInflater)
+        bindingToolbar = binding.layoutToolbar
+        bindingCalculator = binding.layoutCalculator
         setContentView(binding.root)
 
-        showLoadingGetTransaction()
+        val transactionId: Long =
+            intent.getLongExtra(TransactionRouterImpl.KEY_TRANSACTION_ID, DEFAULT_TRANSACTION_ID)
+        if (isCreateTransaction(transactionId)) {
+            setUpToolbar(getString(R.string.transaction_toolbar_title_add))
+            hideButtonDelete()
+        } else {
+            setUpToolbar(getString(R.string.transaction_toolbar_title_update))
+            showButtonDelete()
+        }
+
+        setUpBottomSheet()
     }
 
     override fun listener() {
         with(binding) {
-            buttonZero.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_zero))
-            }
-
-            buttonOne.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_one))
-            }
-
-            buttonTwo.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_two))
-            }
-
-            buttonThree.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_three))
-            }
-
-            buttonFour.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_four))
-            }
-
-            buttonFive.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_five))
-            }
-
-            buttonSix.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_six))
-            }
-
-            buttonSeven.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_seven))
-            }
-
-            buttonEight.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_eight))
-            }
-
-            buttonNine.setOnClickListener {
-                viewModel.setCounter(getString(R.string.transaction_calculator_nine))
-            }
-
-            buttonClear.setOnClickListener {
-                viewModel.onClearCounter()
-            }
-
             layoutButtonToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->
                 if (isChecked) {
                     when (group.checkedButtonId) {
@@ -153,15 +135,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             }
 
             buttonDate.setOnClickListener {
-                viewModel.onOpenDatePicker()
+                viewModel.onOpenDatePicker(true)
             }
 
             buttonCategory.setOnClickListener {
-                viewModel.onOpenCategory()
+                viewModel.onOpenCategory(true)
             }
 
             buttonNote.setOnClickListener {
-                viewModel.onOpenNotePage()
+                viewModel.onOpenNotePage(true)
             }
 
             buttonSave.setOnClickListener {
@@ -175,56 +157,41 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
             buttonAccount.setOnClickListener {
                 openAccountPage()
             }
+
+            textAmount.setOnClickListener {
+                showCalculator()
+            }
         }
     }
 
     override fun observer() {
+        viewModel.amount.observe(this) {
+            setTextAmount(it)
+        }
+
+        viewModel.type.observe(this) {
+            setToggleTransactionType(it)
+        }
+
+        viewModel.account.observe(this) {
+            setTextAccount(it)
+        }
+
+        viewModel.category.observe(this) {
+            setTextCategory(it)
+        }
+
+        viewModel.date.observe(this) {
+            setTextDate(it)
+        }
+
+        viewModel.note.observe(this) {
+            setTextNote(it)
+        }
+
         viewModel.viewState.observe(this@TransactionActivity) {
             when (it) {
-                is TransactionViewState.SetUpViewNewTransaction -> {
-                    setUpToolbar(getString(R.string.transaction_toolbar_title_add))
-                    hideButtonDelete()
-                }
-                is TransactionViewState.SetUpViewUpdateTransaction -> {
-                    setUpToolbar(getString(R.string.transaction_toolbar_title_update))
-                    showButtonDelete()
-                }
-                is TransactionViewState.SetUpTransaction -> {
-                    setTextAmount(it.amount)
-                    setTextDate(it.date)
-                    setToggleTransactionType(it.type)
-                    setTextNote(it.note)
-                    setTextAccount(it.account)
-                    setTextCategory(it.category)
-
-                    hideLoadingGetTransaction()
-                }
-                is TransactionViewState.UpdateAmount -> {
-                    setTextAmount(it.amount)
-                }
-                is TransactionViewState.UpdateCategory -> {
-                    setTextCategory(it.category)
-                }
-                is TransactionViewState.UpdateAccount -> {
-                    setTextAccount(it.account)
-                }
-                is TransactionViewState.UpdateDate -> {
-                    setTextDate(it.date)
-                }
-                is TransactionViewState.UpdateNote -> {
-                    setTextNote(it.note)
-                }
-                is TransactionViewState.OpenDatePicker -> {
-                    openDatePicker(it.date)
-                }
-                is TransactionViewState.OpenNotePage -> {
-                    openNotePage(it.note)
-                }
-                is TransactionViewState.OpenCategoryPage -> {
-                    openCategoryPage(it.categoryType)
-                }
                 is TransactionViewState.SuccessSaveTransaction -> {
-                    hideLoadingSaveTransaction()
                     setResult(RESULT_OK)
                     finish()
                 }
@@ -239,6 +206,33 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
                 }
             }
         }
+
+        viewModel.navigationViewState.observe(this) {
+            when (it) {
+                is TransactionNavigationViewState.OpenDatePicker -> {
+                    if (it.isOpen == true) {
+                        openDatePicker(it.date)
+                        viewModel.onOpenDatePicker(null)
+                    }
+                }
+                is TransactionNavigationViewState.OpenNotePage -> {
+                    if (it.isOpen == true) {
+                        openNotePage(it.note)
+                        viewModel.onOpenNotePage(null)
+                    }
+                }
+                is TransactionNavigationViewState.OpenCategoryPage -> {
+                    if (it.isOpen == true) {
+                        openCategoryPage(it.categoryType)
+                        viewModel.onOpenCategory(null)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isCreateTransaction(transactionId: Long): Boolean {
+        return transactionId == DEFAULT_TRANSACTION_ID
     }
 
     private fun showButtonDelete() {
@@ -321,34 +315,17 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     }
 
     private fun setUpToolbar(title: String) {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
+        bindingToolbar.apply {
+            textTitle.text = title
+            imageActionLeft.apply {
+                setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+                setOnClickListener {
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+                visible()
+            }
         }
-    }
-
-    private fun showLoadingGetTransaction() {
-        binding.progressBarGet.show()
-        binding.textAmount.gone()
-    }
-
-    private fun hideLoadingGetTransaction() {
-        binding.progressBarGet.hide()
-        binding.textAmount.visible()
-    }
-
-    private fun showLoadingSaveTransaction() {
-        binding.progressBarSave.show()
-        binding.buttonSave.disabled()
-    }
-
-    private fun hideLoadingSaveTransaction() {
-        binding.progressBarSave.hide()
-        binding.buttonSave.enabled()
     }
 
     private fun openCategoryPage(categoryType: CategoryType?) {
@@ -376,12 +353,54 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
 
     private fun openAccountPage() {
         accountResult.launch(
-            accountRouter.openAccountSelectionPage(this)
+            Intent(this, TransactionAccountActivity::class.java)
         )
     }
 
+    private fun setUpBottomSheet() {
+        bottomSheetBehavior =
+            BottomSheetBehavior.from(bindingCalculator.layoutBottomSheetRoot).apply {
+                isHideable = true
+            }
+
+        // Default State
+        showCalculator()
+
+        supportFragmentManager.beginTransaction()
+            .replace(bindingCalculator.frameLayout.id, calculatorRouter.getCalculatorFragment())
+            .commit()
+    }
+
+    override fun onInputNumber(text: String) {
+        viewModel.setCounter(text)
+    }
+
+    override fun onClear() {
+        viewModel.onClearCounter()
+    }
+
+    override fun onClose() {
+        closeCalculator()
+    }
+
+    private fun showCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun closeCalculator() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            closeCalculator()
+        } else {
+            setResult(RESULT_CANCELED)
+            finish()
+        }
+    }
+
     companion object {
-        private const val DEFAULT_TRANSACTION_ID: Long = -1
         private const val COUNT_TODAY: Int = 0
         private const val COUNT_TOMORROW: Int = 1
         private const val COUNT_YESTERDAY: Int = -1

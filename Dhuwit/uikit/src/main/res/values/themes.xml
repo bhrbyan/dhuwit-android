@@ -153,6 +153,7 @@
         <item name="android:textCursorDrawable">@drawable/background_cursor_input_text</item>
         <item name="android:maxLines">1</item>
         <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">13</item>
         <item name="android:textAppearance">@style/Uikit.Style.TextAppearance.Body2</item>
     </style>
 
@@ -192,10 +193,10 @@
 
     <style name="Uikit.Style.CardView.Corner">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">8dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeBottomRight">8dp</item>
-        <item name="cornerSizeBottomLeft">8dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
     </style>
 
     <style name="Uikit.Style.CardView.Corner.Top">

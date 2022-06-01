@@ -11,6 +11,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transaction_table")
     suspend fun getTransactions(): List<TransactionEntity>
 
+    @Query("SELECT * FROM transaction_table WHERE account_id = :accountId")
+    suspend fun getTransactionsByAccountId(accountId: Long?): List<TransactionEntity>
+
     @Query("SELECT * FROM transaction_table WHERE id = :id")
     suspend fun getTransaction(id: Long): TransactionEntity
 
@@ -22,4 +25,7 @@ interface TransactionDao {
 
     @Query("DELETE FROM transaction_table WHERE id = :id")
     suspend fun deleteTransaction(id: Long)
+
+    @Query("DELETE FROM transaction_table WHERE account_id = :accountId")
+    suspend fun deleteTransactionByAccountId(accountId: Long?)
 }

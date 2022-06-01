@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main -->
+    <string name="account_main_toolbar_title">Accounts</string>
+    <string name="account_main_empty_state_transactions_title">Transactions not found</string>
+    <string name="account_main_empty_state_transactions_description">You don\'t have any transaction yet, let\'s create one now!</string>
+    <string name="account_main_account_name">%1$s\'s Balance</string>
+    <string name="account_main_income">Income</string>
+    <string name="account_main_expense">Expense</string>
+    <string name="account_main_transaction_header_total_amount_negative_format">-%1$s</string>
+    <string name="account_main_transactions_item_expense">-%1$s</string>
+    <string name="account_main_transactions_item_income">+%1$s</string>
+    <string name="account_main_transactions_title">Transactions</string>
+
     <!-- Form -->
     <string name="account_form_update_toolbar_title">Update Account</string>
     <string name="account_form_create_toolbar_title">Create Account</string>
@@ -12,7 +24,4 @@
     <string name="account_list_title">Account</string>
     <string name="account_list_add_title">Create new account!</string>
     <string name="account_list_add_description">Separate your accounts based on their usage.</string>
-
-    <!-- Selection -->
-    <string name="account_selection_toolbar_title">Select Account</string>
 </resources>

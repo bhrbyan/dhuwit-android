@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calculator_bottom_sheet_head_title">Input Amount</string>
+
+    <string name="calculator_one">1</string>
+    <string name="calculator_two">2</string>
+    <string name="calculator_three">3</string>
+    <string name="calculator_four">4</string>
+    <string name="calculator_five">5</string>
+    <string name="calculator_six">6</string>
+    <string name="calculator_seven">7</string>
+    <string name="calculator_eight">8</string>
+    <string name="calculator_nine">9</string>
+    <string name="calculator_zero">0</string>
+    <string name="calculator_dot">.</string>
+    <string name="calculator_clear">C</string>
+</resources>

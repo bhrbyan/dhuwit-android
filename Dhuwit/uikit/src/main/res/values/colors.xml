@@ -44,6 +44,10 @@
     <color name="silver">#c7c7c7</color>
     <color name="monza">#B00020</color>
     <color name="ecstasy">#F57F17</color>
+    <color name="chantilly">#f8bbd0</color>
+    <color name="sail">#bbdefb</color>
+    <color name="zanah">#c8e6c9</color>
+    <color name="buttermilk">#ffecb3</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 </resources>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="on_boarding_title">Let\'s Get Started!</string>
-    <string name="on_boarding_description">Create your account to record all transactions</string>
-    <string name="on_boarding_account_title">Account</string>
-    <string name="on_boarding_account_hint_name">Name</string>
-    <string name="on_boarding_account_hint_balance">Balance</string>
+    <string name="on_boarding_title">Select\nyour account</string>
+    <string name="on_boarding_description">Create your account now by selecting one of the accounts below to start recording all your transactions</string>
+    <string name="on_boarding_default_account_checking_title">Checking Account</string>
+    <string name="on_boarding_default_account_checking_description">The account you use for daily transactions</string>
+    <string name="on_boarding_default_account_credit_card_title">Credit Card</string>
+    <string name="on_boarding_default_account_credit_card_description">For your credit card or other accounts with credit limit</string>
+    <string name="on_boarding_default_account_cash_title">Cash</string>
+    <string name="on_boarding_default_account_cash_description">An account for make a transaction with cash</string>
+    <string name="on_boarding_default_account_other_title">Other</string>
+    <string name="on_boarding_default_account_other_description">Specify your own account</string>
 </resources>

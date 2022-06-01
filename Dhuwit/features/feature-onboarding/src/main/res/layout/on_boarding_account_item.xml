@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_content"
+        style="@style/Uikit.Style.CardView.All"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/uikit_margin_padding_size_medium"
+        android:layout_marginVertical="@dimen/uikit_margin_padding_size_xsmall"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="false"
+            android:focusable="true"
+            android:paddingHorizontal="@dimen/uikit_margin_padding_size_xxlarge"
+            android:paddingVertical="@dimen/uikit_margin_padding_size_large">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_wallet" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Subtitle1"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/text_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Credit Card" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/uikit_margin_padding_size_large"
+                android:layout_marginEnd="@dimen/uikit_margin_padding_size_large"
+                android:textAppearance="@style/Uikit.Style.TextAppearance.Caption"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_icon"
+                app:layout_constraintTop_toBottomOf="@+id/text_title"
+                tools:text="Credit Card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

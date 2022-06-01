@@ -39,6 +39,10 @@ dependencies {
     /* Module */
     implementation project(":core")
     implementation project(":cores:core-account")
+    implementation project(":cores:core-transaction")
+    implementation project(":cores:core-category")
+    implementation project(":features:feature-transaction")
+    implementation project(":features:feature-calculator")
     implementation project(":state")
     implementation project(":storage")
     implementation project(":uikit")
@@ -63,4 +67,7 @@ dependencies {
 
     /* Decimal Input Text */
     implementation deps.thirdParties.inputText.currency
+
+    /* View Pager 2 */
+    implementation deps.androidX.viewPager2
 }

@@ -2,6 +2,7 @@ package id.dhuwit.feature.category
 
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,16 +18,20 @@ import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
 import id.dhuwit.state.ViewState
+import id.dhuwit.uikit.databinding.ToolbarBinding
 
 @AndroidEntryPoint
 class CategoryListActivity : BaseActivity(), CategoryListListener {
 
     private lateinit var binding: CategoryListActivityBinding
+    private lateinit var bindingToolbar: ToolbarBinding
     private lateinit var adapterCategoryList: CategoryListAdapter
+
     private val viewModel: CategoryListViewModel by viewModels()
 
     override fun init() {
         binding = CategoryListActivityBinding.inflate(layoutInflater)
+        bindingToolbar = binding.layoutToolbar
         setContentView(binding.root)
 
         setUpToolbar()
@@ -86,14 +91,16 @@ class CategoryListActivity : BaseActivity(), CategoryListListener {
     }
 
     private fun setUpToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = getString(R.string.category_list_toolbar_title)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        binding.toolbar.setNavigationOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+        bindingToolbar.apply {
+            textTitle.text = getString(R.string.category_list_toolbar_title)
+            imageActionLeft.apply {
+                setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+                setOnClickListener {
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+                visible()
+            }
         }
     }
 

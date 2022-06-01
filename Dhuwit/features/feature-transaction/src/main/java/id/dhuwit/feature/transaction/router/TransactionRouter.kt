@@ -4,5 +4,5 @@ import android.content.Context
 import android.content.Intent
 
 interface TransactionRouter {
-    fun openTransactionPage(context: Context, transactionId: Long?): Intent
+    fun openTransactionPage(context: Context, transactionId: Long?, accountId: Long?): Intent
 }

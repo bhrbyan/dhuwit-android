@@ -3,19 +3,38 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.32135416666666666" />
         <entry key="features/feature-account/src/main/res/layout-land/account_activity.xml" value="0.2515625" />
+        <entry key="features/feature-account/src/main/res/layout-land/account_form_activity.xml" value="0.1876870457460453" />
+        <entry key="features/feature-account/src/main/res/layout-land/account_main_activity.xml" value="0.2" />
+        <entry key="features/feature-account/src/main/res/layout-land/account_main_item.xml" value="0.17657118426678067" />
+        <entry key="features/feature-account/src/main/res/layout-land/account_main_transaction_header.xml" value="0.3039760581445062" />
         <entry key="features/feature-account/src/main/res/layout-land/account_selection_activity.xml" value="0.2018018018018018" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_list_item.xml" value="0.47291666666666665" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_activity.xml" value="0.10755208333333334" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_item.xml" value="0.10755208333333334" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp-land/account_main_transaction_header.xml" value="0.1" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_activity.xml" value="0.3885416666666667" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp/account_form_activity.xml" value="0.19427083333333334" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_list_item.xml" value="0.3885416666666667" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp/account_main_activity.xml" value="0.159375" />
+        <entry key="features/feature-account/src/main/res/layout-sw600dp/account_main_transaction_header.xml" value="0.159375" />
         <entry key="features/feature-account/src/main/res/layout-sw600dp/account_selection_activity.xml" value="0.3671875" />
         <entry key="features/feature-account/src/main/res/layout/account_activity.xml" value="0.2296875" />
+        <entry key="features/feature-account/src/main/res/layout/account_form_activity.xml" value="0.3189397178281317" />
         <entry key="features/feature-account/src/main/res/layout/account_list.xml" value="0.2947916666666667" />
         <entry key="features/feature-account/src/main/res/layout/account_list_add.xml" value="0.2734375" />
         <entry key="features/feature-account/src/main/res/layout/account_list_item.xml" value="0.374584169001406" />
         <entry key="features/feature-account/src/main/res/layout/account_list_section.xml" value="0.27314814814814814" />
+        <entry key="features/feature-account/src/main/res/layout/account_main_activity.xml" value="0.3189397178281317" />
+        <entry key="features/feature-account/src/main/res/layout/account_main_fragment.xml" value="0.3189397178281317" />
+        <entry key="features/feature-account/src/main/res/layout/account_main_item.xml" value="0.3189397178281317" />
+        <entry key="features/feature-account/src/main/res/layout/account_main_transaction_header.xml" value="0.297593921485859" />
+        <entry key="features/feature-account/src/main/res/layout/account_main_transaction_item.xml" value="0.30141085934159895" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_activity.xml" value="0.33603603603603605" />
         <entry key="features/feature-account/src/main/res/layout/account_selection_item.xml" value="0.33603603603603605" />
+        <entry key="features/feature-calculator/src/main/res/layout/calculator_bottom_sheet.xml" value="0.3189397178281317" />
+        <entry key="features/feature-calculator/src/main/res/layout/calculator_fragment.xml" value="0.3189397178281317" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_activity.xml" value="0.3573313038457884" />
         <entry key="features/feature-category/src/main/res/layout-land/category_list_item.xml" value="0.14270833333333333" />
         <entry key="features/feature-category/src/main/res/layout-sw600dp/category_list_activity.xml" value="0.20833333333333334" />
@@ -25,27 +44,58 @@
         <entry key="features/feature-dashboard/src/main/res/layout-land/dashboard_activity.xml" value="0.24072265625" />
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp-land/dashboard_activity.xml" value="0.13518066406249996" />
         <entry key="features/feature-dashboard/src/main/res/layout-sw600dp/dashboard_activity.xml" value="0.20335998535156252" />
-        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.3550765991210938" />
+        <entry key="features/feature-dashboard/src/main/res/layout/dashboard_activity.xml" value="0.19018402099609377" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_header.xml" value="0.27314814814814814" />
         <entry key="features/feature-dashboard/src/main/res/layout/dashboard_transaction_item.xml" value="0.3885416666666667" />
         <entry key="features/feature-note/src/main/res/layout-land/note_activity.xml" value="0.2018018018018018" />
         <entry key="features/feature-note/src/main/res/layout-sw600dp/note_activity.xml" value="0.37333333333333335" />
         <entry key="features/feature-note/src/main/res/layout/note_activity.xml" value="0.33155555555555555" />
         <entry key="features/feature-onboarding/src/main/res/layout-land/on_boarding_activity.xml" value="0.24270833333333333" />
-        <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.3883333333333333" />
-        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.1531677825296113" />
+        <entry key="features/feature-onboarding/src/main/res/layout-sw600dp/on_boarding_activity.xml" value="0.21" />
+        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_account_item.xml" value="0.2441214194100043" />
+        <entry key="features/feature-onboarding/src/main/res/layout/on_boarding_activity.xml" value="0.25" />
+        <entry key="features/feature-transaction/src/main/res/layout-land/transaction_account_activity.xml" value="0.33304831124412143" />
         <entry key="features/feature-transaction/src/main/res/layout-land/transaction_activity.xml" value="0.2656332398865271" />
-        <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.34841059534457713" />
+        <entry key="features/feature-transaction/src/main/res/layout-sw600dp-land/transaction_activity.xml" value="0.12" />
+        <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_account_activity.xml" value="0.18359375" />
         <entry key="features/feature-transaction/src/main/res/layout-sw600dp/transaction_activity.xml" value="0.24596698099172778" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_account_activity.xml" value="0.30141085934159895" />
+        <entry key="features/feature-transaction/src/main/res/layout/transaction_account_item.xml" value="0.30141085934159895" />
         <entry key="features/feature-transaction/src/main/res/layout/transaction_activity.xml" value="0.27158853655400395" />
         <entry key="uikit/src/main/res/drawable/background_border_calculator.xml" value="0.28958333333333336" />
         <entry key="uikit/src/main/res/drawable/background_border_layout.xml" value="0.4046875" />
         <entry key="uikit/src/main/res/drawable/background_border_primary_account.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/background_bottom_sheet.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/background_button_fill_disabled.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/background_button_fill_enable.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/background_divider.xml" value="0.2165" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_blue.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_minor.xml" value="0.2665" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_pink.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_primary_account.xml" value="0.2265" />
+        <entry key="uikit/src/main/res/drawable/background_gradient_yellow.xml" value="0.2415" />
         <entry key="uikit/src/main/res/drawable/background_launcher_screen.xml" value="0.3453333333333333" />
+        <entry key="uikit/src/main/res/drawable/ic_add_account.xml" value="0.2665" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_double_up.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_down.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_arrow_right.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_bank.xml" value="0.1" />
+        <entry key="uikit/src/main/res/drawable/ic_cash.xml" value="0.1" />
+        <entry key="uikit/src/main/res/drawable/ic_chart_down_red.xml" value="0.2265" />
+        <entry key="uikit/src/main/res/drawable/ic_chart_up_green.xml" value="0.2265" />
+        <entry key="uikit/src/main/res/drawable/ic_credit_card.xml" value="0.1" />
         <entry key="uikit/src/main/res/drawable/ic_delete.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_delete_white.xml" value="0.24895833333333334" />
         <entry key="uikit/src/main/res/drawable/ic_done.xml" value="0.28958333333333336" />
+        <entry key="uikit/src/main/res/drawable/ic_insight_black.xml" value="0.202" />
+        <entry key="uikit/src/main/res/drawable/ic_setting_black.xml" value="0.2665" />
         <entry key="uikit/src/main/res/drawable/ic_star.xml" value="0.4046875" />
+        <entry key="uikit/src/main/res/drawable/ic_submit.xml" value="0.198" />
+        <entry key="uikit/src/main/res/drawable/ic_wallet.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/drawable/selector_button_fill.xml" value="0.2415" />
+        <entry key="uikit/src/main/res/layout/empty_state.xml" value="0.3189397178281317" />
+        <entry key="uikit/src/main/res/layout/layout_toolbar.xml" value="0.3189397178281317" />
+        <entry key="uikit/src/main/res/layout/toolbar.xml" value="0.3189397178281317" />
       </map>
     </option>
   </component>
