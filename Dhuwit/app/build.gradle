@@ -15,7 +15,7 @@ android {
         applicationId "id.dhuwit"
         minSdkVersion ver.app.sdk.min
         targetSdkVersion ver.app.sdk.target
-        versionCode 10
+        versionCode 11
         versionName "2.0.0"
         dimension "version"
 
