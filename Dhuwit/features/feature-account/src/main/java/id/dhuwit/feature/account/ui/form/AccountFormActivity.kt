@@ -39,9 +39,7 @@ class AccountFormActivity : BaseActivity(), CalculatorListener {
     override fun init() {
         binding = AccountFormActivityBinding.inflate(layoutInflater)
         bindingToolbar = binding.layoutToolbar
-        binding.layoutCalculator?.let {
-            bindingCalculator = it
-        }
+        bindingCalculator = binding.layoutCalculator
         setContentView(binding.root)
 
         setUpToolbar()
@@ -76,7 +74,7 @@ class AccountFormActivity : BaseActivity(), CalculatorListener {
                 viewModel.deleteAccount()
             }
 
-            textAmount?.setOnClickListener {
+            textAmount.setOnClickListener {
                 showCalculator()
             }
         }
