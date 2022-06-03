@@ -61,6 +61,7 @@ class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             viewModel.getTransactions()
+            viewModel.getAccounts()
         }
     }
 
