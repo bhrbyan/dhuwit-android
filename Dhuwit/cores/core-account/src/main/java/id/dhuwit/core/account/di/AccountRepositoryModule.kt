@@ -11,7 +11,7 @@ import id.dhuwit.core.account.database.AccountDatabase
 import id.dhuwit.core.account.repository.AccountDataSource
 import id.dhuwit.core.account.repository.AccountLocalDataSource
 import id.dhuwit.core.account.repository.AccountRepository
-import id.dhuwit.core.di.LocalSource
+import id.dhuwit.core.base.di.LocalSource
 import javax.inject.Singleton
 
 @Module

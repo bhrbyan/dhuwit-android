@@ -1,4 +1,4 @@
-package id.dhuwit.core.base
+package id.dhuwit.core.base.base
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import id.dhuwit.core.R
-import id.dhuwit.core.databinding.BaseConfirmationDialogFragmentBinding
+import id.dhuwit.core.base.R
+import id.dhuwit.core.base.databinding.BaseConfirmationDialogFragmentBinding
 
 
 abstract class BaseConfirmationDialogFragment : DialogFragment() {

@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.dhuwit.core.account.database.AccountDao
-import id.dhuwit.core.di.LocalSource
+import id.dhuwit.core.base.di.LocalSource
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.database.TransactionDatabase
 import id.dhuwit.core.transaction.repository.TransactionDataSource

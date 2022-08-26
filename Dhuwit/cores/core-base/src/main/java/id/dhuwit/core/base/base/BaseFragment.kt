@@ -1,4 +1,4 @@
-package id.dhuwit.core.base
+package id.dhuwit.core.base.base
 
 import android.os.Bundle
 import android.view.View

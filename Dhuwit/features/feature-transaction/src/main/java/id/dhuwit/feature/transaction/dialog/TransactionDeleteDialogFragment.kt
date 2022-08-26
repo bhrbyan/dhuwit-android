@@ -1,10 +1,9 @@
 package id.dhuwit.feature.transaction.dialog
 
 import android.content.Context
-import id.dhuwit.core.base.BaseConfirmationDialogFragment
 import id.dhuwit.feature.transaction.R
 
-class TransactionDeleteDialogFragment : BaseConfirmationDialogFragment() {
+class TransactionDeleteDialogFragment : id.dhuwit.core.base.base.BaseConfirmationDialogFragment() {
 
     private var listener: TransactionDeleteConfirmationListener? = null
 

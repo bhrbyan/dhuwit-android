@@ -2,9 +2,9 @@ package id.dhuwit.feature.account.ui.main.adapter.main
 
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
+import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.base.extension.gone
+import id.dhuwit.core.base.extension.visible
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainItemBinding
 import id.dhuwit.storage.Storage
@@ -19,9 +19,9 @@ class AccountMainViewHolder(private val binding: AccountMainItemBinding) :
             account.balance.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
 
         if (account.isPrimary) {
-            binding.imagePrimaryAccount?.visible()
+            binding.imagePrimaryAccount.visible()
         } else {
-            binding.imagePrimaryAccount?.gone()
+            binding.imagePrimaryAccount.gone()
         }
     }
 

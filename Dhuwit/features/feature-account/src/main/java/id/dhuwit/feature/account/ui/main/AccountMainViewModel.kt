@@ -7,8 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
-import id.dhuwit.core.helper.DateHelper
-import id.dhuwit.core.helper.DateHelper.convertPattern
+import id.dhuwit.core.base.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionGetBy
 import id.dhuwit.core.transaction.model.TransactionType
@@ -117,7 +116,10 @@ class AccountMainViewModel @Inject constructor(
     }
 
     private fun setPeriodDate(periodMonth: Int) {
-        periodDate = DateHelper.getPeriodDate(periodMonth, DateHelper.PATTERN_DATE_PERIOD)
+        periodDate = id.dhuwit.core.base.helper.DateHelper.getPeriodDate(
+            periodMonth,
+            id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_PERIOD
+        )
         updateViewState(
             AccountMainViewState.SetPeriodDate(periodDate)
         )
@@ -134,10 +136,10 @@ class AccountMainViewModel @Inject constructor(
     }
 
     private fun isTransactionWithinPeriodDate(transaction: Transaction): Boolean {
-        return DateHelper.isTransactionDateWithinRangePeriodDate(
+        return id.dhuwit.core.base.helper.DateHelper.isTransactionDateWithinRangePeriodDate(
             transactionDate = transaction.date.convertPattern(
-                DateHelper.PATTERN_DATE_DATABASE,
-                DateHelper.PATTERN_DATE_PERIOD
+                id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_DATABASE,
+                id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_PERIOD
             ),
             periodDate = periodDate ?: ""
         )

@@ -8,8 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.extension.*
+import id.dhuwit.core.base.extension.*
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountFormActivityBinding
 import id.dhuwit.feature.calculator.databinding.CalculatorBottomSheetBinding
@@ -21,7 +20,7 @@ import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFormActivity : BaseActivity(), CalculatorListener {
+class AccountFormActivity : id.dhuwit.core.base.base.BaseActivity(), CalculatorListener {
 
     private lateinit var binding: AccountFormActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding
@@ -204,7 +203,7 @@ class AccountFormActivity : BaseActivity(), CalculatorListener {
     }
 
     private fun setTextAmount(amount: Double?) {
-        binding.textAmount?.text = amount?.convertPriceWithCurrencyFormat(
+        binding.textAmount.text = amount?.convertPriceWithCurrencyFormat(
             storage.getSymbolCurrency()
         )
     }

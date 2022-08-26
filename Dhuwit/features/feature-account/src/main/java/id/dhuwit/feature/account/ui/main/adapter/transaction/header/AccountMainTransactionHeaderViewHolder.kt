@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.transaction.model.TransactionSection
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainTransactionHeaderBinding

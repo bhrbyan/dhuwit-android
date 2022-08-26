@@ -1,4 +1,4 @@
-package id.dhuwit.core.extension
+package id.dhuwit.core.base.extension
 
 import android.view.View
 

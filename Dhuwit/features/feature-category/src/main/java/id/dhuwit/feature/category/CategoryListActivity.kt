@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.base.extension.gone
+import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.category.model.Category
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
@@ -21,7 +20,7 @@ import id.dhuwit.state.ViewState
 import id.dhuwit.uikit.databinding.ToolbarBinding
 
 @AndroidEntryPoint
-class CategoryListActivity : BaseActivity(), CategoryListListener {
+class CategoryListActivity : id.dhuwit.core.base.base.BaseActivity(), CategoryListListener {
 
     private lateinit var binding: CategoryListActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding

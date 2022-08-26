@@ -6,12 +6,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import id.dhuwit.core.base.di.LocalSource
 import id.dhuwit.core.currency.database.CurrencyDao
 import id.dhuwit.core.currency.database.CurrencyDatabase
 import id.dhuwit.core.currency.repository.CurrencyDataSource
 import id.dhuwit.core.currency.repository.CurrencyLocalDataSource
 import id.dhuwit.core.currency.repository.CurrencyRepository
-import id.dhuwit.core.di.LocalSource
 import javax.inject.Singleton
 
 @Module

@@ -4,13 +4,12 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
+import id.dhuwit.core.base.extension.convertDoubleToString
+import id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_DATABASE
+import id.dhuwit.core.base.helper.DateHelper.convertToMillis
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
-import id.dhuwit.core.extension.convertDoubleToString
-import id.dhuwit.core.helper.DateHelper
-import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
-import id.dhuwit.core.helper.DateHelper.convertToMillis
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionDeleteBy
 import id.dhuwit.core.transaction.model.TransactionType
@@ -83,7 +82,7 @@ class TransactionViewModel @Inject constructor(
         viewModelScope.launch {
             if (isCreateTransaction()) {
                 setCounter(counterAmount)
-                setDate(DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
+                setDate(id.dhuwit.core.base.helper.DateHelper.getCurrentDate(PATTERN_DATE_DATABASE))
                 setType(TransactionType.Expense)
                 setNote(null)
 
@@ -305,8 +304,12 @@ class TransactionViewModel @Inject constructor(
                 type = type.value ?: TransactionType.Expense,
                 amount = amount.value ?: DEFAULT_AMOUNT,
                 note = note.value,
-                date = date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                date = date.value ?: id.dhuwit.core.base.helper.DateHelper.getCurrentDate(
+                    PATTERN_DATE_DATABASE
+                ),
+                createdAt = id.dhuwit.core.base.helper.DateHelper.getCurrentDate(
+                    PATTERN_DATE_DATABASE
+                ),
                 category = category.value,
                 accountId = account.value?.id ?: 1
             )
@@ -316,8 +319,12 @@ class TransactionViewModel @Inject constructor(
                 type = type.value ?: TransactionType.Expense,
                 amount = amount.value ?: DEFAULT_AMOUNT,
                 note = note.value,
-                date = date.value ?: DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
-                createdAt = DateHelper.getCurrentDate(PATTERN_DATE_DATABASE),
+                date = date.value ?: id.dhuwit.core.base.helper.DateHelper.getCurrentDate(
+                    PATTERN_DATE_DATABASE
+                ),
+                createdAt = id.dhuwit.core.base.helper.DateHelper.getCurrentDate(
+                    PATTERN_DATE_DATABASE
+                ),
                 category = category.value,
                 accountId = account.value?.id ?: 1
             )

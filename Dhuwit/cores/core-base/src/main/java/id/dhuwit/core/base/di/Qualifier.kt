@@ -1,4 +1,4 @@
-package id.dhuwit.core.di
+package id.dhuwit.core.base.di
 
 import javax.inject.Qualifier
 

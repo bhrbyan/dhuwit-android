@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.extension.visible
+import id.dhuwit.core.base.extension.visible
 import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionAccountActivityBinding
 import id.dhuwit.feature.transaction.ui.TransactionConstants
@@ -19,7 +18,8 @@ import id.dhuwit.uikit.databinding.ToolbarBinding
 import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 
 @AndroidEntryPoint
-class TransactionAccountActivity : BaseActivity(), TransactionAccountListener {
+class TransactionAccountActivity : id.dhuwit.core.base.base.BaseActivity(),
+    TransactionAccountListener {
 
     private lateinit var binding: TransactionAccountActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding

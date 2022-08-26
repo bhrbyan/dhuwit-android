@@ -3,12 +3,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import id.dhuwit.core.base.BaseFragment
 import id.dhuwit.feature.calculator.R
 import id.dhuwit.feature.calculator.databinding.CalculatorFragmentBinding
 import id.dhuwit.feature.calculator.ui.CalculatorListener
 
-class CalculatorFragment : BaseFragment() {
+class CalculatorFragment : id.dhuwit.core.base.base.BaseFragment() {
 
     private var binding: CalculatorFragmentBinding? = null
 

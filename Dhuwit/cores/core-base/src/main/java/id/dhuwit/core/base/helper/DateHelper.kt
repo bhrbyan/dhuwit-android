@@ -1,4 +1,4 @@
-package id.dhuwit.core.helper
+package id.dhuwit.core.base.helper
 
 import java.text.SimpleDateFormat
 import java.util.*

@@ -2,7 +2,6 @@ package id.dhuwit.launcher
 
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.core.category.util.CategoryUtil
 import id.dhuwit.core.currency.util.CurrencyUtil
 import id.dhuwit.feature.account.router.AccountRouter
@@ -11,7 +10,7 @@ import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LauncherActivity : BaseActivity() {
+class LauncherActivity : id.dhuwit.core.base.base.BaseActivity() {
 
     private val viewModel: LauncherViewModel by viewModels()
 

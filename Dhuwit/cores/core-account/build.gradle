@@ -37,7 +37,7 @@ android {
 dependencies {
 
     /* Module */
-    implementation project(":core")
+    implementation project(":cores:core-base")
     implementation project(":state")
 
     implementation deps.kotlin
@@ -60,4 +60,8 @@ dependencies {
     implementation deps.google.hilt.android
     kapt deps.google.hilt.compiler
     kapt deps.androidX.hiltCompiler
+}
+
+kapt {
+    correctErrorTypes = true
 }

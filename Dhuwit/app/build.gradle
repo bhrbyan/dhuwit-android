@@ -64,7 +64,7 @@ android {
 dependencies {
 
     /* Module */
-    implementation project(":core")
+    implementation project(":cores:core-base")
     implementation project(":cores:core-currency")
     implementation project(":cores:core-category")
     implementation project(":features:feature-onboarding")

@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import id.dhuwit.core.base.BaseActivity
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
+import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.base.extension.gone
+import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
@@ -29,7 +28,8 @@ import id.dhuwit.uikit.divider.DividerMarginItemDecorationViewPager
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountMainActivity : BaseActivity(), AccountMainTransactionItemListener {
+class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
+    AccountMainTransactionItemListener {
 
     private lateinit var binding: AccountMainActivityBinding
     private lateinit var bindingToolbar: ToolbarBinding

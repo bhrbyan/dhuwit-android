@@ -10,17 +10,15 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.core.base.BaseActivity
+import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.base.extension.gone
+import id.dhuwit.core.base.extension.visible
+import id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_DATABASE
+import id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_TRANSACTION
+import id.dhuwit.core.base.helper.DateHelper.convertPattern
+import id.dhuwit.core.base.helper.DateHelper.convertToDate
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.core.extension.convertPriceWithCurrencyFormat
-import id.dhuwit.core.extension.gone
-import id.dhuwit.core.extension.visible
-import id.dhuwit.core.helper.DateHelper
-import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_DATABASE
-import id.dhuwit.core.helper.DateHelper.PATTERN_DATE_TRANSACTION
-import id.dhuwit.core.helper.DateHelper.convertPattern
-import id.dhuwit.core.helper.DateHelper.convertToDate
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.calculator.databinding.CalculatorBottomSheetBinding
 import id.dhuwit.feature.calculator.router.CalculatorRouter
@@ -43,7 +41,8 @@ import id.dhuwit.uikit.databinding.ToolbarBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListener,
+class TransactionActivity : id.dhuwit.core.base.base.BaseActivity(),
+    TransactionDeleteConfirmationListener,
     CalculatorListener {
 
     private lateinit var binding: TransactionActivityBinding
@@ -291,15 +290,15 @@ class TransactionActivity : BaseActivity(), TransactionDeleteConfirmationListene
     private fun setTextDate(date: String?) {
         val convertedDate = date?.convertPattern(PATTERN_DATE_DATABASE, PATTERN_DATE_TRANSACTION)
         binding.textDate.text = when (convertedDate) {
-            DateHelper.getDate(
+            id.dhuwit.core.base.helper.DateHelper.getDate(
                 PATTERN_DATE_TRANSACTION,
                 COUNT_TODAY
             ) -> getString(R.string.transaction_date_today)
-            DateHelper.getDate(
+            id.dhuwit.core.base.helper.DateHelper.getDate(
                 PATTERN_DATE_TRANSACTION,
                 COUNT_TOMORROW
             ) -> getString(R.string.transaction_date_tomorrow)
-            DateHelper.getDate(
+            id.dhuwit.core.base.helper.DateHelper.getDate(
                 PATTERN_DATE_TRANSACTION,
                 COUNT_YESTERDAY
             ) -> getString(R.string.transaction_date_yesterday)

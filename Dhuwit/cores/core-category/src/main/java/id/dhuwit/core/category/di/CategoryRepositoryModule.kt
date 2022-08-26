@@ -6,12 +6,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import id.dhuwit.core.base.di.LocalSource
 import id.dhuwit.core.category.database.CategoryDao
 import id.dhuwit.core.category.database.CategoryDatabase
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.core.category.repository.CategoryLocalDataSource
 import id.dhuwit.core.category.repository.CategoryRepository
-import id.dhuwit.core.di.LocalSource
 import javax.inject.Singleton
 
 @Module

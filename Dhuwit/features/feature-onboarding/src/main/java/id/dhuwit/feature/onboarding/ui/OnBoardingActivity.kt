@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.model.AccountOnBoarding
-import id.dhuwit.core.base.BaseActivity
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.onboarding.R
 import id.dhuwit.feature.onboarding.databinding.OnBoardingActivityBinding
@@ -18,7 +17,7 @@ import id.dhuwit.storage.Storage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
+class OnBoardingActivity : id.dhuwit.core.base.base.BaseActivity(), OnBoardingAccountListener {
 
     private lateinit var binding: OnBoardingActivityBinding
     private lateinit var adapterAccount: OnBoardingAccountAdapter
@@ -66,7 +65,7 @@ class OnBoardingActivity : BaseActivity(), OnBoardingAccountListener {
             submitList(getDefaultAccounts())
         }
 
-        binding.recyclerViewAccount?.apply {
+        binding.recyclerViewAccount.apply {
             adapter = adapterAccount
             layoutManager = LinearLayoutManager(context)
         }

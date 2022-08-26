@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion ver.app.sdk.compile
+    buildToolsVersion ver.app.buildTools
+
+    defaultConfig {
+        minSdkVersion ver.app.sdk.min
+        targetSdkVersion ver.app.sdk.target
+
+        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility ver.app.compat.source
+        targetCompatibility ver.app.compat.target
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+
+    /* Module */
+    implementation project(":uikit")
+
+    implementation deps.kotlin
+    implementation deps.google.material
+    implementation deps.androidX.kotlinExt
+    implementation deps.androidX.appCompat
+
+    /* Unit Test*/
+    testImplementation deps.jUnit
+    androidTestImplementation deps.androidX.test.extension
+    androidTestImplementation deps.androidX.test.espressoCore
+
+    /* Room */
+    implementation deps.androidX.room.runtime
+    annotationProcessor deps.androidX.room.compiler
+    kapt deps.androidX.room.compiler
+    implementation deps.androidX.room.extension
+
+    /* Hilt */
+    implementation deps.google.hilt.android
+    kapt deps.google.hilt.compiler
+}

@@ -1,7 +1,6 @@
 rootProject.name = "Dhuwit"
 /* Base */
 include ':app'
-include ':core'
 include ':storage'
 include ':state'
 include ':uikit'
@@ -19,3 +18,4 @@ include ':features:feature-note'
 include ':features:feature-onboarding'
 include ':features:feature-transaction'
 include ':features:feature-calculator'
+include ':cores:core-base'

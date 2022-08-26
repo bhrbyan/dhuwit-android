@@ -37,7 +37,7 @@ android {
 dependencies {
 
     /* Module */
-    implementation project(":core")
+    implementation project(":cores:core-base")
     implementation project(":state")
 
     implementation deps.kotlin
@@ -62,4 +62,8 @@ dependencies {
 
     /* Gson */
     implementation deps.google.gson
+}
+
+kapt {
+    correctErrorTypes = true
 }

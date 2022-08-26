@@ -3,8 +3,7 @@ package id.dhuwit.feature.account.ui.main.adapter.transaction.header
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import id.dhuwit.core.helper.DateHelper
-import id.dhuwit.core.helper.DateHelper.convertPattern
+import id.dhuwit.core.base.helper.DateHelper.convertPattern
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionSection
 import id.dhuwit.core.transaction.model.TransactionType
@@ -24,8 +23,8 @@ class AccountMainTransactionHeaderAdapter(private val storage: Storage) :
 
         transactions?.forEach { transaction ->
             val formattedDate = transaction.date.convertPattern(
-                DateHelper.PATTERN_DATE_DATABASE,
-                DateHelper.PATTERN_DATE_TRANSACTION
+                id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_DATABASE,
+                id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_TRANSACTION
             )
 
             if (transactionSections.size <= 0) {
