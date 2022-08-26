@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.TransactionSection
+import id.dhuwit.core.uikit.divider.UikitDividerItemDecorationLastItem
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainTransactionHeaderBinding
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
-import id.dhuwit.uikit.divider.DividerItemDecorationLastItem
 import kotlin.math.abs
 
 class AccountMainTransactionHeaderViewHolder(private val binding: AccountMainTransactionHeaderBinding) :
@@ -41,7 +41,7 @@ class AccountMainTransactionHeaderViewHolder(private val binding: AccountMainTra
                 false
             )
             addItemDecoration(
-                DividerItemDecorationLastItem(
+                UikitDividerItemDecorationLastItem(
                     ContextCompat.getDrawable(context, R.drawable.background_divider)
                 )
             )

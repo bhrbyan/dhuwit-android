@@ -15,6 +15,9 @@ import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.Transaction
+import id.dhuwit.core.uikit.databinding.EmptyStateBinding
+import id.dhuwit.core.uikit.databinding.ToolbarBinding
+import id.dhuwit.core.uikit.divider.UikitDividerMarginItemDecorationViewPager
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
 import id.dhuwit.feature.account.router.AccountRouter
@@ -22,9 +25,6 @@ import id.dhuwit.feature.account.ui.main.adapter.main.AccountMainAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.header.AccountMainTransactionHeaderAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
 import id.dhuwit.feature.transaction.router.TransactionRouter
-import id.dhuwit.uikit.databinding.EmptyStateBinding
-import id.dhuwit.uikit.databinding.ToolbarBinding
-import id.dhuwit.uikit.divider.DividerMarginItemDecorationViewPager
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -195,11 +195,12 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
 
                 // The ItemDecoration gives the current (centered) item horizontal margin so that
                 // it doesn't occupy the whole screen width. Without it the items overlap
-                val itemDecoration = DividerMarginItemDecorationViewPager(
-                    context,
-                    R.dimen.view_pager_current_item_horizontal_margin,
-                    false
-                )
+                val itemDecoration =
+                    UikitDividerMarginItemDecorationViewPager(
+                        context,
+                        R.dimen.view_pager_current_item_horizontal_margin,
+                        false
+                    )
                 addItemDecoration(itemDecoration)
             } else {
                 orientation = ViewPager2.ORIENTATION_VERTICAL
@@ -223,11 +224,12 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
 
                 // The ItemDecoration gives the current (centered) item horizontal margin so that
                 // it doesn't occupy the whole screen width. Without it the items overlap
-                val itemDecoration = DividerMarginItemDecorationViewPager(
-                    context,
-                    R.dimen.view_pager_current_item_horizontal_margin,
-                    true
-                )
+                val itemDecoration =
+                    UikitDividerMarginItemDecorationViewPager(
+                        context,
+                        R.dimen.view_pager_current_item_horizontal_margin,
+                        true
+                    )
                 addItemDecoration(itemDecoration)
             }
         }

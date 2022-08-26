@@ -9,13 +9,13 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.base.state.ViewState
+import id.dhuwit.core.uikit.databinding.ToolbarBinding
+import id.dhuwit.core.uikit.divider.UikitDividerMarginItemDecoration
 import id.dhuwit.feature.transaction.R
 import id.dhuwit.feature.transaction.databinding.TransactionAccountActivityBinding
 import id.dhuwit.feature.transaction.ui.TransactionConstants
 import id.dhuwit.feature.transaction.ui.account.adapter.TransactionAccountAdapter
 import id.dhuwit.feature.transaction.ui.account.adapter.TransactionAccountListener
-import id.dhuwit.uikit.databinding.ToolbarBinding
-import id.dhuwit.uikit.divider.DividerMarginItemDecoration
 
 @AndroidEntryPoint
 class TransactionAccountActivity : id.dhuwit.core.base.base.BaseActivity(),
@@ -76,7 +76,7 @@ class TransactionAccountActivity : id.dhuwit.core.base.base.BaseActivity(),
             adapter = adapterAccount
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
-                DividerMarginItemDecoration(
+                UikitDividerMarginItemDecoration(
                     context,
                     DividerItemDecoration.VERTICAL,
                     resources.getDimensionPixelSize(R.dimen.uikit_margin_padding_size_medium)

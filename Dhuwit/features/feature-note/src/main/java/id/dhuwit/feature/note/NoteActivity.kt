@@ -3,10 +3,10 @@ package id.dhuwit.feature.note
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import id.dhuwit.core.base.extension.visible
+import id.dhuwit.core.uikit.databinding.ToolbarBinding
 import id.dhuwit.feature.note.NoteConstants.KEY_INPUT_NOTE
 import id.dhuwit.feature.note.NoteConstants.KEY_NOTE
 import id.dhuwit.feature.note.databinding.NoteActivityBinding
-import id.dhuwit.uikit.databinding.ToolbarBinding
 
 class NoteActivity : id.dhuwit.core.base.base.BaseActivity() {
 

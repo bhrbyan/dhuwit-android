@@ -1,11 +1,12 @@
-package id.dhuwit.uikit.divider
+package id.dhuwit.core.uikit.divider
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class DividerItemDecorationLastItem(private val divider: Drawable?) :
+/* Exclude Last Divider Item */
+class UikitDividerItemDecorationLastItem(private val divider: Drawable?) :
     RecyclerView.ItemDecoration() {
 
     override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {

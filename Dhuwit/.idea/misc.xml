@@ -6,6 +6,7 @@
         <entry key="../../../../../../layout/custom_preview.xml" value="0.32135416666666666" />
         <entry key="cores/core-app/src/main/res/layout/base_confirmation_dialog_fragment.xml" value="0.18854211201368107" />
         <entry key="cores/core-base/src/main/res/layout/base_confirmation_dialog_fragment.xml" value="0.17101325352714836" />
+        <entry key="cores/core-uikit/src/main/res/drawable/ic_add.xml" value="0.189" />
         <entry key="features/feature-account/src/main/res/layout-land/account_activity.xml" value="0.2515625" />
         <entry key="features/feature-account/src/main/res/layout-land/account_form_activity.xml" value="0.1876870457460453" />
         <entry key="features/feature-account/src/main/res/layout-land/account_main_activity.xml" value="0.2" />

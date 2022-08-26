@@ -45,7 +45,7 @@ dependencies {
     implementation project(":features:feature-transaction")
     implementation project(":features:feature-calculator")
 
-    implementation project(":uikit")
+    implementation project(":cores:core-uikit")
 
     implementation deps.kotlin
     implementation deps.google.material

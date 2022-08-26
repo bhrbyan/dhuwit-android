@@ -1,4 +1,4 @@
-package id.dhuwit.uikit.divider
+package id.dhuwit.core.uikit.divider
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -6,7 +6,8 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import androidx.recyclerview.widget.DividerItemDecoration
 
-class DividerMarginItemDecoration(
+/* Add margin start and end */
+class UikitDividerMarginItemDecoration(
     context: Context,
     orientation: Int,
     margin: Int

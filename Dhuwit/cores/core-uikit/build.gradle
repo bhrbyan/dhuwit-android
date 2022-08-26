@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -40,10 +38,6 @@ android {
 
 dependencies {
 
-    /* Module */
-    implementation project(":cores:core-base")
-    implementation project(":cores:core-uikit")
-
     implementation deps.kotlin
     implementation deps.google.material
     implementation deps.androidX.kotlinExt
@@ -53,10 +47,4 @@ dependencies {
     testImplementation deps.jUnit
     androidTestImplementation deps.androidX.test.extension
     androidTestImplementation deps.androidX.test.espressoCore
-
-    /* Hilt */
-    implementation deps.google.hilt.android
-    kapt deps.google.hilt.compiler
-    kapt deps.androidX.hiltCompiler
-
 }

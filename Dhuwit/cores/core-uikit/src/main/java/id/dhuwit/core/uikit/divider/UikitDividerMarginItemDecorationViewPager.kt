@@ -1,4 +1,4 @@
-package id.dhuwit.uikit.divider
+package id.dhuwit.core.uikit.divider
 
 import android.content.Context
 import android.graphics.Rect
@@ -6,7 +6,8 @@ import android.view.View
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 
-class DividerMarginItemDecorationViewPager(
+/* Divider for View Pager */
+class UikitDividerMarginItemDecorationViewPager(
     context: Context,
     @DimenRes marginInDp: Int,
     private val isLandscape: Boolean

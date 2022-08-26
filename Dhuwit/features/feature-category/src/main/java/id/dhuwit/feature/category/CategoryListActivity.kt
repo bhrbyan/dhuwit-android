@@ -12,12 +12,12 @@ import id.dhuwit.core.base.extension.gone
 import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.category.model.Category
+import id.dhuwit.core.uikit.databinding.ToolbarBinding
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_ID
 import id.dhuwit.feature.category.CategoryListConstants.KEY_SELECT_CATEGORY_TYPE
 import id.dhuwit.feature.category.adapter.CategoryListAdapter
 import id.dhuwit.feature.category.adapter.CategoryListListener
 import id.dhuwit.feature.category.databinding.CategoryListActivityBinding
-import id.dhuwit.uikit.databinding.ToolbarBinding
 
 @AndroidEntryPoint
 class CategoryListActivity : id.dhuwit.core.base.base.BaseActivity(), CategoryListListener {

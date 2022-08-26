@@ -49,7 +49,7 @@ dependencies {
     implementation project(":features:feature-calculator")
     implementation project(":features:feature-category")
     implementation project(":features:feature-note")
-    implementation project(":uikit")
+    implementation project(":cores:core-uikit")
 
     implementation deps.kotlin
     implementation deps.google.material
