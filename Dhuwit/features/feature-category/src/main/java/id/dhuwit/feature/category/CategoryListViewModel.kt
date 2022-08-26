@@ -2,12 +2,12 @@ package id.dhuwit.feature.category
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.base.state.State
+import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategorySearch
 import id.dhuwit.core.category.model.CategoryType
 import id.dhuwit.core.category.repository.CategoryDataSource
-import id.dhuwit.state.State
-import id.dhuwit.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

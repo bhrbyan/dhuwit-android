@@ -1,9 +1,9 @@
 package id.dhuwit.core.category.repository
 
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.category.database.CategoryDao
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

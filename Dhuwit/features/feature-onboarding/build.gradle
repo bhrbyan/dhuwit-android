@@ -44,8 +44,8 @@ dependencies {
     implementation project(":cores:core-base")
     implementation project(":cores:core-account")
     implementation project(":features:feature-account")
-    implementation project(":state")
-    implementation project(":storage")
+    implementation project(":cores:core-setting")
+    
     implementation project(":uikit")
 
     implementation deps.kotlin

@@ -8,18 +8,18 @@ import id.dhuwit.core.base.extension.visible
 import id.dhuwit.core.base.helper.DateHelper.PATTERN_DATE_DATABASE
 import id.dhuwit.core.base.helper.DateHelper.PATTERN_TIME
 import id.dhuwit.core.base.helper.DateHelper.convertPattern
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainTransactionItemBinding
-import id.dhuwit.storage.Storage
 
 class AccountMainTransactionItemViewHolder(private val binding: AccountMainTransactionItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun onBind(transaction: Transaction, storage: Storage) {
+    fun onBind(transaction: Transaction, settingUser: SettingUser) {
         with(binding) {
-            setUpAmount(transaction.type, transaction.amount, storage.getSymbolCurrency())
+            setUpAmount(transaction.type, transaction.amount, settingUser.getSymbolCurrency())
             textCategoryName.text = transaction.category?.name
             textTime.text =
                 transaction.createdAt.convertPattern(PATTERN_DATE_DATABASE, PATTERN_TIME)

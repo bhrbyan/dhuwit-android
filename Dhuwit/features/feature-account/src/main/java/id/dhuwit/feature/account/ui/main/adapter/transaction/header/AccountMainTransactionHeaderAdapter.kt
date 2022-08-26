@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.base.helper.DateHelper.convertPattern
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionSection
 import id.dhuwit.core.transaction.model.TransactionType
 import id.dhuwit.feature.account.databinding.AccountMainTransactionHeaderBinding
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
-import id.dhuwit.storage.Storage
 
-class AccountMainTransactionHeaderAdapter(private val storage: Storage) :
+class AccountMainTransactionHeaderAdapter(private val settingUser: SettingUser) :
     RecyclerView.Adapter<AccountMainTransactionHeaderViewHolder>() {
 
     private var transactionSections: MutableList<TransactionSection> = mutableListOf()
@@ -100,7 +100,7 @@ class AccountMainTransactionHeaderAdapter(private val storage: Storage) :
     }
 
     override fun onBindViewHolder(holder: AccountMainTransactionHeaderViewHolder, position: Int) {
-        holder.onBind(transactionSections[position], storage, listener)
+        holder.onBind(transactionSections[position], settingUser, listener)
     }
 
     override fun getItemCount(): Int {

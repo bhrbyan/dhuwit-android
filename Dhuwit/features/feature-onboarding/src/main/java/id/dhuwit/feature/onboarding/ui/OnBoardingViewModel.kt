@@ -7,16 +7,16 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.model.Account
 import id.dhuwit.core.account.repository.AccountDataSource
-import id.dhuwit.state.State
-import id.dhuwit.state.ViewState
-import id.dhuwit.storage.Storage
+import id.dhuwit.core.base.state.State
+import id.dhuwit.core.base.state.ViewState
+import id.dhuwit.core.setting.user.SettingUser
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val accountRepository: AccountDataSource,
-    private val storage: Storage
+    private val settingUser: SettingUser
 ) : ViewModel() {
 
     private var _viewState = MutableLiveData<ViewState>()
@@ -43,7 +43,7 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun updateStatusFirstTimeUser() {
-        storage.setFirstTimeUser(false)
+        settingUser.setFirstTimeUser(false)
     }
 
 }

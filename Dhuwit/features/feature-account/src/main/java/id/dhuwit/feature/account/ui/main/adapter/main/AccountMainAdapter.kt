@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import id.dhuwit.core.account.model.Account
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.feature.account.databinding.AccountMainItemBinding
-import id.dhuwit.storage.Storage
 
-class AccountMainAdapter(private val storage: Storage) :
+class AccountMainAdapter(private val settingUser: SettingUser) :
     ListAdapter<Account, AccountMainViewHolder>(object : DiffUtil.ItemCallback<Account>() {
         override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
             return oldItem.id == newItem.id
@@ -30,6 +30,6 @@ class AccountMainAdapter(private val storage: Storage) :
     }
 
     override fun onBindViewHolder(holder: AccountMainViewHolder, position: Int) {
-        holder.onBind(getItem(position), storage)
+        holder.onBind(getItem(position), settingUser)
     }
 }

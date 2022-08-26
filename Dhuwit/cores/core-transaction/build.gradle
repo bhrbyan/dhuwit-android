@@ -40,7 +40,7 @@ dependencies {
     implementation project(":cores:core-base")
     implementation project(":cores:core-account")
     implementation project(":cores:core-category")
-    implementation project(":state")
+    
 
     implementation deps.kotlin
     implementation deps.google.material

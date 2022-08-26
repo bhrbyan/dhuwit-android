@@ -1,7 +1,7 @@
 package id.dhuwit.core.account.repository
 
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.state.State
+import id.dhuwit.core.base.state.State
 
 interface AccountDataSource {
     suspend fun createAccount(account: Account): State<Boolean>

@@ -1,7 +1,7 @@
 package id.dhuwit.core.currency.repository
 
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.currency.model.Currency
-import id.dhuwit.state.State
 import javax.inject.Inject
 
 class CurrencyRepository @Inject constructor(private val local: CurrencyDataSource) :

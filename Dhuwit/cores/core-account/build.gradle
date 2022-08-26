@@ -38,7 +38,7 @@ dependencies {
 
     /* Module */
     implementation project(":cores:core-base")
-    implementation project(":state")
+    
 
     implementation deps.kotlin
     implementation deps.google.material

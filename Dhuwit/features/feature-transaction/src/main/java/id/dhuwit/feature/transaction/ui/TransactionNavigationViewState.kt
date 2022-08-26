@@ -1,7 +1,7 @@
 package id.dhuwit.feature.transaction.ui
 
+import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.state.ViewState
 
 sealed class TransactionNavigationViewState : ViewState.Feature() {
 

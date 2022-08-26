@@ -43,7 +43,7 @@ dependencies {
     /* Module */
     implementation project(":cores:core-base")
     implementation project(":cores:core-category")
-    implementation project(":state")
+    
     implementation project(":uikit")
 
     implementation deps.kotlin

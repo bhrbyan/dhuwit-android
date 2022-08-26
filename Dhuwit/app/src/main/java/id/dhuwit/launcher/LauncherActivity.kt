@@ -4,9 +4,10 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.category.util.CategoryUtil
 import id.dhuwit.core.currency.util.CurrencyUtil
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.feature.account.router.AccountRouter
 import id.dhuwit.feature.onboarding.router.OnBoardingRouter
-import id.dhuwit.storage.Storage
+
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class LauncherActivity : id.dhuwit.core.base.base.BaseActivity() {
     lateinit var accountRouter: AccountRouter
 
     @Inject
-    lateinit var storage: Storage
+    lateinit var settingUser: SettingUser
 
     override fun init() {
         validateUserStatus()
@@ -44,7 +45,7 @@ class LauncherActivity : id.dhuwit.core.base.base.BaseActivity() {
     }
 
     private fun validateUserStatus() {
-        if (storage.isFirstTimeUser()) {
+        if (settingUser.isFirstTimeUser()) {
             val currencies = CurrencyUtil.getCurrencies(this)
             val categories = CategoryUtil.getCategories(this)
 

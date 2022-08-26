@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/cores/core-base" />
             <option value="$PROJECT_DIR$/cores/core-category" />
             <option value="$PROJECT_DIR$/cores/core-currency" />
+            <option value="$PROJECT_DIR$/cores/core-setting" />
             <option value="$PROJECT_DIR$/cores/core-transaction" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/feature-account" />
@@ -25,8 +26,6 @@
             <option value="$PROJECT_DIR$/features/feature-note" />
             <option value="$PROJECT_DIR$/features/feature-onboarding" />
             <option value="$PROJECT_DIR$/features/feature-transaction" />
-            <option value="$PROJECT_DIR$/state" />
-            <option value="$PROJECT_DIR$/storage" />
             <option value="$PROJECT_DIR$/uikit" />
           </set>
         </option>

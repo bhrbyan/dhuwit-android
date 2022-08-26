@@ -1,12 +1,12 @@
 package id.dhuwit.core.transaction.repository
 
 import id.dhuwit.core.account.database.AccountDao
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.transaction.database.TransactionDao
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionDeleteBy
 import id.dhuwit.core.transaction.model.TransactionGetBy
 import id.dhuwit.core.transaction.model.TransactionType
-import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

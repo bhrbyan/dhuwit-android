@@ -1,8 +1,8 @@
 package id.dhuwit.core.category.repository
 
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategoryType
-import id.dhuwit.state.State
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(private val local: CategoryDataSource) :

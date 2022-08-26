@@ -1,8 +1,8 @@
 package id.dhuwit.core.currency.repository
 
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.currency.database.CurrencyDao
 import id.dhuwit.core.currency.model.Currency
-import id.dhuwit.state.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

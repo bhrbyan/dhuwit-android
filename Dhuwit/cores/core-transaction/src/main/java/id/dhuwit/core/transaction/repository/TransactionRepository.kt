@@ -1,9 +1,9 @@
 package id.dhuwit.core.transaction.repository
 
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.core.transaction.model.TransactionDeleteBy
 import id.dhuwit.core.transaction.model.TransactionGetBy
-import id.dhuwit.state.State
 import javax.inject.Inject
 
 class TransactionRepository @Inject constructor(

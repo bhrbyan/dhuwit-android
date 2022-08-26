@@ -5,18 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.dhuwit.core.base.state.State
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.repository.CategoryDataSource
 import id.dhuwit.core.currency.model.Currency
 import id.dhuwit.core.currency.repository.CurrencyDataSource
-import id.dhuwit.state.State
-import id.dhuwit.storage.Storage
+import id.dhuwit.core.setting.user.SettingUser
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LauncherViewModel @Inject constructor(
-    private val storage: Storage,
+    private val settingUser: SettingUser,
     private val currencyRepository: CurrencyDataSource,
     private val categoryRepository: CategoryDataSource
 ) : ViewModel() {
@@ -39,7 +39,7 @@ class LauncherViewModel @Inject constructor(
     }
 
     private fun setCurrencySymbol(currency: Currency) {
-        storage.setSymbolCurrency(currency.symbol)
+        settingUser.setSymbolCurrency(currency.symbol)
     }
 
     private fun isStoreDataSuccess(): Boolean {

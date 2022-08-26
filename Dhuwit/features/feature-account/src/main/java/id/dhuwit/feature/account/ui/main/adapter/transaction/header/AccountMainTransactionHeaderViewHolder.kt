@@ -5,12 +5,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.TransactionSection
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainTransactionHeaderBinding
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
-import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.divider.DividerItemDecorationLastItem
 import kotlin.math.abs
 
@@ -21,16 +21,16 @@ class AccountMainTransactionHeaderViewHolder(private val binding: AccountMainTra
 
     fun onBind(
         transactionSection: TransactionSection,
-        storage: Storage,
+        settingUser: SettingUser,
         listener: AccountMainTransactionItemListener?
     ) {
         binding.textDate.text = transactionSection.date
-        setTotalAmount(transactionSection.totalAmount, storage)
+        setTotalAmount(transactionSection.totalAmount, settingUser)
 
         val adapterTransactions =
             AccountMainTransactionItemAdapter(
                 transactionSection.transactions,
-                storage,
+                settingUser,
                 listener
             )
         binding.recyclerViewTransactionItems.apply {
@@ -49,9 +49,9 @@ class AccountMainTransactionHeaderViewHolder(private val binding: AccountMainTra
         adapterTransactions.notifyDataSetChanged()
     }
 
-    private fun setTotalAmount(amount: Double, storage: Storage) {
+    private fun setTotalAmount(amount: Double, settingUser: SettingUser) {
         val convertedAmount =
-            abs(amount).convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+            abs(amount).convertPriceWithCurrencyFormat(settingUser.getSymbolCurrency())
         with(binding) {
             textTotalAmountTransaction.text = if (amount >= 0) {
                 convertedAmount

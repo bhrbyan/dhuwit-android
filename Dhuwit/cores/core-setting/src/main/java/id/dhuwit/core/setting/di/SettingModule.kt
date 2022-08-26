@@ -1,4 +1,4 @@
-package id.dhuwit.storage.di
+package id.dhuwit.core.setting.di
 
 import android.content.Context
 import dagger.Module
@@ -6,18 +6,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import id.dhuwit.storage.Storage
-import id.dhuwit.storage.StorageImpl
+import id.dhuwit.core.setting.user.SettingUser
+import id.dhuwit.core.setting.user.SettingUserImpl
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object StorageModule {
+object SettingModule {
 
     @Provides
     @Singleton
-    fun provideAppSharedPref(@ApplicationContext context: Context): Storage {
-        return StorageImpl(context)
+    fun provideSettingUser(@ApplicationContext context: Context): SettingUser {
+        return SettingUserImpl(context)
     }
 
 }

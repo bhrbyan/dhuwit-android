@@ -67,10 +67,10 @@ dependencies {
     implementation project(":cores:core-base")
     implementation project(":cores:core-currency")
     implementation project(":cores:core-category")
+    implementation project(":cores:core-setting")
     implementation project(":features:feature-onboarding")
     implementation project(":features:feature-account")
-    implementation project(":state")
-    implementation project(":storage")
+
 
     implementation deps.kotlin
     implementation deps.google.material

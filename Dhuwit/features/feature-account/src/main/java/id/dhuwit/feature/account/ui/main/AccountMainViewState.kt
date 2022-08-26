@@ -1,8 +1,8 @@
 package id.dhuwit.feature.account.ui.main
 
 import id.dhuwit.core.account.model.Account
+import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.transaction.model.Transaction
-import id.dhuwit.state.ViewState
 
 sealed class AccountMainViewState : ViewState.Feature() {
 

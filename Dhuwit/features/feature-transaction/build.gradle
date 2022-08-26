@@ -45,11 +45,10 @@ dependencies {
     implementation project(":cores:core-account")
     implementation project(":cores:core-category")
     implementation project(":cores:core-transaction")
+    implementation project(":cores:core-setting")
     implementation project(":features:feature-calculator")
     implementation project(":features:feature-category")
     implementation project(":features:feature-note")
-    implementation project(":state")
-    implementation project(":storage")
     implementation project(":uikit")
 
     implementation deps.kotlin

@@ -1,7 +1,7 @@
 package id.dhuwit.core.account.repository
 
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.state.State
+import id.dhuwit.core.base.state.State
 import javax.inject.Inject
 
 class AccountRepository @Inject constructor(private val local: AccountDataSource) :

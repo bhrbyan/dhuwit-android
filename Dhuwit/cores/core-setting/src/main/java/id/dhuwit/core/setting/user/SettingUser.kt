@@ -1,6 +1,6 @@
-package id.dhuwit.storage
+package id.dhuwit.core.setting.user
 
-interface Storage {
+interface SettingUser {
     fun setFirstTimeUser(isFirstTimeUser: Boolean)
     fun isFirstTimeUser(): Boolean
     fun setSymbolCurrency(symbolCurrency: String)

@@ -1,4 +1,4 @@
-package id.dhuwit.state
+package id.dhuwit.core.base.state
 
 sealed class ViewState {
     abstract class Feature : ViewState()

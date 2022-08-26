@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.dhuwit.core.account.repository.AccountDataSource
-import id.dhuwit.state.State
-import id.dhuwit.state.ViewState
+import id.dhuwit.core.base.state.State
+import id.dhuwit.core.base.state.ViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

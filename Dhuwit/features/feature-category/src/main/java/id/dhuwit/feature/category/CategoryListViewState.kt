@@ -1,8 +1,8 @@
 package id.dhuwit.feature.category
 
+import id.dhuwit.core.base.state.ViewState
 import id.dhuwit.core.category.model.Category
 import id.dhuwit.core.category.model.CategorySearch
-import id.dhuwit.state.ViewState
 
 sealed class CategoryListViewState : ViewState.Feature() {
     data class GetCategories(val categories: List<Category>?) : CategoryListViewState()

@@ -12,6 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.dhuwit.core.base.extension.convertPriceWithCurrencyFormat
 import id.dhuwit.core.base.extension.gone
 import id.dhuwit.core.base.extension.visible
+import id.dhuwit.core.base.state.ViewState
+import id.dhuwit.core.setting.user.SettingUser
 import id.dhuwit.core.transaction.model.Transaction
 import id.dhuwit.feature.account.R
 import id.dhuwit.feature.account.databinding.AccountMainActivityBinding
@@ -20,8 +22,6 @@ import id.dhuwit.feature.account.ui.main.adapter.main.AccountMainAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.header.AccountMainTransactionHeaderAdapter
 import id.dhuwit.feature.account.ui.main.adapter.transaction.item.AccountMainTransactionItemListener
 import id.dhuwit.feature.transaction.router.TransactionRouter
-import id.dhuwit.state.ViewState
-import id.dhuwit.storage.Storage
 import id.dhuwit.uikit.databinding.EmptyStateBinding
 import id.dhuwit.uikit.databinding.ToolbarBinding
 import id.dhuwit.uikit.divider.DividerMarginItemDecorationViewPager
@@ -41,7 +41,7 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
     private val viewModel: AccountMainViewModel by viewModels()
 
     @Inject
-    lateinit var storage: Storage
+    lateinit var settingUser: SettingUser
 
     @Inject
     lateinit var accountRouter: AccountRouter
@@ -124,9 +124,9 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
                 }
                 is AccountMainViewState.GetTransactions -> {
                     binding.textIncomeAmount.text =
-                        viewState.incomeAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+                        viewState.incomeAmount?.convertPriceWithCurrencyFormat(settingUser.getSymbolCurrency())
                     binding.textExpenseAmount.text =
-                        viewState.expenseAmount?.convertPriceWithCurrencyFormat(storage.getSymbolCurrency())
+                        viewState.expenseAmount?.convertPriceWithCurrencyFormat(settingUser.getSymbolCurrency())
 
                     adapterTransactionHeader.updateList(viewState.transactions)
                     if (viewState.transactions.isNullOrEmpty()) {
@@ -166,7 +166,7 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
     }
 
     private fun setUpViewPagerAdapter() {
-        viewPagerAdapter = AccountMainAdapter(storage)
+        viewPagerAdapter = AccountMainAdapter(settingUser)
 
         binding.viewPager.apply {
             adapter = viewPagerAdapter
@@ -234,7 +234,7 @@ class AccountMainActivity : id.dhuwit.core.base.base.BaseActivity(),
     }
 
     private fun setUpAdapterHeaderTransaction() {
-        adapterTransactionHeader = AccountMainTransactionHeaderAdapter(storage).apply {
+        adapterTransactionHeader = AccountMainTransactionHeaderAdapter(settingUser).apply {
             listener = this@AccountMainActivity
         }
         binding.recyclerViewTransactions.apply {

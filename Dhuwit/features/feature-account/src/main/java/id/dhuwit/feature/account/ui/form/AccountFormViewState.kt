@@ -1,7 +1,7 @@
 package id.dhuwit.feature.account.ui.form
 
 import id.dhuwit.core.account.model.Account
-import id.dhuwit.state.ViewState
+import id.dhuwit.core.base.state.ViewState
 
 sealed class AccountFormViewState : ViewState.Feature() {
     object CreateAccount : AccountFormViewState()
